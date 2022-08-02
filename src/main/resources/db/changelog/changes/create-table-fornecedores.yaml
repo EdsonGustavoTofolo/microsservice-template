@@ -1,0 +1,142 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-table-fornecedores
+      author: edson.tofolo
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - tableExists:
+                tableName: fornecedores
+      changes:
+        - createTable:
+            tableName: fornecedores
+            columns:
+              - column:
+                  name: id
+                  type: INTEGER
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: fornecedores_id_pk
+
+              - column:
+                  name: cnpj
+                  type: varchar(14)
+                  constraints:
+                    nullable: false
+                    unique: true
+                    uniqueConstraintName: fornecedores_cnpj_uq
+
+              - column:
+                  name: razao_social
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: nome_fantasia
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: observacao
+                  type: text
+
+              - column:
+                  name: created_at
+                  type: datetime
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: created_by
+                  type: varchar(60)
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: last_modified_at
+                  type: datetime
+
+              - column:
+                  name: last_modified_by
+                  type: varchar(60)
+
+        - createTable:
+            tableName: fornecedores_audit
+            columns:
+              - column:
+                  name: id
+                  type: INTEGER
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: cnpj
+                  type: varchar(14)
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: razao_social
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: nome_fantasia
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: observacao
+                  type: text
+
+              - column:
+                  name: created_at
+                  type: datetime
+
+              - column:
+                  name: created_by
+                  type: varchar(60)
+
+              - column:
+                  name: last_modified_at
+                  type: datetime
+
+              - column:
+                  name: last_modified_by
+                  type: varchar(60)
+
+              - column:
+                  name: revision_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+                    referencedTableName: revinfo
+                    referencedColumnNames: rev
+                    foreignKeyName: fornecedores_audit_revinfo_rev_fk
+
+              - column:
+                  name: revision_type
+                  type: tinyint
+
+        - addPrimaryKey:
+            tableName: fornecedores_audit
+            columnNames: id, revision_id
+            validate: false
+            clustered: false
+            constraintName: fornecedores_audit_id_rev_pk
+
+        - createIndex:
+            clustered: true
+            columns:
+              - column:
+                  name: cnpj
+                  descending: false
+            indexName: idx_fornecedores_cnpj
+            tableName: fornecedores
+            unique: true

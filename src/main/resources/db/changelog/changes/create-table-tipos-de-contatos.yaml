@@ -1,0 +1,151 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-table-tipos-de-contatos
+      author: edson.tofolo
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - tableExists:
+                tableName: tipos_de_contatos
+      changes:
+        - createTable:
+            tableName: tipos_de_contatos
+            columns:
+              - column:
+                  name: id
+                  type: integer
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: tipos_de_contatos_id_pk
+
+              - column:
+                  name: tipo_de_contato
+                  type: varchar(8)
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: ddd
+                  type: varchar(2)
+
+              - column:
+                  name: numero
+                  type: varchar(10)
+
+              - column:
+                  name: endereco_email
+                  type: varchar(255)
+
+              - column:
+                  name: url_site
+                  type: varchar(255)
+
+              - column:
+                  name: texto
+                  type: varchar(255)
+
+              - column:
+                  name: contatos_id
+                  type: integer
+                  constraints:
+                    nullable: false
+                    referencedTableName: contatos
+                    referencedColumnNames: fornecedor_id
+                    foreignKeyName: tipos_de_contatos_contatos_id_fk
+
+              - column:
+                  name: created_at
+                  type: datetime
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: created_by
+                  type: varchar(60)
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: last_modified_at
+                  type: datetime
+
+              - column:
+                  name: last_modified_by
+                  type: varchar(60)
+
+        - createTable:
+            tableName: tipos_de_contatos_audit
+            columns:
+              - column:
+                  name: id
+                  type: integer
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: tipo_de_contato
+                  type: varchar(8)
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: ddd
+                  type: varchar(2)
+
+              - column:
+                  name: numero
+                  type: varchar(10)
+
+              - column:
+                  name: endereco_email
+                  type: varchar(255)
+
+              - column:
+                  name: url_site
+                  type: varchar(255)
+
+              - column:
+                  name: texto
+                  type: varchar(255)
+
+              - column:
+                  name: contatos_id
+                  type: integer
+
+              - column:
+                  name: created_at
+                  type: datetime
+
+              - column:
+                  name: created_by
+                  type: varchar(60)
+
+              - column:
+                  name: last_modified_at
+                  type: datetime
+
+              - column:
+                  name: last_modified_by
+                  type: varchar(60)
+
+              - column:
+                  name: revision_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+                    referencedTableName: revinfo
+                    referencedColumnNames: rev
+                    foreignKeyName: tipos_de_contatos_audit_revinfo_rev_fk
+
+              - column:
+                  name: revision_type
+                  type: tinyint
+
+        - addPrimaryKey:
+            tableName: tipos_de_contatos_audit
+            columnNames: id, revision_id
+            validate: false
+            clustered: false
+            constraintName: tipos_de_contatos_audit_id_rev_pk

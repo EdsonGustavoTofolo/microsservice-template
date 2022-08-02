@@ -1,0 +1,32 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-table-cidades
+      author: edson.tofolo
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - tableExists:
+                tableName: cidades
+      changes:
+        - createTable:
+            tableName: cidades
+            columns:
+              - column:
+                  name: id
+                  type: integer
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: cidades_id_pk
+              - column:
+                  name: nome
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: estado_id
+                  type: INTEGER
+                  constraints:
+                    referencedTableName: estados
+                    referencedColumnNames: id
+                    foreignKeyName: cidades_estado_id_fk

@@ -1,0 +1,23 @@
+databaseChangeLog:
+  - changeSet:
+      id: insert-cidades-brasileiras-parana
+      author: edson.tofolo
+      changes:
+        - loadData:
+            tableName: cidades
+            separator: ;
+            usePreparedStatements: true
+            file: db/data/cidades-parana-data.csv
+            columns:
+              - column:
+                  index: 0
+                  name: id
+                  type: string
+              - column:
+                  index: 1
+                  name: nome
+                  type: string
+              - column:
+                  index: 2
+                  name: estado_id
+                  type: integer

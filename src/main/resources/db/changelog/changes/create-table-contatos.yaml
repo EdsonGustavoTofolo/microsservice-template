@@ -1,0 +1,97 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-table-contatos
+      author: edson.tofolo
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - tableExists:
+                tableName: contatos
+      changes:
+        - createTable:
+            tableName: contatos
+            columns:
+              - column:
+                  name: fornecedor_id
+                  type: integer
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: contatos_id_pk
+                    referencedTableName: fornecedores
+                    referencedColumnNames: id
+                    foreignKeyName: contatos_fornecedor_id_fk
+
+              - column:
+                  name: observacao
+                  type: text
+
+              - column:
+                  name: created_at
+                  type: datetime
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: created_by
+                  type: varchar(60)
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: last_modified_at
+                  type: datetime
+
+              - column:
+                  name: last_modified_by
+                  type: varchar(60)
+
+        - createTable:
+            tableName: contatos_audit
+            columns:
+              - column:
+                  name: fornecedor_id
+                  type: integer
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: observacao
+                  type: text
+
+              - column:
+                  name: created_at
+                  type: datetime
+
+              - column:
+                  name: created_by
+                  type: varchar(60)
+
+              - column:
+                  name: last_modified_at
+                  type: datetime
+
+              - column:
+                  name: last_modified_by
+                  type: varchar(60)
+
+              - column:
+                  name: revision_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+                    referencedTableName: revinfo
+                    referencedColumnNames: rev
+                    foreignKeyName: contatos_audit_revinfo_rev_fk
+
+              - column:
+                  name: revision_type
+                  type: tinyint
+
+        - addPrimaryKey:
+            tableName: contatos_audit
+            columnNames: fornecedor_id, revision_id
+            validate: false
+            clustered: false
+            constraintName: contatos_audit_id_rev_pk

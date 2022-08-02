@@ -1,0 +1,23 @@
+databaseChangeLog:
+  - include:
+      file: db/changelog/changes/create-table-revinfo.yaml
+  - include:
+      file: db/changelog/changes/create-table-paises.yaml
+  - include:
+      file: db/changelog/changes/create-table-estados.yaml
+  - include:
+      file: db/changelog/changes/create-table-cidades.yaml
+  - include:
+      file: db/changelog/changes/insert-paises.yaml
+  - include:
+      file: db/changelog/changes/insert-estados-brasileiros.yaml
+  - include:
+      file: db/changelog/changes/insert-cidades-brasileiras-parana.yaml
+  - include:
+      file: db/changelog/changes/create-table-fornecedores.yaml
+  - include:
+      file: db/changelog/changes/create-table-enderecos.yaml
+  - include:
+      file: db/changelog/changes/create-table-contatos.yaml
+  - include:
+      file: db/changelog/changes/create-table-tipos-de-contatos.yaml

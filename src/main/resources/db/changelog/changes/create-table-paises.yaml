@@ -1,0 +1,25 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-table-paises
+      author: edson.tofolo
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - tableExists:
+                tableName: paises
+      changes:
+        - createTable:
+            tableName: paises
+            columns:
+              - column:
+                  name: id
+                  type: INTEGER
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: paises_id_pk
+              - column:
+                  name: nome
+                  type: varchar(255)
+                  constraints:
+                    nullable: false

@@ -1,0 +1,38 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-table-estados
+      author: edson.tofolo
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - tableExists:
+                tableName: estados
+      changes:
+        - createTable:
+            tableName: estados
+            columns:
+              - column:
+                  name: id
+                  type: INTEGER
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: estados_id_pk
+              - column:
+                  name: nome
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: sigla
+                  type: char(2)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: pais_id
+                  type: INTEGER
+                  constraints:
+                    referencedTableName: paises
+                    referencedColumnNames: id
+                    foreignKeyName: estados_pais_id_fk
+

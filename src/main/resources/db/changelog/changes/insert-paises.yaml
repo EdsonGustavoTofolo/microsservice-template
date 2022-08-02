@@ -1,0 +1,19 @@
+databaseChangeLog:
+  - changeSet:
+      id: insert-paises
+      author: edson.tofolo
+      changes:
+        - loadData:
+            tableName: paises
+            separator: ;
+            usePreparedStatements: true
+            file: db/data/paises-data.csv
+            columns:
+              - column:
+                  index: 0
+                  name: id
+                  type: integer
+              - column:
+                  index: 1
+                  name: nome
+                  type: string

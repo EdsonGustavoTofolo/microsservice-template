@@ -1,0 +1,27 @@
+databaseChangeLog:
+  - changeSet:
+      id: insert-estados-brasileiros
+      author: edson.tofolo
+      changes:
+        - loadData:
+            tableName: estados
+            separator: ;
+            usePreparedStatements: true
+            file: db/data/estados-brasileiros-data.csv
+            columns:
+              - column:
+                  index: 0
+                  name: id
+                  type: integer
+              - column:
+                  index: 1
+                  name: nome
+                  type: string
+              - column:
+                  index: 2
+                  name: sigla
+                  type: string
+              - column:
+                  index: 3
+                  name: pais_id
+                  type: integer
