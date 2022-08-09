@@ -6,13 +6,20 @@ import io.github.edsongustavotofolo.microservicetemplate.domain.entities.impl.Co
 import io.github.edsongustavotofolo.microservicetemplate.domain.entities.impl.EnderecoImpl;
 import io.github.edsongustavotofolo.microservicetemplate.domain.entities.impl.FornecedorImpl;
 import io.github.edsongustavotofolo.microservicetemplate.domain.entities.valueobjects.*;
-import io.github.edsongustavotofolo.microservicetemplate.usecases.models.CriarFornecedorRequestModel;
+import io.github.edsongustavotofolo.microservicetemplate.usecases.models.CreateFornecedorRequestModel;
+import io.github.edsongustavotofolo.microservicetemplate.usecases.models.mappers.ContatoMapper;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.models.mappers.FornecedorMapper;
 
 public class FornecedorMapperImpl implements FornecedorMapper {
 
+    private final ContatoMapper contatoMapper;
+
+    public FornecedorMapperImpl(ContatoMapper contatoMapper) {
+        this.contatoMapper = contatoMapper;
+    }
+
     @Override
-    public Fornecedor toDomain(final CriarFornecedorRequestModel requestModel) {
+    public Fornecedor toDomain(final CreateFornecedorRequestModel requestModel) {
         var endereco = new EnderecoImpl(
                 requestModel.getLogradouro(),
                 requestModel.getNumero(),
@@ -25,13 +32,7 @@ public class FornecedorMapperImpl implements FornecedorMapper {
         var contatos = new ContatosImpl();
         contatos.setObservacao(requestModel.getObservacaoContatos());
         requestModel.getContatos().forEach(contatoModel -> {
-            Contato contato = switch (contatoModel.getTipoDeContato()) {
-                case EMAIL: yield new Email(contatoModel.getEnderecoEmail());
-                case TELEFONE: yield new Telefone(contatoModel.getDdd(), contatoModel.getNumero());
-                case CELULAR: yield new Celular(contatoModel.getDdd(), contatoModel.getNumero());
-                case SITE: yield new Site(contatoModel.getUrlSite());
-                case OUTRO: yield new OutroContato(contatoModel.getTexto());
-            };
+            var contato = this.contatoMapper.toDomain(contatoModel);
             contatos.adicionar(contato);
         });
 

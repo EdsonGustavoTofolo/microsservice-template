@@ -1,7 +1,7 @@
 package io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.gateways.database;
 
 import io.github.edsongustavotofolo.microservicetemplate.infrastructure.configuration.database.repository.AuditConfiguration;
-import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.gateways.database.model.*;
+import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.gateways.database.model.FornecedorEntity;
 import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.gateways.database.model.mappers.FornecedorEntityMapper;
 import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.gateways.database.repository.CidadeJpaRepository;
 import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.gateways.database.repository.FornecedorJpaRepository;
@@ -22,8 +22,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
 
 import static io.github.edsongustavotofolo.microservicetemplate.domain.builder.FornecedorBuilder.umFornecedor;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.verify;
 
 @DataJpaTest
@@ -48,6 +47,19 @@ class FornecedorJpaGatewayIntegrationTest {
     }
 
     @Test
+    void deveRetornarTrueAoVerificarExistenciaDeFornecedorPorCnpj() {
+        // cenario
+        var fornecedor = umFornecedor().get();
+        this.fornecedorJpaGateway.criar(fornecedor);
+
+        // exec
+        var actualExistsByCnpj = this.fornecedorJpaGateway.existeFornecedorComCnpj(fornecedor.getCnpj().toString());
+
+        // check
+        assertTrue(actualExistsByCnpj);
+    }
+
+    @Test
     void deveCriarFornecedorComSucesso() {
         // cenario
         var fornecedor = umFornecedor().get();
@@ -62,37 +74,37 @@ class FornecedorJpaGatewayIntegrationTest {
 
         verify(fornecedorJpaRepository).persist(argumentCaptor.capture());
 
-        var fornecedorEntity = argumentCaptor.getValue();
-        assertNotNull(fornecedorEntity);
-        assertNotNull(fornecedorEntity.getId());
-        assertEquals(id, fornecedorEntity.getId());
-        assertNotNull(fornecedorEntity.getCreatedAt());
-        assertNotNull(fornecedorEntity.getCreatedBy());
-        assertNotNull(fornecedorEntity.getLastModifiedAt());
-        assertNotNull(fornecedorEntity.getLastModifiedBy());
+        var actualFornecedorEntity = argumentCaptor.getValue();
+        assertNotNull(actualFornecedorEntity);
+        assertNotNull(actualFornecedorEntity.getId());
+        assertEquals(id, actualFornecedorEntity.getId());
+        assertNotNull(actualFornecedorEntity.getCreatedAt());
+        assertNotNull(actualFornecedorEntity.getCreatedBy());
+        assertNotNull(actualFornecedorEntity.getLastModifiedAt());
+        assertNotNull(actualFornecedorEntity.getLastModifiedBy());
 
-        assertNotNull(fornecedorEntity.getEndereco());
-        assertNotNull(fornecedorEntity.getEndereco().getId());
-        assertNotNull(fornecedorEntity.getEndereco().getCreatedAt());
-        assertNotNull(fornecedorEntity.getEndereco().getCreatedBy());
-        assertNotNull(fornecedorEntity.getEndereco().getLastModifiedAt());
-        assertNotNull(fornecedorEntity.getEndereco().getLastModifiedBy());
+        assertNotNull(actualFornecedorEntity.getEndereco());
+        assertNotNull(actualFornecedorEntity.getEndereco().getId());
+        assertNotNull(actualFornecedorEntity.getEndereco().getCreatedAt());
+        assertNotNull(actualFornecedorEntity.getEndereco().getCreatedBy());
+        assertNotNull(actualFornecedorEntity.getEndereco().getLastModifiedAt());
+        assertNotNull(actualFornecedorEntity.getEndereco().getLastModifiedBy());
 
-        assertNotNull(fornecedorEntity.getContatos());
-        assertNotNull(fornecedorEntity.getContatos().getId());
-        assertNotNull(fornecedorEntity.getContatos().getTipos());
-        assertNotNull(fornecedorEntity.getContatos().getCreatedAt());
-        assertNotNull(fornecedorEntity.getContatos().getCreatedBy());
-        assertNotNull(fornecedorEntity.getContatos().getLastModifiedAt());
-        assertNotNull(fornecedorEntity.getContatos().getLastModifiedBy());
+        assertNotNull(actualFornecedorEntity.getContatos());
+        assertNotNull(actualFornecedorEntity.getContatos().getId());
+        assertNotNull(actualFornecedorEntity.getContatos().getTipos());
+        assertNotNull(actualFornecedorEntity.getContatos().getCreatedAt());
+        assertNotNull(actualFornecedorEntity.getContatos().getCreatedBy());
+        assertNotNull(actualFornecedorEntity.getContatos().getLastModifiedAt());
+        assertNotNull(actualFornecedorEntity.getContatos().getLastModifiedBy());
 
-        MatcherAssert.assertThat(fornecedorEntity.getContatos().getTipos().size(), Matchers.greaterThan(0));
-        MatcherAssert.assertThat(fornecedorEntity.getContatos().getTipos().size(), Matchers.equalTo(5));
+        MatcherAssert.assertThat(actualFornecedorEntity.getContatos().getTipos().size(), Matchers.greaterThan(0));
+        MatcherAssert.assertThat(actualFornecedorEntity.getContatos().getTipos().size(), Matchers.equalTo(5));
 
-        assertNotNull(fornecedorEntity.getContatos().getTipos().get(0).getId());
-        assertNotNull(fornecedorEntity.getContatos().getTipos().get(1).getId());
-        assertNotNull(fornecedorEntity.getContatos().getTipos().get(2).getId());
-        assertNotNull(fornecedorEntity.getContatos().getTipos().get(3).getId());
-        assertNotNull(fornecedorEntity.getContatos().getTipos().get(4).getId());
+        assertNotNull(actualFornecedorEntity.getContatos().getTipos().get(0).getId());
+        assertNotNull(actualFornecedorEntity.getContatos().getTipos().get(1).getId());
+        assertNotNull(actualFornecedorEntity.getContatos().getTipos().get(2).getId());
+        assertNotNull(actualFornecedorEntity.getContatos().getTipos().get(3).getId());
+        assertNotNull(actualFornecedorEntity.getContatos().getTipos().get(4).getId());
     }
 }

@@ -1,6 +1,8 @@
 package io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http;
 
-import io.github.edsongustavotofolo.microservicetemplate.usecases.models.CriarFornecedorRequestModel;
+import io.github.edsongustavotofolo.microservicetemplate.usecases.models.CreateFornecedorRequestModel;
+import io.github.edsongustavotofolo.microservicetemplate.usecases.models.UpdateFornecedorRequestModel;
+import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.AtualizarFornecedorInputBoundary;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.CriarFornecedorInputBoundary;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.headers.Header;
@@ -10,11 +12,9 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
@@ -31,6 +31,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 public class FornecedorRestController {
 
     private final CriarFornecedorInputBoundary criarFornecedorInputBoundary;
+    private final AtualizarFornecedorInputBoundary atualizarFornecedorInputBoundary;
 
     @Operation(summary = "Cria um novo fornecedor",
             description = "Cria um fornecedor com os dados fornecidos")
@@ -44,7 +45,7 @@ public class FornecedorRestController {
                     description = "Dados do fornecedor inválidos")
     })
     @PostMapping
-    public ResponseEntity<Void> create(@Valid @RequestBody CriarFornecedorRequestModel requestModel) {
+    public ResponseEntity<Void> create(@Valid @RequestBody CreateFornecedorRequestModel requestModel) {
         var id = this.criarFornecedorInputBoundary.execute(requestModel);
 
         URI location = ServletUriComponentsBuilder
@@ -56,4 +57,19 @@ public class FornecedorRestController {
         return ResponseEntity.created(location).build();
     }
 
+    @Operation(summary = "Atualiza um fornecedor",
+            description = "Atualiza o fornecedor com o ID passado na URL e com os dados fornecidos")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200",
+                    description = "Atualizado com sucesso"),
+            @ApiResponse(responseCode = "400",
+                    description = "Dados do Fornecedor inválido"),
+            @ApiResponse(responseCode = "404",
+                    description = "Fornecedor não encontrado")
+    })
+    @PatchMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public void patch(@PathVariable Integer id, @Valid @RequestBody UpdateFornecedorRequestModel requestModel) {
+        this.atualizarFornecedorInputBoundary.execute(id, requestModel);
+    }
 }

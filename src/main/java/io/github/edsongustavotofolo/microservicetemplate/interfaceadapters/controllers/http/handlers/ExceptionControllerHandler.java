@@ -1,5 +1,6 @@
 package io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.handlers;
 
+import io.github.edsongustavotofolo.microservicetemplate.domain.exceptions.BusinessRuleException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
@@ -17,6 +18,17 @@ import java.util.List;
 @ControllerAdvice
 @Slf4j
 public class ExceptionControllerHandler {
+
+    @ExceptionHandler(value = BusinessRuleException.class)
+    public ResponseEntity<ErrorApi> businessRuleExceptionHander(BusinessRuleException ex, WebRequest request) {
+        log.error("Falha de regra de negocio");
+        var errorApi = ErrorApi.builder()
+                .mensagens(List.of(ex.getMessage()))
+                .dataHora(LocalDateTime.now())
+                .status(HttpStatus.BAD_REQUEST.value())
+                .build();
+        return ResponseEntity.badRequest().body(errorApi);
+    }
 
     @ExceptionHandler(value = MethodArgumentNotValidException.class)
     public ResponseEntity<ErrorApi> methodArgumentNotValidExceptionHandler(MethodArgumentNotValidException ex, WebRequest request) {

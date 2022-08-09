@@ -1,7 +1,6 @@
 package io.github.edsongustavotofolo.microservicetemplate.domain.entities.impl;
 
-import io.github.edsongustavotofolo.microservicetemplate.domain.entities.Contatos;
-import io.github.edsongustavotofolo.microservicetemplate.domain.entities.valueobjects.Contato;
+import io.github.edsongustavotofolo.microservicetemplate.domain.entities.*;
 import lombok.Setter;
 
 import java.util.ArrayList;
@@ -36,5 +35,30 @@ public class ContatosImpl implements Contatos {
     @Override
     public void adicionar(final Contato contato) {
         lista.add(contato);
+    }
+
+    @Override
+    public Email getEmailAt(int index) {
+        return (Email) this.lista.get(index);
+    }
+
+    @Override
+    public Celular getCelularAt(int index) {
+        return (Celular) this.lista.get(index);
+    }
+
+    @Override
+    public Telefone getTelefoneAt(int index) {
+        return (Telefone) this.lista.get(index);
+    }
+
+    @Override
+    public Site getSiteAt(int index) {
+        return (Site) this.lista.get(index);
+    }
+
+    @Override
+    public OutroContato getOutroAt(int index) {
+        return (OutroContato) this.lista.get(index);
     }
 }

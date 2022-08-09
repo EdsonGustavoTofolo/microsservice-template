@@ -1,8 +1,6 @@
 package io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.gateways.database.model.mappers;
 
-import io.github.edsongustavotofolo.microservicetemplate.domain.entities.Contatos;
-import io.github.edsongustavotofolo.microservicetemplate.domain.entities.Fornecedor;
-import io.github.edsongustavotofolo.microservicetemplate.domain.entities.valueobjects.*;
+import io.github.edsongustavotofolo.microservicetemplate.domain.entities.*;
 import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.gateways.database.model.ContatosEntity;
 import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.gateways.database.model.FornecedorEntity;
 import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.gateways.database.model.TipoDeContatoEntity;

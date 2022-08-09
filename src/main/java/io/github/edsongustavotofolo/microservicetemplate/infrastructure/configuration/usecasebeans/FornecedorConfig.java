@@ -2,7 +2,9 @@ package io.github.edsongustavotofolo.microservicetemplate.infrastructure.configu
 
 import io.github.edsongustavotofolo.microservicetemplate.usecases.gateways.FornecedorDsGateway;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.interactors.CriarFornecedorInteractor;
+import io.github.edsongustavotofolo.microservicetemplate.usecases.models.mappers.ContatoMapper;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.models.mappers.FornecedorMapper;
+import io.github.edsongustavotofolo.microservicetemplate.usecases.models.mappers.impl.ContatoMapperImpl;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.models.mappers.impl.FornecedorMapperImpl;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.CriarFornecedorInputBoundary;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.FornecedorCriadoOutputBoundary;
@@ -18,8 +20,13 @@ public class FornecedorConfig {
     private final FornecedorCriadoOutputBoundary presenter;
 
     @Bean
+    public ContatoMapper contatoMapper() {
+        return new ContatoMapperImpl();
+    }
+
+    @Bean
     public FornecedorMapper fornecedorMapper() {
-        return new FornecedorMapperImpl();
+        return new FornecedorMapperImpl(contatoMapper());
     }
 
     @Bean

@@ -1,10 +1,15 @@
-package io.github.edsongustavotofolo.microservicetemplate.domain.entities.valueobjects;
+package io.github.edsongustavotofolo.microservicetemplate.domain.entities;
 
 public abstract class ContatoTelefonico extends Contato {
-    protected final String ddd;
-    protected final String numero;
+    protected String ddd;
+    protected String numero;
 
     public ContatoTelefonico(String ddd, String numero) {
+        this.ddd = ddd;
+        this.numero = numero;
+    }
+
+    public void update(final String ddd, final String numero) {
         this.ddd = ddd;
         this.numero = numero;
     }

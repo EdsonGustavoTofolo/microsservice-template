@@ -18,7 +18,7 @@ public final class Cnpj {
         this.numero = numero;
     }
 
-    private boolean numeroInvalido(final String numero) {
+    public static boolean numeroInvalido(final String numero) {
         var cnpj = numero.replaceAll("\\D", "");
 
         if (!cnpj.matches("\\d{14}")) {
@@ -31,7 +31,7 @@ public final class Cnpj {
         return false;
     }
 
-    private boolean digitoVerificadorValido(final String numero) {
+    private static boolean digitoVerificadorValido(final String numero) {
         if (numero.equals("00000000000000") || numero.equals("11111111111111")
                 || numero.equals("22222222222222") || numero.equals("33333333333333")
                 || numero.equals("44444444444444") || numero.equals("55555555555555")

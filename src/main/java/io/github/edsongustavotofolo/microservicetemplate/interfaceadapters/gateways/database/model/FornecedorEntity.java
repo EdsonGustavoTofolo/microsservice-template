@@ -24,7 +24,7 @@ public class FornecedorEntity extends AuditableEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
     private Integer id;
-    @Column(nullable = false, length = 14)
+    @Column(nullable = false, length = 14, unique = true)
     private String cnpj;
     @Column(nullable = false)
     private String razaoSocial;

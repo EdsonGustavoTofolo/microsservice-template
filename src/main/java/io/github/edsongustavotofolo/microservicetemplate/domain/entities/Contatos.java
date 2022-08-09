@@ -1,7 +1,5 @@
 package io.github.edsongustavotofolo.microservicetemplate.domain.entities;
 
-import io.github.edsongustavotofolo.microservicetemplate.domain.entities.valueobjects.Contato;
-
 import java.util.List;
 
 public interface Contatos {
@@ -9,4 +7,10 @@ public interface Contatos {
     String getObservacao();
     List<Contato> getLista();
     void adicionar(final Contato contato);
+
+    Email getEmailAt(int index);
+    Celular getCelularAt(int index);
+    Telefone getTelefoneAt(int index);
+    Site getSiteAt(int index);
+    OutroContato getOutroAt(int index);
 }

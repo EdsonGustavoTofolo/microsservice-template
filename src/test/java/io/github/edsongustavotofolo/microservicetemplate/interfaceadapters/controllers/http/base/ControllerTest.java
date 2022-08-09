@@ -14,7 +14,7 @@ public abstract class ControllerTest {
         this.mapper = mapper;
     }
 
-    protected String mapToJson(Object object) {
+    protected String mapToJson(final Object object) {
         try {
             return mapper.writeValueAsString(object);
         } catch (JsonProcessingException e) {

@@ -10,6 +10,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 @Service
 @Slf4j
 @RequiredArgsConstructor
@@ -34,5 +36,21 @@ public class FornecedorJpaGateway implements FornecedorDsGateway {
         var saved = this.fornecedorJpaRepository.persist(fornecedorEntity);
 
         return saved.getId();
+    }
+
+    @Override
+    public boolean existeFornecedorComCnpj(final String cnpj) {
+        log.info("Verificando existencia de fornecedor pelo cnpj " + cnpj);
+        return this.fornecedorJpaRepository.existsByCnpj(cnpj);
+    }
+
+    @Override
+    public Optional<Fornecedor> buscarPorId(Integer id) {
+        throw new RuntimeException("Not implemented yet");
+    }
+
+    @Override
+    public void atualizar(Fornecedor fornecedor) {
+        throw new RuntimeException("Not implemented yet");
     }
 }

@@ -1,9 +1,10 @@
 package io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.github.edsongustavotofolo.microservicetemplate.domain.exceptions.BusinessRuleException;
 import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.base.ControllerTest;
-import io.github.edsongustavotofolo.microservicetemplate.usecases.models.ContatoModel;
-import io.github.edsongustavotofolo.microservicetemplate.usecases.models.CriarFornecedorRequestModel;
+import io.github.edsongustavotofolo.microservicetemplate.usecases.models.CreateContatoModel;
+import io.github.edsongustavotofolo.microservicetemplate.usecases.models.CreateFornecedorRequestModel;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.models.NovoFornecedorResponseModel;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.models.TipoDeContatoEnum;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.CriarFornecedorInputBoundary;
@@ -21,7 +22,9 @@ import org.springframework.test.web.servlet.ResultActions;
 
 import java.util.List;
 
+import static io.github.edsongustavotofolo.microservicetemplate.usecases.models.builders.CreateFornecedorRequestModelBuilder.umFornecedor;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doThrow;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -40,7 +43,27 @@ class FornecedorRestControllerIntegrationTest extends ControllerTest {
     }
 
     @Test
-    public void naoDeveCriarFornecedorSemOsCamposObrigatorios() throws Exception {
+    void naoDeveCriarFornecedorComCnpjInvalido() throws Exception {
+        var requestModel = umFornecedor().comCnpj("99999999999999").get();
+
+        var expectedMessage = "CNPJ Inválido!";
+        var ex = new BusinessRuleException(expectedMessage);
+        doThrow(ex).when(criarFornecedorInputBoundary).execute(requestModel);
+
+        ResultActions perform = this.mvc.perform(
+                post(URL_API_V1_FORNECEDORES)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(mapToJson(requestModel)));
+
+        perform.andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.status").value(HttpStatus.BAD_REQUEST.value()))
+                .andExpect(jsonPath("$.mensagens").isArray())
+                .andExpect(jsonPath("$.mensagens[0]").value(expectedMessage))
+                .andDo(print());
+    }
+
+    @Test
+    void naoDeveCriarFornecedorSemOsCamposObrigatorios() throws Exception {
         // execucao
         ResultActions perform = this.mvc.perform(
                 post(URL_API_V1_FORNECEDORES)
@@ -57,14 +80,14 @@ class FornecedorRestControllerIntegrationTest extends ControllerTest {
     }
 
     @Test
-    public void deveCriarFornecedorComSucesso() throws Exception {
+    void deveCriarFornecedorComSucesso() throws Exception {
         // cenario
         var responseModel = new NovoFornecedorResponseModel(1);
         Mockito.when(criarFornecedorInputBoundary
-                .execute(any(CriarFornecedorRequestModel.class)))
+                .execute(any(CreateFornecedorRequestModel.class)))
                 .thenReturn(responseModel);
 
-        var fornecedorRequestModel = CriarFornecedorRequestModel.builder()
+        var fornecedorRequestModel = CreateFornecedorRequestModel.builder()
                 .cnpj("45135006000104")
                 .razaoSocial("Fornecedor Ltda")
                 .nomeFantasia("Fornecedor & Cia")
@@ -78,7 +101,7 @@ class FornecedorRestControllerIntegrationTest extends ControllerTest {
                 .pontoDeReferencia("proximo ao CEMA")
                 .contatos(
                         List.of(
-                                ContatoModel.builder()
+                                CreateContatoModel.builder()
                                         .tipoDeContato(TipoDeContatoEnum.EMAIL)
                                         .enderecoEmail("person@mymail.com")
                                         .build()))

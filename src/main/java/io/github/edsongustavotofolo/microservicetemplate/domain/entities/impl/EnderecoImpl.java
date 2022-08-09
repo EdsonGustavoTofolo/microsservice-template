@@ -5,14 +5,14 @@ import io.github.edsongustavotofolo.microservicetemplate.domain.entities.Enderec
 import io.github.edsongustavotofolo.microservicetemplate.domain.entities.valueobjects.Cep;
 
 public class EnderecoImpl implements Endereco {
-    private final Integer id;
-    private final String logradouro;
-    private final String numero;
-    private final String bairro;
-    private final String complemento;
-    private final String pontoDeReferencia;
-    private final Cep cep;
-    private final Cidade cidade;
+    private Integer id;
+    private String logradouro;
+    private String numero;
+    private String bairro;
+    private String complemento;
+    private String pontoDeReferencia;
+    private Cep cep;
+    private Cidade cidade;
 
     public EnderecoImpl(String logradouro, String numero, String bairro, String complemento, String pontoDeReferencia, Cep cep, Cidade cidade) {
         this.id = null;
@@ -23,6 +23,11 @@ public class EnderecoImpl implements Endereco {
         this.pontoDeReferencia = pontoDeReferencia;
         this.cep = cep;
         this.cidade = cidade;
+    }
+
+    public EnderecoImpl(Integer id, String logradouro, String numero, String bairro, String complemento, String pontoDeReferencia, Cep cep, Cidade cidade) {
+        this(logradouro, numero, bairro, complemento, pontoDeReferencia, cep, cidade);
+        this.id = id;
     }
 
     @Override

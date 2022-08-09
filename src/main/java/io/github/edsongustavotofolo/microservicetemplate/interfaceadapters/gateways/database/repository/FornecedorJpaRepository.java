@@ -12,4 +12,5 @@ public interface FornecedorJpaRepository
         extends RevisionRepository<FornecedorEntity, Integer, Integer>,
                 JpaRepository<FornecedorEntity, Integer>,
                 HibernateRepository<FornecedorEntity> {
+    boolean existsByCnpj(String cnpj);
 }
