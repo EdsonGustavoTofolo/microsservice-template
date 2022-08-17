@@ -1,7 +1,7 @@
 package io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http;
 
-import io.github.edsongustavotofolo.microservicetemplate.usecases.models.CreateFornecedorRequestModel;
-import io.github.edsongustavotofolo.microservicetemplate.usecases.models.UpdateFornecedorRequestModel;
+import io.github.edsongustavotofolo.microservicetemplate.usecases.models.CreateFornecedorModel;
+import io.github.edsongustavotofolo.microservicetemplate.usecases.models.UpdateFornecedorModel;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.AtualizarFornecedorInputBoundary;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.CriarFornecedorInputBoundary;
 import io.swagger.v3.oas.annotations.Operation;
@@ -24,7 +24,7 @@ import static org.springframework.http.HttpHeaders.LOCATION;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RestController
-@RequestMapping(value = "/api/v1/fornecedores", produces = APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/api/v1/fornecedores")
 @RequiredArgsConstructor
 @Slf4j
 @Tag(name = "Fornecedor", description = "Cadastro de Fornecedor")
@@ -44,8 +44,8 @@ public class FornecedorRestController {
             @ApiResponse(responseCode = "400",
                     description = "Dados do fornecedor inválidos")
     })
-    @PostMapping
-    public ResponseEntity<Void> create(@Valid @RequestBody CreateFornecedorRequestModel requestModel) {
+    @PostMapping(consumes = APPLICATION_JSON_VALUE)
+    public ResponseEntity<Void> create(@Valid @RequestBody CreateFornecedorModel requestModel) {
         var id = this.criarFornecedorInputBoundary.execute(requestModel);
 
         URI location = ServletUriComponentsBuilder
@@ -67,9 +67,9 @@ public class FornecedorRestController {
             @ApiResponse(responseCode = "404",
                     description = "Fornecedor não encontrado")
     })
-    @PatchMapping("/{id}")
-    @ResponseStatus(HttpStatus.OK)
-    public void patch(@PathVariable Integer id, @Valid @RequestBody UpdateFornecedorRequestModel requestModel) {
+    @PatchMapping(value = "/{id}", consumes = APPLICATION_JSON_VALUE)
+    public ResponseEntity<Void> patch(@PathVariable Integer id, @Valid @RequestBody UpdateFornecedorModel requestModel) {
         this.atualizarFornecedorInputBoundary.execute(id, requestModel);
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 }

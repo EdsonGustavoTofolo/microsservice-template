@@ -6,7 +6,7 @@ import io.github.edsongustavotofolo.microservicetemplate.domain.entities.impl.Co
 import io.github.edsongustavotofolo.microservicetemplate.domain.entities.impl.EnderecoImpl;
 import io.github.edsongustavotofolo.microservicetemplate.domain.entities.impl.FornecedorImpl;
 import io.github.edsongustavotofolo.microservicetemplate.domain.entities.valueobjects.*;
-import io.github.edsongustavotofolo.microservicetemplate.usecases.models.CreateFornecedorRequestModel;
+import io.github.edsongustavotofolo.microservicetemplate.usecases.models.CreateFornecedorModel;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.models.mappers.ContatoMapper;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.models.mappers.FornecedorMapper;
 
@@ -19,7 +19,7 @@ public class FornecedorMapperImpl implements FornecedorMapper {
     }
 
     @Override
-    public Fornecedor toDomain(final CreateFornecedorRequestModel requestModel) {
+    public Fornecedor toDomain(final CreateFornecedorModel requestModel) {
         var endereco = new EnderecoImpl(
                 requestModel.getLogradouro(),
                 requestModel.getNumero(),

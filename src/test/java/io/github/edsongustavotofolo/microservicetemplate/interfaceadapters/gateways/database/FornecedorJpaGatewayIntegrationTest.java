@@ -1,6 +1,6 @@
 package io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.gateways.database;
 
-import io.github.edsongustavotofolo.microservicetemplate.infrastructure.configuration.database.repository.AuditConfiguration;
+import io.github.edsongustavotofolo.microservicetemplate.infrastructure.configuration.database.repository.AuditConfig;
 import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.gateways.database.model.FornecedorEntity;
 import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.gateways.database.model.mappers.FornecedorEntityMapper;
 import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.gateways.database.repository.CidadeJpaRepository;
@@ -28,7 +28,7 @@ import static org.mockito.Mockito.verify;
 @DataJpaTest
 @EnableJpaRepositories(repositoryFactoryBeanClass = EnversRevisionRepositoryFactoryBean.class)
 @EntityScan
-@ContextConfiguration(classes = AuditConfiguration.class)
+@ContextConfiguration(classes = AuditConfig.class)
 @TestPropertySource("classpath:application.properties")
 class FornecedorJpaGatewayIntegrationTest {
 

@@ -1,9 +1,10 @@
 package io.github.edsongustavotofolo.microservicetemplate.usecases.interactors;
 
 import io.github.edsongustavotofolo.microservicetemplate.domain.entities.Fornecedor;
-import io.github.edsongustavotofolo.microservicetemplate.domain.exceptions.BusinessRuleException;
+import io.github.edsongustavotofolo.microservicetemplate.usecases.exceptions.BusinessRuleException;
+import io.github.edsongustavotofolo.microservicetemplate.usecases.exceptions.FornecedorCnpjInvalidException;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.gateways.FornecedorDsGateway;
-import io.github.edsongustavotofolo.microservicetemplate.usecases.models.CreateFornecedorRequestModel;
+import io.github.edsongustavotofolo.microservicetemplate.usecases.models.CreateFornecedorModel;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.models.builders.CreateFornecedorRequestModelBuilder;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.models.mappers.FornecedorMapper;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.FornecedorCriadoOutputBoundary;
@@ -36,8 +37,8 @@ class CriarFornecedorInteractorUnitTest {
     @Test
     void deveLancarExcecaoAoCriarFornecedorComCnpjJaExistenteNaBase() {
         var expectedMessage = "Já existe Fornecedor com o CNPJ informado!";
-        var ex = new BusinessRuleException(expectedMessage);
-        doThrow(ex).when(presenter).throwValidationError(expectedMessage);
+        var ex = new FornecedorCnpjInvalidException();
+        doThrow(ex).when(presenter).cnpjInvalido();
 
         var requestModel = CreateFornecedorRequestModelBuilder.umFornecedor().get();
 
@@ -58,8 +59,8 @@ class CriarFornecedorInteractorUnitTest {
         // cenario
         var expectedMessage = "CNPJ inválido!";
 
-        var expectedException = new BusinessRuleException(expectedMessage);
-        doThrow(expectedException).when(presenter).throwValidationError(expectedMessage);
+        var expectedException = new FornecedorCnpjInvalidException();
+        doThrow(expectedException).when(presenter).cnpjInvalido();
 
         var cnpjInvalido = "99999999999999";
         var requestModel = CreateFornecedorRequestModelBuilder.umFornecedor().comCnpj(cnpjInvalido).get();
@@ -80,7 +81,7 @@ class CriarFornecedorInteractorUnitTest {
         Fornecedor fornecedor = umFornecedor().get();
 
         when(fornecedorMapper
-                .toDomain(any(CreateFornecedorRequestModel.class))).thenReturn(fornecedor);
+                .toDomain(any(CreateFornecedorModel.class))).thenReturn(fornecedor);
 
         when(fornecedorDsGateway.criar(fornecedor)).thenReturn(1);
 

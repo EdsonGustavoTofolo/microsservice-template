@@ -2,19 +2,19 @@ package io.github.edsongustavotofolo.microservicetemplate.usecases.models.builde
 
 import io.github.edsongustavotofolo.microservicetemplate.usecases.models.TipoDeContatoEnum;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.models.UpdateContatoModel;
-import io.github.edsongustavotofolo.microservicetemplate.usecases.models.UpdateFornecedorRequestModel;
+import io.github.edsongustavotofolo.microservicetemplate.usecases.models.UpdateFornecedorModel;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class UpdateFornecedorRequestModelBuilder {
-    private UpdateFornecedorRequestModel requestModel;
+    private UpdateFornecedorModel requestModel;
 
     private UpdateFornecedorRequestModelBuilder() {}
 
     public static UpdateFornecedorRequestModelBuilder umFornecedor() {
         var builder = new UpdateFornecedorRequestModelBuilder();
-        builder.requestModel = UpdateFornecedorRequestModel.builder()
+        builder.requestModel = UpdateFornecedorModel.builder()
                 .cnpj("45135006000104")
                 .razaoSocial("Fornecedor Ltda")
                 .nomeFantasia("Fornecedor & Cia")
@@ -63,7 +63,7 @@ public class UpdateFornecedorRequestModelBuilder {
         return this;
     }
 
-    public UpdateFornecedorRequestModel get() {
+    public UpdateFornecedorModel get() {
         return this.requestModel;
     }
 }

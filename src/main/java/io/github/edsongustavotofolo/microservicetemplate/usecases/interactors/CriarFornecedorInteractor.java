@@ -2,7 +2,7 @@ package io.github.edsongustavotofolo.microservicetemplate.usecases.interactors;
 
 import io.github.edsongustavotofolo.microservicetemplate.domain.entities.valueobjects.Cnpj;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.gateways.FornecedorDsGateway;
-import io.github.edsongustavotofolo.microservicetemplate.usecases.models.CreateFornecedorRequestModel;
+import io.github.edsongustavotofolo.microservicetemplate.usecases.models.CreateFornecedorModel;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.models.NovoFornecedorResponseModel;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.models.mappers.FornecedorMapper;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.CriarFornecedorInputBoundary;
@@ -23,12 +23,12 @@ public class CriarFornecedorInteractor implements CriarFornecedorInputBoundary {
     }
 
     @Override
-    public NovoFornecedorResponseModel execute(final CreateFornecedorRequestModel requestModel) {
+    public NovoFornecedorResponseModel execute(final CreateFornecedorModel requestModel) {
         if (Cnpj.numeroInvalido(requestModel.getCnpj())) {
-            this.presenter.throwValidationError("CNPJ inválido!");
+            this.presenter.cnpjInvalido();
         }
         if (this.fornecedorDsGateway.existeFornecedorComCnpj(requestModel.getCnpj())) {
-            this.presenter.throwValidationError("Já existe Fornecedor com o CNPJ informado!");
+            this.presenter.fornecedorJaExisteComCnpj();
         }
 
         var fornecedor = this.fornecedorMapper.toDomain(requestModel);

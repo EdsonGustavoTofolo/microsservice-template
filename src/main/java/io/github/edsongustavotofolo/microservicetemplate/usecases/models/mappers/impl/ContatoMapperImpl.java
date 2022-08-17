@@ -19,7 +19,7 @@ public class ContatoMapperImpl implements ContatoMapper {
     }
 
     @Override
-    public Contato toDomain(UpdateContatoModel contatoModel) {
+    public Contato toDomain(final UpdateContatoModel contatoModel) {
         return switch (contatoModel.getTipoDeContato()) {
             case EMAIL: yield new Email(contatoModel.getId(), contatoModel.getEnderecoEmail());
             case TELEFONE: yield new Telefone(contatoModel.getId(), contatoModel.getDdd(), contatoModel.getNumero());

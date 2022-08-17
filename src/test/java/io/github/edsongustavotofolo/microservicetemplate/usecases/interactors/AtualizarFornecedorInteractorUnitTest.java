@@ -5,7 +5,7 @@ import io.github.edsongustavotofolo.microservicetemplate.domain.entities.*;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.gateways.FornecedorDsGateway;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.models.TipoDeContatoEnum;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.models.UpdateContatoModel;
-import io.github.edsongustavotofolo.microservicetemplate.usecases.models.UpdateFornecedorRequestModel;
+import io.github.edsongustavotofolo.microservicetemplate.usecases.models.UpdateFornecedorModel;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.models.builders.UpdateFornecedorRequestModelBuilder;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.models.mappers.impl.ContatoMapperImpl;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.FornecedorAtualizadoOutputBoundary;
@@ -41,7 +41,7 @@ class AtualizarFornecedorInteractorUnitTest {
         when(fornecedorDsGateway.buscarPorId(id)).thenReturn(Optional.of(fornecedorResult));
         when(contatoMapper.toDomain(any(UpdateContatoModel.class))).thenCallRealMethod();
 
-        UpdateFornecedorRequestModel expected = UpdateFornecedorRequestModelBuilder.umFornecedor()
+        UpdateFornecedorModel expected = UpdateFornecedorRequestModelBuilder.umFornecedor()
                 .adicionarContato(UpdateContatoModel.builder()
                         .id(6)
                         .tipoDeContato(TipoDeContatoEnum.EMAIL)
