@@ -7,6 +7,7 @@ import io.github.edsongustavotofolo.microservicetemplate.usecases.models.UpdateF
 import io.github.edsongustavotofolo.microservicetemplate.usecases.models.mappers.ContatoMapper;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.AtualizarFornecedorInputBoundary;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.FornecedorAtualizadoOutputBoundary;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +26,7 @@ public class AtualizarFornecedorInteractor implements AtualizarFornecedorInputBo
         this.contatoMapper = contatoMapper;
     }
 
+    @Transactional
     @Override
     public void execute(final Integer id, final UpdateFornecedorModel requestModel) {
         var fornecedor = this.fornecedorDsGateway.buscarPorId(id)

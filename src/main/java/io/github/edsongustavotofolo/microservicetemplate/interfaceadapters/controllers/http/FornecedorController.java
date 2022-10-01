@@ -1,9 +1,10 @@
 package io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http;
 
-import io.github.edsongustavotofolo.microservicetemplate.usecases.models.CreateFornecedorModel;
+import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.converters.CreateFornecedorConverter;
+import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.dtos.CreateFornecedorRequestModel;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.models.UpdateFornecedorModel;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.AtualizarFornecedorInputBoundary;
-import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.CriarFornecedorInputBoundary;
+import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.CreateFornecedorInputPort;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.headers.Header;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -28,9 +29,9 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 @RequiredArgsConstructor
 @Slf4j
 @Tag(name = "Fornecedor", description = "Cadastro de Fornecedor")
-public class FornecedorRestController {
+public class FornecedorController {
 
-    private final CriarFornecedorInputBoundary criarFornecedorInputBoundary;
+    private final CreateFornecedorInputPort createFornecedorInputPort;
     private final AtualizarFornecedorInputBoundary atualizarFornecedorInputBoundary;
 
     @Operation(summary = "Cria um novo fornecedor",
@@ -45,8 +46,10 @@ public class FornecedorRestController {
                     description = "Dados do fornecedor inválidos")
     })
     @PostMapping(consumes = APPLICATION_JSON_VALUE)
-    public ResponseEntity<Void> create(@Valid @RequestBody CreateFornecedorModel requestModel) {
-        var id = this.criarFornecedorInputBoundary.execute(requestModel);
+    public ResponseEntity<Void> create(@Valid @RequestBody CreateFornecedorRequestModel requestModel) {
+        final var model = CreateFornecedorConverter.toModel(requestModel);
+
+        var id = this.createFornecedorInputPort.execute(model);
 
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest()

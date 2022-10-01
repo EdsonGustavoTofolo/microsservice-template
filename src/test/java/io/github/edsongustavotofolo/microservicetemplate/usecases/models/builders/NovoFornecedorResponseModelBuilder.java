@@ -1,19 +1,19 @@
 package io.github.edsongustavotofolo.microservicetemplate.usecases.models.builders;
 
-import io.github.edsongustavotofolo.microservicetemplate.usecases.models.NovoFornecedorResponseModel;
+import io.github.edsongustavotofolo.microservicetemplate.usecases.models.CreatedFornecedorModel;
 
 public class NovoFornecedorResponseModelBuilder {
-    private NovoFornecedorResponseModel responseModel;
+    private CreatedFornecedorModel responseModel;
 
     private NovoFornecedorResponseModelBuilder() {}
 
     public static NovoFornecedorResponseModelBuilder umFornecedorResponseModel() {
         var builder = new NovoFornecedorResponseModelBuilder();
-        builder.responseModel = new NovoFornecedorResponseModel(1);
+        builder.responseModel = new CreatedFornecedorModel(1);
         return builder;
     }
 
-    public NovoFornecedorResponseModel get() {
+    public CreatedFornecedorModel get() {
         return this.responseModel;
     }
 }

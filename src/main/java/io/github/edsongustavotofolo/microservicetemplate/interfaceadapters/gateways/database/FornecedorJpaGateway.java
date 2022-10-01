@@ -8,7 +8,6 @@ import io.github.edsongustavotofolo.microservicetemplate.usecases.gateways.Forne
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -21,7 +20,6 @@ public class FornecedorJpaGateway implements FornecedorDsGateway {
     private final CidadeJpaRepository cidadeJpaRepository;
     private final FornecedorEntityMapper fornecedorEntityMapper;
 
-    @Transactional
     @Override
     public Integer criar(final Fornecedor fornecedor) {
         log.info("Criando fornecedor");

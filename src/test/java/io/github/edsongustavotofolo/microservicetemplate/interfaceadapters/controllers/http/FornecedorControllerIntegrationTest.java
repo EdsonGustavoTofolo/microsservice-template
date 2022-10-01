@@ -5,9 +5,9 @@ import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.contr
 import io.github.edsongustavotofolo.microservicetemplate.usecases.exceptions.FornecedorCnpjInvalidException;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.models.CreateContatoModel;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.models.CreateFornecedorModel;
-import io.github.edsongustavotofolo.microservicetemplate.usecases.models.NovoFornecedorResponseModel;
+import io.github.edsongustavotofolo.microservicetemplate.usecases.models.CreatedFornecedorModel;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.models.TipoDeContatoEnum;
-import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.CriarFornecedorInputBoundary;
+import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.CreateFornecedorInputPort;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -31,18 +31,18 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @ExtendWith(MockitoExtension.class)
-class FornecedorRestControllerIntegrationTest extends ControllerTest {
+class FornecedorControllerIntegrationTest extends ControllerTest {
 
     private static final String URL_API_V1_FORNECEDORES = "/api/v1/fornecedores";
 
     @Mock
-    private CriarFornecedorInputBoundary criarFornecedorInputBoundary;
+    private CreateFornecedorInputPort createFornecedorInputPort;
     @InjectMocks
-    private FornecedorRestController fornecedorRestController;
+    private FornecedorController fornecedorController;
 
     @BeforeEach()
     void setup() {
-        this.setupBase(this.fornecedorRestController);
+        this.setupBase(this.fornecedorController);
     }
 
     @Test
@@ -50,7 +50,7 @@ class FornecedorRestControllerIntegrationTest extends ControllerTest {
         var requestModel = umFornecedor().comCnpj("99999999999999").get();
 
         var ex = new FornecedorCnpjInvalidException();
-        doThrow(ex).when(criarFornecedorInputBoundary).execute(requestModel);
+        doThrow(ex).when(createFornecedorInputPort).execute(requestModel);
 
         ResultActions perform = this.mvc.perform(
                 post(URL_API_V1_FORNECEDORES)
@@ -89,8 +89,8 @@ class FornecedorRestControllerIntegrationTest extends ControllerTest {
     @Test
     void deveCriarFornecedorComSucesso() throws Exception {
         // cenario
-        var responseModel = new NovoFornecedorResponseModel(1);
-        Mockito.when(criarFornecedorInputBoundary
+        var responseModel = new CreatedFornecedorModel(1);
+        Mockito.when(createFornecedorInputPort
                 .execute(any(CreateFornecedorModel.class)))
                 .thenReturn(responseModel);
 

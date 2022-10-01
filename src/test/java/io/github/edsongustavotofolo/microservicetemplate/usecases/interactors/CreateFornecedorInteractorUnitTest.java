@@ -7,7 +7,7 @@ import io.github.edsongustavotofolo.microservicetemplate.usecases.gateways.Forne
 import io.github.edsongustavotofolo.microservicetemplate.usecases.models.CreateFornecedorModel;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.models.builders.CreateFornecedorRequestModelBuilder;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.models.mappers.FornecedorMapper;
-import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.FornecedorCriadoOutputBoundary;
+import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.CreatedFornecedorOutputPort;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -24,21 +24,21 @@ import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-class CriarFornecedorInteractorUnitTest {
+class CreateFornecedorInteractorUnitTest {
     @Mock
-    private FornecedorCriadoOutputBoundary presenter;
+    private CreatedFornecedorOutputPort presenter;
     @Mock
     private FornecedorDsGateway fornecedorDsGateway;
     @Mock
     private FornecedorMapper fornecedorMapper;
     @InjectMocks
-    private CriarFornecedorInteractor interactor;
+    private CreateFornecedorInteractor interactor;
 
     @Test
     void deveLancarExcecaoAoCriarFornecedorComCnpjJaExistenteNaBase() {
         var expectedMessage = "Já existe Fornecedor com o CNPJ informado!";
         var ex = new FornecedorCnpjInvalidException();
-        doThrow(ex).when(presenter).cnpjInvalido();
+        doThrow(ex).when(presenter).cnpjIsInvalid();
 
         var requestModel = CreateFornecedorRequestModelBuilder.umFornecedor().get();
 
@@ -60,7 +60,7 @@ class CriarFornecedorInteractorUnitTest {
         var expectedMessage = "CNPJ inválido!";
 
         var expectedException = new FornecedorCnpjInvalidException();
-        doThrow(expectedException).when(presenter).cnpjInvalido();
+        doThrow(expectedException).when(presenter).cnpjIsInvalid();
 
         var cnpjInvalido = "99999999999999";
         var requestModel = CreateFornecedorRequestModelBuilder.umFornecedor().comCnpj(cnpjInvalido).get();

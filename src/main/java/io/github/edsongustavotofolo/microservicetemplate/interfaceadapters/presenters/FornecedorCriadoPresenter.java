@@ -3,25 +3,25 @@ package io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.pres
 import io.github.edsongustavotofolo.microservicetemplate.usecases.exceptions.BusinessRuleException;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.exceptions.FornecedorAlreadyExistsException;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.exceptions.FornecedorCnpjInvalidException;
-import io.github.edsongustavotofolo.microservicetemplate.usecases.models.NovoFornecedorResponseModel;
-import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.FornecedorCriadoOutputBoundary;
+import io.github.edsongustavotofolo.microservicetemplate.usecases.models.CreatedFornecedorModel;
+import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.CreatedFornecedorOutputPort;
 import org.springframework.stereotype.Service;
 
 @Service
-public class FornecedorCriadoPresenter implements FornecedorCriadoOutputBoundary {
+public class FornecedorCriadoPresenter implements CreatedFornecedorOutputPort {
 
     @Override
-    public NovoFornecedorResponseModel present(final Integer id) {
-        return new NovoFornecedorResponseModel(id);
+    public CreatedFornecedorModel present(final Integer id) {
+        return new CreatedFornecedorModel(id);
     }
 
     @Override
-    public void cnpjInvalido() throws BusinessRuleException {
+    public void cnpjIsInvalid() throws BusinessRuleException {
         throw new FornecedorCnpjInvalidException();
     }
 
     @Override
-    public void fornecedorJaExisteComCnpj() throws BusinessRuleException {
+    public void fornecedorAlreadyExists() throws BusinessRuleException {
         throw new FornecedorAlreadyExistsException();
     }
 }
