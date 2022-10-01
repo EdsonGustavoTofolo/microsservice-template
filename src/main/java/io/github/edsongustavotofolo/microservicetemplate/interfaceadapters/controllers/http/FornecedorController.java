@@ -2,6 +2,7 @@ package io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.cont
 
 import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.converters.CreateFornecedorConverter;
 import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.dtos.CreateFornecedorRequestModel;
+import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.presenters.exceptions.BusinessRuleException;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.dtos.UpdateFornecedorModel;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.AtualizarFornecedorInputPort;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.CreateFornecedorInputPort;
@@ -46,7 +47,7 @@ public class FornecedorController {
                     description = "Dados do fornecedor inválidos")
     })
     @PostMapping(consumes = APPLICATION_JSON_VALUE)
-    public ResponseEntity<Void> create(@Valid @RequestBody CreateFornecedorRequestModel requestModel) {
+    public ResponseEntity<Void> create(@Valid @RequestBody CreateFornecedorRequestModel requestModel) throws BusinessRuleException {
         final var model = CreateFornecedorConverter.toModel(requestModel);
 
         var id = this.createFornecedorInputPort.execute(model);

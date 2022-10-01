@@ -1,6 +1,7 @@
 package io.github.edsongustavotofolo.microservicetemplate.usecases.interactors;
 
 import io.github.edsongustavotofolo.microservicetemplate.domain.entities.valueobjects.Cnpj;
+import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.presenters.exceptions.BusinessRuleException;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.interactors.mappers.FornecedorMapper;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.CreateFornecedorInputPort;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.CreatedFornecedorOutputPort;
@@ -19,7 +20,7 @@ public class CreateFornecedorInteractor implements CreateFornecedorInputPort {
 
     @Transactional
     @Override
-    public CreatedFornecedorModel execute(final CreateFornecedorModel requestModel) {
+    public CreatedFornecedorModel execute(final CreateFornecedorModel requestModel) throws BusinessRuleException {
         if (Cnpj.numeroInvalido(requestModel.getCnpj())) {
             this.presenter.cnpjIsInvalid();
         }

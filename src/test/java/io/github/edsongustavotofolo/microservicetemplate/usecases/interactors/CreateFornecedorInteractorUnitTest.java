@@ -35,7 +35,7 @@ class CreateFornecedorInteractorUnitTest {
     private CreateFornecedorInteractor interactor;
 
     @Test
-    void deveLancarExcecaoAoCriarFornecedorComCnpjJaExistenteNaBase() {
+    void deveLancarExcecaoAoCriarFornecedorComCnpjJaExistenteNaBase() throws BusinessRuleException {
         var expectedMessage = "Já existe Fornecedor com o CNPJ informado!";
         var ex = new FornecedorCnpjInvalidException();
         doThrow(ex).when(presenter).cnpjIsInvalid();
@@ -55,7 +55,7 @@ class CreateFornecedorInteractorUnitTest {
     }
 
     @Test
-    void deveLancarExcecaoAoCriarFornecedorComCnpjInvalido() {
+    void deveLancarExcecaoAoCriarFornecedorComCnpjInvalido() throws BusinessRuleException {
         // cenario
         var expectedMessage = "CNPJ inválido!";
 
@@ -76,7 +76,7 @@ class CreateFornecedorInteractorUnitTest {
     }
 
     @Test
-    void executarComSucesso() {
+    void executarComSucesso() throws BusinessRuleException {
         // cenario
         Fornecedor fornecedor = umFornecedor().get();
 

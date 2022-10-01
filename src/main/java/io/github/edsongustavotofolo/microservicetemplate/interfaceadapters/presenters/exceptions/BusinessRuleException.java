@@ -10,10 +10,16 @@ import java.time.ZonedDateTime;
 import java.util.Locale;
 
 @Getter
-public class BusinessRuleException extends RuntimeException {
+public class BusinessRuleException extends Exception {
 
     private final HttpStatus status;
     private final ErrorType errorType;
+
+    public BusinessRuleException(final HttpStatus status, final ErrorType errorType, final Throwable cause) {
+        super(cause);
+        this.status = status;
+        this.errorType = errorType;
+    }
 
     public BusinessRuleException(final HttpStatus status, final ErrorType errorType) {
         this.status = status;
