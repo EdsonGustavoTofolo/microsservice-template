@@ -5,21 +5,21 @@ import io.github.edsongustavotofolo.microservicetemplate.domain.entities.valueob
 import io.github.edsongustavotofolo.microservicetemplate.usecases.providers.FornecedorProvider;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.dtos.UpdateFornecedorModel;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.interactors.mappers.ContatoMapper;
-import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.AtualizarFornecedorInputBoundary;
-import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.FornecedorAtualizadoOutputBoundary;
+import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.AtualizarFornecedorInputPort;
+import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.FornecedorAtualizadoOutputPort;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class AtualizarFornecedorInteractor implements AtualizarFornecedorInputBoundary {
+public class AtualizarFornecedorInteractor implements AtualizarFornecedorInputPort {
 
     private final FornecedorProvider fornecedorProvider;
-    private final FornecedorAtualizadoOutputBoundary presenter;
+    private final FornecedorAtualizadoOutputPort presenter;
     private final ContatoMapper contatoMapper;
 
     public AtualizarFornecedorInteractor(FornecedorProvider fornecedorProvider,
-                                         FornecedorAtualizadoOutputBoundary presenter,
+                                         FornecedorAtualizadoOutputPort presenter,
                                          ContatoMapper contatoMapper) {
         this.fornecedorProvider = fornecedorProvider;
         this.presenter = presenter;

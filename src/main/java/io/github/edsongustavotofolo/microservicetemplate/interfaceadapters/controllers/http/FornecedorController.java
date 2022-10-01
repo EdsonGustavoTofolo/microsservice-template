@@ -3,7 +3,7 @@ package io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.cont
 import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.converters.CreateFornecedorConverter;
 import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.dtos.CreateFornecedorRequestModel;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.dtos.UpdateFornecedorModel;
-import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.AtualizarFornecedorInputBoundary;
+import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.AtualizarFornecedorInputPort;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.CreateFornecedorInputPort;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.headers.Header;
@@ -32,7 +32,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 public class FornecedorController {
 
     private final CreateFornecedorInputPort createFornecedorInputPort;
-    private final AtualizarFornecedorInputBoundary atualizarFornecedorInputBoundary;
+    private final AtualizarFornecedorInputPort atualizarFornecedorInputPort;
 
     @Operation(summary = "Cria um novo fornecedor",
             description = "Cria um fornecedor com os dados fornecidos")
@@ -72,7 +72,7 @@ public class FornecedorController {
     })
     @PatchMapping(value = "/{id}", consumes = APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> patch(@PathVariable Integer id, @Valid @RequestBody UpdateFornecedorModel requestModel) {
-        this.atualizarFornecedorInputBoundary.execute(id, requestModel);
+        this.atualizarFornecedorInputPort.execute(id, requestModel);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 }

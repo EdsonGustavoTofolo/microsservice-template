@@ -8,7 +8,7 @@ import io.github.edsongustavotofolo.microservicetemplate.usecases.interactors.ma
 import io.github.edsongustavotofolo.microservicetemplate.usecases.interactors.mappers.impl.ContatoMapperImpl;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.interactors.mappers.impl.FornecedorMapperImpl;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.CreateFornecedorInputPort;
-import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.FornecedorAtualizadoOutputBoundary;
+import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.FornecedorAtualizadoOutputPort;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.CreatedFornecedorOutputPort;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -20,7 +20,7 @@ public class FornecedorConfig {
 
     private final FornecedorProvider fornecedorProvider;
     private final CreatedFornecedorOutputPort fornecedorCriadoPresenter;
-    private final FornecedorAtualizadoOutputBoundary fornecedorAtualizadoPresenter;
+    private final FornecedorAtualizadoOutputPort fornecedorAtualizadoPresenter;
 
     @Bean
     public ContatoMapper contatoMapper() {

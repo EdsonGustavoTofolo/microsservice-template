@@ -8,7 +8,7 @@ import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.dtos.Upd
 import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.dtos.UpdateFornecedorModel;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.models.builders.UpdateFornecedorRequestModelBuilder;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.interactors.mappers.impl.ContatoMapperImpl;
-import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.FornecedorAtualizadoOutputBoundary;
+import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.FornecedorAtualizadoOutputPort;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
@@ -26,7 +26,7 @@ class AtualizarFornecedorInteractorUnitTest {
     @Mock
     private FornecedorProvider fornecedorProvider;
     @Mock
-    private FornecedorAtualizadoOutputBoundary presenter;
+    private FornecedorAtualizadoOutputPort presenter;
     @Mock
     private ContatoMapperImpl contatoMapper;
     @InjectMocks

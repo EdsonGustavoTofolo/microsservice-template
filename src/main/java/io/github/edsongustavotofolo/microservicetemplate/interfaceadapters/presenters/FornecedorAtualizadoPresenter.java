@@ -3,11 +3,11 @@ package io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.pres
 import io.github.edsongustavotofolo.microservicetemplate.domain.entities.Fornecedor;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.exceptions.BusinessRuleException;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.exceptions.FornecedorNotFoundException;
-import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.FornecedorAtualizadoOutputBoundary;
+import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.FornecedorAtualizadoOutputPort;
 import org.springframework.stereotype.Service;
 
 @Service
-public class FornecedorAtualizadoPresenter implements FornecedorAtualizadoOutputBoundary {
+public class FornecedorAtualizadoPresenter implements FornecedorAtualizadoOutputPort {
 
     @Override
     public Fornecedor fornecedorNaoEncontrado() throws BusinessRuleException {
