@@ -1,4 +1,4 @@
-package io.github.edsongustavotofolo.microservicetemplate.usecases.models.mappers.impl;
+package io.github.edsongustavotofolo.microservicetemplate.usecases.interactors.mappers.impl;
 
 import io.github.edsongustavotofolo.microservicetemplate.domain.entities.Fornecedor;
 import io.github.edsongustavotofolo.microservicetemplate.domain.entities.impl.CidadeImpl;
@@ -6,9 +6,9 @@ import io.github.edsongustavotofolo.microservicetemplate.domain.entities.impl.Co
 import io.github.edsongustavotofolo.microservicetemplate.domain.entities.impl.EnderecoImpl;
 import io.github.edsongustavotofolo.microservicetemplate.domain.entities.impl.FornecedorImpl;
 import io.github.edsongustavotofolo.microservicetemplate.domain.entities.valueobjects.*;
-import io.github.edsongustavotofolo.microservicetemplate.usecases.models.CreateFornecedorModel;
-import io.github.edsongustavotofolo.microservicetemplate.usecases.models.mappers.ContatoMapper;
-import io.github.edsongustavotofolo.microservicetemplate.usecases.models.mappers.FornecedorMapper;
+import io.github.edsongustavotofolo.microservicetemplate.usecases.interactors.mappers.ContatoMapper;
+import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.dtos.CreateFornecedorModel;
+import io.github.edsongustavotofolo.microservicetemplate.usecases.interactors.mappers.FornecedorMapper;
 
 public class FornecedorMapperImpl implements FornecedorMapper {
 

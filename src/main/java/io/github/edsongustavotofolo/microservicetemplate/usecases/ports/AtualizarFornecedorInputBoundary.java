@@ -1,6 +1,6 @@
 package io.github.edsongustavotofolo.microservicetemplate.usecases.ports;
 
-import io.github.edsongustavotofolo.microservicetemplate.usecases.models.UpdateFornecedorModel;
+import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.dtos.UpdateFornecedorModel;
 
 @FunctionalInterface
 public interface AtualizarFornecedorInputBoundary {

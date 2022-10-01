@@ -2,12 +2,12 @@ package io.github.edsongustavotofolo.microservicetemplate.usecases.interactors;
 
 import io.github.edsongustavotofolo.microservicetemplate.domain.builder.FornecedorBuilder;
 import io.github.edsongustavotofolo.microservicetemplate.domain.entities.*;
-import io.github.edsongustavotofolo.microservicetemplate.usecases.gateways.FornecedorDsGateway;
-import io.github.edsongustavotofolo.microservicetemplate.usecases.models.TipoDeContatoEnum;
-import io.github.edsongustavotofolo.microservicetemplate.usecases.models.UpdateContatoModel;
-import io.github.edsongustavotofolo.microservicetemplate.usecases.models.UpdateFornecedorModel;
+import io.github.edsongustavotofolo.microservicetemplate.usecases.providers.FornecedorProvider;
+import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.dtos.TipoDeContatoEnum;
+import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.dtos.UpdateContatoModel;
+import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.dtos.UpdateFornecedorModel;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.models.builders.UpdateFornecedorRequestModelBuilder;
-import io.github.edsongustavotofolo.microservicetemplate.usecases.models.mappers.impl.ContatoMapperImpl;
+import io.github.edsongustavotofolo.microservicetemplate.usecases.interactors.mappers.impl.ContatoMapperImpl;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.FornecedorAtualizadoOutputBoundary;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -24,7 +24,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 class AtualizarFornecedorInteractorUnitTest {
     @Mock
-    private FornecedorDsGateway fornecedorDsGateway;
+    private FornecedorProvider fornecedorProvider;
     @Mock
     private FornecedorAtualizadoOutputBoundary presenter;
     @Mock
@@ -38,7 +38,7 @@ class AtualizarFornecedorInteractorUnitTest {
         var id = 1;
 
         var fornecedorResult = FornecedorBuilder.umFornecedor().get();
-        when(fornecedorDsGateway.buscarPorId(id)).thenReturn(Optional.of(fornecedorResult));
+        when(fornecedorProvider.buscarPorId(id)).thenReturn(Optional.of(fornecedorResult));
         when(contatoMapper.toDomain(any(UpdateContatoModel.class))).thenCallRealMethod();
 
         UpdateFornecedorModel expected = UpdateFornecedorRequestModelBuilder.umFornecedor()
@@ -54,7 +54,7 @@ class AtualizarFornecedorInteractorUnitTest {
 
         // check
         ArgumentCaptor<Fornecedor> argumentCaptor = ArgumentCaptor.forClass(Fornecedor.class);
-        verify(fornecedorDsGateway, times(1)).atualizar(argumentCaptor.capture());
+        verify(fornecedorProvider, times(1)).atualizar(argumentCaptor.capture());
         var actual = argumentCaptor.getValue();
 
         assertEquals(expected.getCnpj(), actual.getCnpj().toString());

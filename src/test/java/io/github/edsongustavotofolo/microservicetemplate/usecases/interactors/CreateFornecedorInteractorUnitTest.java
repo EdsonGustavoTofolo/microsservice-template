@@ -3,10 +3,10 @@ package io.github.edsongustavotofolo.microservicetemplate.usecases.interactors;
 import io.github.edsongustavotofolo.microservicetemplate.domain.entities.Fornecedor;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.exceptions.BusinessRuleException;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.exceptions.FornecedorCnpjInvalidException;
-import io.github.edsongustavotofolo.microservicetemplate.usecases.gateways.FornecedorDsGateway;
-import io.github.edsongustavotofolo.microservicetemplate.usecases.models.CreateFornecedorModel;
+import io.github.edsongustavotofolo.microservicetemplate.usecases.providers.FornecedorProvider;
+import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.dtos.CreateFornecedorModel;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.models.builders.CreateFornecedorRequestModelBuilder;
-import io.github.edsongustavotofolo.microservicetemplate.usecases.models.mappers.FornecedorMapper;
+import io.github.edsongustavotofolo.microservicetemplate.usecases.interactors.mappers.FornecedorMapper;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.CreatedFornecedorOutputPort;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -28,7 +28,7 @@ class CreateFornecedorInteractorUnitTest {
     @Mock
     private CreatedFornecedorOutputPort presenter;
     @Mock
-    private FornecedorDsGateway fornecedorDsGateway;
+    private FornecedorProvider fornecedorProvider;
     @Mock
     private FornecedorMapper fornecedorMapper;
     @InjectMocks
@@ -42,7 +42,7 @@ class CreateFornecedorInteractorUnitTest {
 
         var requestModel = CreateFornecedorRequestModelBuilder.umFornecedor().get();
 
-        when(fornecedorDsGateway.existeFornecedorComCnpj(requestModel.getCnpj())).thenReturn(true);
+        when(fornecedorProvider.existeFornecedorComCnpj(requestModel.getCnpj())).thenReturn(true);
 
         // execucao
         try {
@@ -83,7 +83,7 @@ class CreateFornecedorInteractorUnitTest {
         when(fornecedorMapper
                 .toDomain(any(CreateFornecedorModel.class))).thenReturn(fornecedor);
 
-        when(fornecedorDsGateway.criar(fornecedor)).thenReturn(1);
+        when(fornecedorProvider.criar(fornecedor)).thenReturn(1);
 
         var responseModel = umFornecedorResponseModel().get();
 

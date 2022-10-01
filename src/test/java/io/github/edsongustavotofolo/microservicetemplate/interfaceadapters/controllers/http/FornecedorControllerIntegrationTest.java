@@ -3,10 +3,10 @@ package io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.cont
 import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.base.ControllerTest;
 import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.handlers.models.ErrorType;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.exceptions.FornecedorCnpjInvalidException;
-import io.github.edsongustavotofolo.microservicetemplate.usecases.models.CreateContatoModel;
-import io.github.edsongustavotofolo.microservicetemplate.usecases.models.CreateFornecedorModel;
-import io.github.edsongustavotofolo.microservicetemplate.usecases.models.CreatedFornecedorModel;
-import io.github.edsongustavotofolo.microservicetemplate.usecases.models.TipoDeContatoEnum;
+import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.dtos.CreateContatoModel;
+import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.dtos.CreateFornecedorModel;
+import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.dtos.CreatedFornecedorModel;
+import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.dtos.TipoDeContatoEnum;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.CreateFornecedorInputPort;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

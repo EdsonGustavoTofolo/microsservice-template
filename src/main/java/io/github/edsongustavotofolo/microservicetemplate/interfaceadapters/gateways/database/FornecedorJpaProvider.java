@@ -4,7 +4,7 @@ import io.github.edsongustavotofolo.microservicetemplate.domain.entities.Fornece
 import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.gateways.database.model.mappers.FornecedorEntityMapper;
 import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.gateways.database.repository.CidadeJpaRepository;
 import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.gateways.database.repository.FornecedorJpaRepository;
-import io.github.edsongustavotofolo.microservicetemplate.usecases.gateways.FornecedorDsGateway;
+import io.github.edsongustavotofolo.microservicetemplate.usecases.providers.FornecedorProvider;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -14,7 +14,7 @@ import java.util.Optional;
 @Service
 @Slf4j
 @RequiredArgsConstructor
-public class FornecedorJpaGateway implements FornecedorDsGateway {
+public class FornecedorJpaProvider implements FornecedorProvider {
 
     private final FornecedorJpaRepository fornecedorJpaRepository;
     private final CidadeJpaRepository cidadeJpaRepository;

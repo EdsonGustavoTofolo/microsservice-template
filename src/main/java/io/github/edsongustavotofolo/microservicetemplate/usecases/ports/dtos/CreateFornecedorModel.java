@@ -1,4 +1,4 @@
-package io.github.edsongustavotofolo.microservicetemplate.usecases.models;
+package io.github.edsongustavotofolo.microservicetemplate.usecases.ports.dtos;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

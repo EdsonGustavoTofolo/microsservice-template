@@ -1,7 +1,7 @@
 package io.github.edsongustavotofolo.microservicetemplate.usecases.ports;
 
 import io.github.edsongustavotofolo.microservicetemplate.usecases.exceptions.BusinessRuleException;
-import io.github.edsongustavotofolo.microservicetemplate.usecases.models.CreatedFornecedorModel;
+import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.dtos.CreatedFornecedorModel;
 
 public interface CreatedFornecedorOutputPort {
     CreatedFornecedorModel present(final Integer id);

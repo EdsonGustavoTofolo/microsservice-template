@@ -1,6 +1,6 @@
-package io.github.edsongustavotofolo.microservicetemplate.usecases.models;
+package io.github.edsongustavotofolo.microservicetemplate.usecases.ports.dtos;
 
-import io.github.edsongustavotofolo.microservicetemplate.usecases.models.annotations.Conditional;
+import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.dtos.annotations.Conditional;
 import lombok.Builder;
 import lombok.Data;
 

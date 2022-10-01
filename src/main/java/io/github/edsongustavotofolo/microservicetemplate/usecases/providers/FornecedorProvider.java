@@ -1,10 +1,10 @@
-package io.github.edsongustavotofolo.microservicetemplate.usecases.gateways;
+package io.github.edsongustavotofolo.microservicetemplate.usecases.providers;
 
 import io.github.edsongustavotofolo.microservicetemplate.domain.entities.Fornecedor;
 
 import java.util.Optional;
 
-public interface FornecedorDsGateway {
+public interface FornecedorProvider {
     Integer criar(final Fornecedor fornecedor);
 
     boolean existeFornecedorComCnpj(final String cnpj);

@@ -2,9 +2,9 @@ package io.github.edsongustavotofolo.microservicetemplate.usecases.interactors;
 
 import io.github.edsongustavotofolo.microservicetemplate.domain.entities.*;
 import io.github.edsongustavotofolo.microservicetemplate.domain.entities.valueobjects.Cnpj;
-import io.github.edsongustavotofolo.microservicetemplate.usecases.gateways.FornecedorDsGateway;
-import io.github.edsongustavotofolo.microservicetemplate.usecases.models.UpdateFornecedorModel;
-import io.github.edsongustavotofolo.microservicetemplate.usecases.models.mappers.ContatoMapper;
+import io.github.edsongustavotofolo.microservicetemplate.usecases.providers.FornecedorProvider;
+import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.dtos.UpdateFornecedorModel;
+import io.github.edsongustavotofolo.microservicetemplate.usecases.interactors.mappers.ContatoMapper;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.AtualizarFornecedorInputBoundary;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.FornecedorAtualizadoOutputBoundary;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,14 +14,14 @@ import java.util.List;
 
 public class AtualizarFornecedorInteractor implements AtualizarFornecedorInputBoundary {
 
-    private final FornecedorDsGateway fornecedorDsGateway;
+    private final FornecedorProvider fornecedorProvider;
     private final FornecedorAtualizadoOutputBoundary presenter;
     private final ContatoMapper contatoMapper;
 
-    public AtualizarFornecedorInteractor(FornecedorDsGateway fornecedorDsGateway,
+    public AtualizarFornecedorInteractor(FornecedorProvider fornecedorProvider,
                                          FornecedorAtualizadoOutputBoundary presenter,
                                          ContatoMapper contatoMapper) {
-        this.fornecedorDsGateway = fornecedorDsGateway;
+        this.fornecedorProvider = fornecedorProvider;
         this.presenter = presenter;
         this.contatoMapper = contatoMapper;
     }
@@ -29,7 +29,7 @@ public class AtualizarFornecedorInteractor implements AtualizarFornecedorInputBo
     @Transactional
     @Override
     public void execute(final Integer id, final UpdateFornecedorModel requestModel) {
-        var fornecedor = this.fornecedorDsGateway.buscarPorId(id)
+        var fornecedor = this.fornecedorProvider.buscarPorId(id)
                 .orElse(presenter.fornecedorNaoEncontrado());
 
         fornecedor.setCnpj(new Cnpj(requestModel.getCnpj()));
@@ -85,6 +85,6 @@ public class AtualizarFornecedorInteractor implements AtualizarFornecedorInputBo
         if (!contatosParaAdicionar.isEmpty()) {
             contatosParaAdicionar.forEach(contato -> fornecedor.getContatos().adicionar(contato));
         }
-        this.fornecedorDsGateway.atualizar(fornecedor);
+        this.fornecedorProvider.atualizar(fornecedor);
     }
 }

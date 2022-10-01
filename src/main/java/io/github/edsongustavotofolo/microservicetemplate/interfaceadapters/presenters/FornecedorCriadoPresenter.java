@@ -3,7 +3,7 @@ package io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.pres
 import io.github.edsongustavotofolo.microservicetemplate.usecases.exceptions.BusinessRuleException;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.exceptions.FornecedorAlreadyExistsException;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.exceptions.FornecedorCnpjInvalidException;
-import io.github.edsongustavotofolo.microservicetemplate.usecases.models.CreatedFornecedorModel;
+import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.dtos.CreatedFornecedorModel;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.CreatedFornecedorOutputPort;
 import org.springframework.stereotype.Service;
 

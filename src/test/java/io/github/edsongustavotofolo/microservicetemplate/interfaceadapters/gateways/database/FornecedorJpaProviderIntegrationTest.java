@@ -5,7 +5,7 @@ import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.gatew
 import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.gateways.database.model.mappers.FornecedorEntityMapper;
 import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.gateways.database.repository.CidadeJpaRepository;
 import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.gateways.database.repository.FornecedorJpaRepository;
-import io.github.edsongustavotofolo.microservicetemplate.usecases.gateways.FornecedorDsGateway;
+import io.github.edsongustavotofolo.microservicetemplate.usecases.providers.FornecedorProvider;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeEach;
@@ -30,7 +30,7 @@ import static org.mockito.Mockito.verify;
 @EntityScan
 @ContextConfiguration(classes = AuditConfig.class)
 @TestPropertySource("classpath:application.properties")
-class FornecedorJpaGatewayIntegrationTest {
+class FornecedorJpaProviderIntegrationTest {
 
     @SpyBean
     private FornecedorJpaRepository fornecedorJpaRepository;
@@ -39,11 +39,11 @@ class FornecedorJpaGatewayIntegrationTest {
 
     private final FornecedorEntityMapper fornecedorEntityMapper = Mappers.getMapper(FornecedorEntityMapper.class);
 
-    private FornecedorDsGateway fornecedorJpaGateway;
+    private FornecedorProvider fornecedorJpaGateway;
 
     @BeforeEach
     public void setup() {
-        this.fornecedorJpaGateway = new FornecedorJpaGateway(this.fornecedorJpaRepository, this.cidadeJpaRepository, this.fornecedorEntityMapper);
+        this.fornecedorJpaGateway = new FornecedorJpaProvider(this.fornecedorJpaRepository, this.cidadeJpaRepository, this.fornecedorEntityMapper);
     }
 
     @Test
