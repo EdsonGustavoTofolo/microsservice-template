@@ -14,7 +14,7 @@ import java.util.Optional;
 public interface ViaCepClient {
 
     @GetMapping("/{cep}/json")
-    Optional<ViaCepResponse> buscarPorCep(@PathVariable String cep);
+    Optional<ViaCepResponse> buscarPorCep(@PathVariable final String cep);
 
     @RequiredArgsConstructor
     @ToString
