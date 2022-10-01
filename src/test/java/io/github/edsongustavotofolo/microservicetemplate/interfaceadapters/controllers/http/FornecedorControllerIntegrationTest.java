@@ -1,13 +1,13 @@
 package io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http;
 
 import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.base.ControllerTest;
-import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.presenters.exceptions.enums.ErrorType;
+import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.output.exceptions.enums.ErrorType;
 import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.presenters.exceptions.FornecedorCnpjInvalidException;
-import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.dtos.CreateContatoModel;
-import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.dtos.CreateFornecedorModel;
-import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.dtos.CreatedFornecedorModel;
+import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.input.dtos.CreateContatoModel;
+import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.input.dtos.CreateFornecedorModel;
+import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.output.dtos.CreatedFornecedorModel;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.dtos.TipoDeContatoEnum;
-import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.CreateFornecedorInputPort;
+import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.input.CreateFornecedorInputPort;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

@@ -1,8 +1,8 @@
 package io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.converters;
 
 import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.dtos.CreateFornecedorRequestModel;
-import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.dtos.CreateContatoModel;
-import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.dtos.CreateFornecedorModel;
+import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.input.dtos.CreateContatoModel;
+import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.input.dtos.CreateFornecedorModel;
 
 public class CreateFornecedorConverter {
 

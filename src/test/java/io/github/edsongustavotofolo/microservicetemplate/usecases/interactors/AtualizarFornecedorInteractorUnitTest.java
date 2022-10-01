@@ -4,11 +4,11 @@ import io.github.edsongustavotofolo.microservicetemplate.domain.builder.Forneced
 import io.github.edsongustavotofolo.microservicetemplate.domain.entities.*;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.providers.FornecedorProvider;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.dtos.TipoDeContatoEnum;
-import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.dtos.UpdateContatoModel;
-import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.dtos.UpdateFornecedorModel;
+import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.input.dtos.UpdateContatoModel;
+import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.dtos.UpdateFornecedorModel;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.models.builders.UpdateFornecedorRequestModelBuilder;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.interactors.mappers.impl.ContatoMapperImpl;
-import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.FornecedorAtualizadoOutputPort;
+import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.output.FornecedorAtualizadoOutputPort;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;

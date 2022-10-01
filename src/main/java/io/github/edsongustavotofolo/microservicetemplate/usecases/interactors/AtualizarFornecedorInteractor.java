@@ -3,10 +3,10 @@ package io.github.edsongustavotofolo.microservicetemplate.usecases.interactors;
 import io.github.edsongustavotofolo.microservicetemplate.domain.entities.*;
 import io.github.edsongustavotofolo.microservicetemplate.domain.entities.valueobjects.Cnpj;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.providers.FornecedorProvider;
-import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.dtos.UpdateFornecedorModel;
+import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.dtos.UpdateFornecedorModel;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.interactors.mappers.ContatoMapper;
-import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.AtualizarFornecedorInputPort;
-import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.FornecedorAtualizadoOutputPort;
+import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.input.AtualizarFornecedorInputPort;
+import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.output.FornecedorAtualizadoOutputPort;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;

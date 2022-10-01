@@ -1,12 +1,12 @@
 package io.github.edsongustavotofolo.microservicetemplate.usecases.interactors;
 
 import io.github.edsongustavotofolo.microservicetemplate.domain.entities.valueobjects.Cnpj;
-import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.presenters.exceptions.BusinessRuleException;
+import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.output.exceptions.BusinessRuleException;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.interactors.mappers.FornecedorMapper;
-import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.CreateFornecedorInputPort;
-import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.CreatedFornecedorOutputPort;
-import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.dtos.CreateFornecedorModel;
-import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.dtos.CreatedFornecedorModel;
+import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.input.CreateFornecedorInputPort;
+import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.output.CreatedFornecedorOutputPort;
+import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.input.dtos.CreateFornecedorModel;
+import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.output.dtos.CreatedFornecedorModel;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.providers.FornecedorProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;

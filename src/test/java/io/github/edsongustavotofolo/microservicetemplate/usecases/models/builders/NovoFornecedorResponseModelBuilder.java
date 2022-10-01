@@ -1,6 +1,6 @@
 package io.github.edsongustavotofolo.microservicetemplate.usecases.models.builders;
 
-import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.dtos.CreatedFornecedorModel;
+import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.output.dtos.CreatedFornecedorModel;
 
 public class NovoFornecedorResponseModelBuilder {
     private CreatedFornecedorModel responseModel;

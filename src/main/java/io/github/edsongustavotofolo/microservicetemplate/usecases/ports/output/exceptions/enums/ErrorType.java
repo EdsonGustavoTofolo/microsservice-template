@@ -1,4 +1,4 @@
-package io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.presenters.exceptions.enums;
+package io.github.edsongustavotofolo.microservicetemplate.usecases.ports.output.exceptions.enums;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Locale;

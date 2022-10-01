@@ -1,5 +1,6 @@
-package io.github.edsongustavotofolo.microservicetemplate.usecases.ports.dtos;
+package io.github.edsongustavotofolo.microservicetemplate.usecases.ports.input.dtos;
 
+import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.input.dtos.CreateContatoModel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

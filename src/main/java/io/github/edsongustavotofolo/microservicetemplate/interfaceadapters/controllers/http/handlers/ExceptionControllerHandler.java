@@ -2,8 +2,8 @@ package io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.cont
 
 import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.handlers.models.ErrorApiResponse;
 import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.handlers.models.StandardErrorApi;
-import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.presenters.exceptions.BusinessRuleException;
-import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.presenters.exceptions.enums.ErrorType;
+import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.presenters.exceptions.BaseHttpException;
+import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.output.exceptions.enums.ErrorType;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -24,10 +24,11 @@ import java.util.stream.Collectors;
 @Slf4j
 public class ExceptionControllerHandler {
 
-    @ExceptionHandler(value = BusinessRuleException.class)
-    public ResponseEntity<StandardErrorApi> businessRuleExceptionHander(final BusinessRuleException ex,
+    @ExceptionHandler(value = BaseHttpException.class)
+    public ResponseEntity<StandardErrorApi> businessRuleExceptionHander(final BaseHttpException ex,
                                                                         final HttpServletRequest request) {
-        log.error("Falha de regra de negocio");
+        log.error("Falha de regra de negocio", ex);
+
         return ResponseEntity
                 .status(ex.getStatus())
                 .body(ex.getStandardErrorApi(request.getRequestURI(), request.getLocale()));

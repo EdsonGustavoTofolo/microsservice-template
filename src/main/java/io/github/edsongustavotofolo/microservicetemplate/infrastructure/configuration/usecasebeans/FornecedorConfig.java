@@ -7,9 +7,9 @@ import io.github.edsongustavotofolo.microservicetemplate.usecases.interactors.ma
 import io.github.edsongustavotofolo.microservicetemplate.usecases.interactors.mappers.FornecedorMapper;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.interactors.mappers.impl.ContatoMapperImpl;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.interactors.mappers.impl.FornecedorMapperImpl;
-import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.CreateFornecedorInputPort;
-import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.FornecedorAtualizadoOutputPort;
-import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.CreatedFornecedorOutputPort;
+import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.input.CreateFornecedorInputPort;
+import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.output.FornecedorAtualizadoOutputPort;
+import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.output.CreatedFornecedorOutputPort;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

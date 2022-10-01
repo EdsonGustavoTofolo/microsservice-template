@@ -1,8 +1,8 @@
 package io.github.edsongustavotofolo.microservicetemplate.usecases.models.builders;
 
 import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.dtos.TipoDeContatoEnum;
-import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.dtos.UpdateContatoModel;
-import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.dtos.UpdateFornecedorModel;
+import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.input.dtos.UpdateContatoModel;
+import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.dtos.UpdateFornecedorModel;
 
 import java.util.ArrayList;
 import java.util.List;

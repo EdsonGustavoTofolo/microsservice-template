@@ -2,10 +2,10 @@ package io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.cont
 
 import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.converters.CreateFornecedorConverter;
 import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.dtos.CreateFornecedorRequestModel;
-import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.presenters.exceptions.BusinessRuleException;
-import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.dtos.UpdateFornecedorModel;
-import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.AtualizarFornecedorInputPort;
-import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.CreateFornecedorInputPort;
+import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.output.exceptions.BusinessRuleException;
+import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.dtos.UpdateFornecedorModel;
+import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.input.AtualizarFornecedorInputPort;
+import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.input.CreateFornecedorInputPort;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.headers.Header;
 import io.swagger.v3.oas.annotations.media.Schema;

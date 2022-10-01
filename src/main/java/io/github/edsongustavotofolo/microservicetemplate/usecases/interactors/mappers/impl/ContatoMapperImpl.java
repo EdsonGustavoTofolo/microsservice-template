@@ -2,8 +2,8 @@ package io.github.edsongustavotofolo.microservicetemplate.usecases.interactors.m
 
 import io.github.edsongustavotofolo.microservicetemplate.domain.entities.*;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.interactors.mappers.ContatoMapper;
-import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.dtos.CreateContatoModel;
-import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.dtos.UpdateContatoModel;
+import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.input.dtos.CreateContatoModel;
+import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.input.dtos.UpdateContatoModel;
 
 public class ContatoMapperImpl implements ContatoMapper {
 

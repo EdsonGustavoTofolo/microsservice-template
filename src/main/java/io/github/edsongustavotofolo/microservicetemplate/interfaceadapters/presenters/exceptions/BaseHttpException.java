@@ -2,7 +2,8 @@ package io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.pres
 
 import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.handlers.models.ErrorApiResponse;
 import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.handlers.models.StandardErrorApi;
-import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.presenters.exceptions.enums.ErrorType;
+import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.output.exceptions.BusinessRuleException;
+import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.output.exceptions.enums.ErrorType;
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
 
@@ -10,20 +11,18 @@ import java.time.ZonedDateTime;
 import java.util.Locale;
 
 @Getter
-public class BusinessRuleException extends Exception {
+public class BaseHttpException extends BusinessRuleException {
 
     private final HttpStatus status;
-    private final ErrorType errorType;
 
-    public BusinessRuleException(final HttpStatus status, final ErrorType errorType, final Throwable cause) {
-        super(cause);
+    public BaseHttpException(final HttpStatus status, final ErrorType errorType, final Throwable cause) {
+        super(errorType, cause);
         this.status = status;
-        this.errorType = errorType;
     }
 
-    public BusinessRuleException(final HttpStatus status, final ErrorType errorType) {
+    public BaseHttpException(final HttpStatus status, final ErrorType errorType) {
+        super(errorType);
         this.status = status;
-        this.errorType = errorType;
     }
 
     public StandardErrorApi getStandardErrorApi(final String path, final Locale locale) {
@@ -32,8 +31,8 @@ public class BusinessRuleException extends Exception {
                 .status(this.status.value())
                 .timestamp(ZonedDateTime.now())
                 .error(ErrorApiResponse.builder()
-                        .code(this.errorType.name())
-                        .message(this.errorType.getMessage(locale))
+                        .code(getErrorType().name())
+                        .message(getErrorType().getMessage(locale))
                         .build())
                 .build();
     }
