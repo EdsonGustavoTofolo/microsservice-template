@@ -1,6 +1,6 @@
 package io.github.edsongustavotofolo.microservicetemplate.usecases.exceptions;
 
-import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.handlers.models.ErrorType;
+import io.github.edsongustavotofolo.microservicetemplate.usecases.exceptions.enums.ErrorType;
 import org.springframework.http.HttpStatus;
 
 public class FornecedorNotFoundException extends BusinessRuleException {

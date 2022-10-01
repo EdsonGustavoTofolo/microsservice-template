@@ -1,9 +1,9 @@
 package io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.handlers;
 
 import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.handlers.models.ErrorApiResponse;
-import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.handlers.models.ErrorType;
 import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.handlers.models.StandardErrorApi;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.exceptions.BusinessRuleException;
+import io.github.edsongustavotofolo.microservicetemplate.usecases.exceptions.enums.ErrorType;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import javax.servlet.http.HttpServletRequest;
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -45,7 +45,7 @@ public class ExceptionControllerHandler {
                         Collectors.mapping(DefaultMessageSourceResolvable::getDefaultMessage, Collectors.toList())
                 ));
         var errorApi = StandardErrorApi.builder()
-                .timestamp(LocalDateTime.now())
+                .timestamp(ZonedDateTime.now())
                 .status(HttpStatus.BAD_REQUEST.value())
                 .error(ErrorApiResponse.builder()
                         .code(ErrorType.EXPT001.name())
@@ -61,7 +61,7 @@ public class ExceptionControllerHandler {
                                                                                    final HttpServletRequest request) {
         log.error("Violacao de integridade no banco de dados", ex);
         var errorApi = StandardErrorApi.builder()
-                .timestamp(LocalDateTime.now())
+                .timestamp(ZonedDateTime.now())
                 .status(HttpStatus.INTERNAL_SERVER_ERROR.value())
                 .error(ErrorApiResponse.builder()
                         .code(ErrorType.EXPT002.name())
