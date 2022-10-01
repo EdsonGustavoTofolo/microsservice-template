@@ -1,8 +1,8 @@
 package io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.presenters;
 
 import io.github.edsongustavotofolo.microservicetemplate.domain.entities.Fornecedor;
-import io.github.edsongustavotofolo.microservicetemplate.usecases.exceptions.BusinessRuleException;
-import io.github.edsongustavotofolo.microservicetemplate.usecases.exceptions.FornecedorNotFoundException;
+import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.presenters.exceptions.BusinessRuleException;
+import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.presenters.exceptions.FornecedorNotFoundException;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.FornecedorAtualizadoOutputPort;
 import org.springframework.stereotype.Service;
 

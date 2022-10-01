@@ -1,8 +1,8 @@
 package io.github.edsongustavotofolo.microservicetemplate.usecases.interactors;
 
 import io.github.edsongustavotofolo.microservicetemplate.domain.entities.Fornecedor;
-import io.github.edsongustavotofolo.microservicetemplate.usecases.exceptions.BusinessRuleException;
-import io.github.edsongustavotofolo.microservicetemplate.usecases.exceptions.FornecedorCnpjInvalidException;
+import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.presenters.exceptions.BusinessRuleException;
+import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.presenters.exceptions.FornecedorCnpjInvalidException;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.providers.FornecedorProvider;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.dtos.CreateFornecedorModel;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.models.builders.CreateFornecedorRequestModelBuilder;

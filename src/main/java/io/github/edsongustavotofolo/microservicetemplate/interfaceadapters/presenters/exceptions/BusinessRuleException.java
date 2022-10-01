@@ -1,8 +1,8 @@
-package io.github.edsongustavotofolo.microservicetemplate.usecases.exceptions;
+package io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.presenters.exceptions;
 
 import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.handlers.models.ErrorApiResponse;
 import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.handlers.models.StandardErrorApi;
-import io.github.edsongustavotofolo.microservicetemplate.usecases.exceptions.enums.ErrorType;
+import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.presenters.exceptions.enums.ErrorType;
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
 

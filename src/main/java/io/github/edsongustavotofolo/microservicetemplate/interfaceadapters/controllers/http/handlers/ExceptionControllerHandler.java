@@ -2,8 +2,8 @@ package io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.cont
 
 import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.handlers.models.ErrorApiResponse;
 import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.handlers.models.StandardErrorApi;
-import io.github.edsongustavotofolo.microservicetemplate.usecases.exceptions.BusinessRuleException;
-import io.github.edsongustavotofolo.microservicetemplate.usecases.exceptions.enums.ErrorType;
+import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.presenters.exceptions.BusinessRuleException;
+import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.presenters.exceptions.enums.ErrorType;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.dao.DataIntegrityViolationException;
