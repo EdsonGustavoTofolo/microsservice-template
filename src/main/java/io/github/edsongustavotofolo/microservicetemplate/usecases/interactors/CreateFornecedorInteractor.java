@@ -24,9 +24,11 @@ public class CreateFornecedorInteractor implements CreateFornecedorInputPort {
     public void execute(final CreateFornecedor requestModel) throws BusinessRuleException {
         if (Cnpj.numeroInvalido(requestModel.getCnpj())) {
             this.presenter.cnpjIsInvalid();
+            return;
         }
         if (this.fornecedorProvider.existeFornecedorComCnpj(requestModel.getCnpj())) {
             this.presenter.fornecedorAlreadyExists();
+            return;
         }
 
         final var fornecedor = this.fornecedorMapper.toDomain(requestModel);
