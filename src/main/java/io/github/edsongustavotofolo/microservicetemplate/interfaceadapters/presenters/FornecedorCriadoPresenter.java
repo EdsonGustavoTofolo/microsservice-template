@@ -3,7 +3,7 @@ package io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.pres
 import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.output.exceptions.BusinessRuleException;
 import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.presenters.exceptions.FornecedorAlreadyExistsException;
 import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.presenters.exceptions.FornecedorCnpjInvalidException;
-import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.output.dtos.CreatedFornecedorModel;
+import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.output.dtos.CreatedFornecedor;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.output.CreatedFornecedorOutputPort;
 import org.springframework.stereotype.Service;
 
@@ -11,8 +11,8 @@ import org.springframework.stereotype.Service;
 public class FornecedorCriadoPresenter implements CreatedFornecedorOutputPort {
 
     @Override
-    public CreatedFornecedorModel present(final Integer id) {
-        return new CreatedFornecedorModel(id);
+    public CreatedFornecedor present(final Integer id) {
+        return new CreatedFornecedor(id);
     }
 
     @Override

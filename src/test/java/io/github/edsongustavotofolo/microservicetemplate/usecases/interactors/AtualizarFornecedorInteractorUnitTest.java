@@ -4,7 +4,7 @@ import io.github.edsongustavotofolo.microservicetemplate.domain.builder.Forneced
 import io.github.edsongustavotofolo.microservicetemplate.domain.entities.*;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.providers.FornecedorProvider;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.dtos.TipoDeContatoEnum;
-import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.input.dtos.UpdateContatoModel;
+import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.input.dtos.UpdateContato;
 import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.dtos.UpdateFornecedorModel;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.models.builders.UpdateFornecedorRequestModelBuilder;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.interactors.mappers.impl.ContatoMapperImpl;
@@ -39,10 +39,10 @@ class AtualizarFornecedorInteractorUnitTest {
 
         var fornecedorResult = FornecedorBuilder.umFornecedor().get();
         when(fornecedorProvider.buscarPorId(id)).thenReturn(Optional.of(fornecedorResult));
-        when(contatoMapper.toDomain(any(UpdateContatoModel.class))).thenCallRealMethod();
+        when(contatoMapper.toDomain(any(UpdateContato.class))).thenCallRealMethod();
 
         UpdateFornecedorModel expected = UpdateFornecedorRequestModelBuilder.umFornecedor()
-                .adicionarContato(UpdateContatoModel.builder()
+                .adicionarContato(UpdateContato.builder()
                         .id(6)
                         .tipoDeContato(TipoDeContatoEnum.EMAIL)
                         .enderecoEmail("novoemail@fornecedor.com")

@@ -3,7 +3,7 @@ package io.github.edsongustavotofolo.microservicetemplate.usecases.ports.output.
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-public final class CreatedFornecedorModel {
+public final class CreatedFornecedor {
     private final Integer id;
 
     public Integer get() {

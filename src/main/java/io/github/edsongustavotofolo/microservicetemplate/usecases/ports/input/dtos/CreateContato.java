@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class CreateContatoModel {
+public class CreateContato {
     private TipoDeContatoEnum tipoDeContato;
     private String ddd;
     private String numero;
@@ -18,37 +18,37 @@ public class CreateContatoModel {
     private String urlSite;
     private String texto;
 
-    public static CreateContatoModel outro(final String texto) {
-        return CreateContatoModel.builder()
+    public static CreateContato outro(final String texto) {
+        return CreateContato.builder()
                 .tipoDeContato(TipoDeContatoEnum.OUTRO)
                 .texto(texto)
                 .build();
     }
 
-    public static CreateContatoModel site(final String url) {
-        return CreateContatoModel.builder()
+    public static CreateContato site(final String url) {
+        return CreateContato.builder()
                 .tipoDeContato(TipoDeContatoEnum.SITE)
                 .urlSite(url)
                 .build();
     }
 
-    public static CreateContatoModel celular(final String ddd, final String numero) {
-        return CreateContatoModel.builder()
+    public static CreateContato celular(final String ddd, final String numero) {
+        return CreateContato.builder()
                 .tipoDeContato(TipoDeContatoEnum.CELULAR)
                 .ddd(ddd)
                 .numero(numero)
                 .build();
     }
 
-    public static CreateContatoModel telefone(final String ddd, final String numero) {
-        return CreateContatoModel.builder()
+    public static CreateContato telefone(final String ddd, final String numero) {
+        return CreateContato.builder()
                 .tipoDeContato(TipoDeContatoEnum.TELEFONE)
                 .ddd(ddd)
                 .numero(numero)
                 .build();
     }
-    public static CreateContatoModel email(final String enderecoEmail) {
-        return CreateContatoModel.builder()
+    public static CreateContato email(final String enderecoEmail) {
+        return CreateContato.builder()
                 .tipoDeContato(TipoDeContatoEnum.EMAIL)
                 .enderecoEmail(enderecoEmail)
                 .build();

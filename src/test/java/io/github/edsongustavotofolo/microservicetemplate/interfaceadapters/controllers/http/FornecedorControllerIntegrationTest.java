@@ -3,9 +3,9 @@ package io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.cont
 import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.base.ControllerTest;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.output.exceptions.enums.ErrorType;
 import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.presenters.exceptions.FornecedorCnpjInvalidException;
-import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.input.dtos.CreateContatoModel;
-import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.input.dtos.CreateFornecedorModel;
-import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.output.dtos.CreatedFornecedorModel;
+import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.input.dtos.CreateContato;
+import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.input.dtos.CreateFornecedor;
+import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.output.dtos.CreatedFornecedor;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.dtos.TipoDeContatoEnum;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.input.CreateFornecedorInputPort;
 import org.junit.jupiter.api.BeforeEach;
@@ -89,12 +89,12 @@ class FornecedorControllerIntegrationTest extends ControllerTest {
     @Test
     void deveCriarFornecedorComSucesso() throws Exception {
         // cenario
-        var responseModel = new CreatedFornecedorModel(1);
+        var responseModel = new CreatedFornecedor(1);
         Mockito.when(createFornecedorInputPort
-                .execute(any(CreateFornecedorModel.class)))
+                .execute(any(CreateFornecedor.class)))
                 .thenReturn(responseModel);
 
-        var fornecedorRequestModel = CreateFornecedorModel.builder()
+        var fornecedorRequestModel = CreateFornecedor.builder()
                 .cnpj("45135006000104")
                 .razaoSocial("Fornecedor Ltda")
                 .nomeFantasia("Fornecedor & Cia")
@@ -108,7 +108,7 @@ class FornecedorControllerIntegrationTest extends ControllerTest {
                 .pontoDeReferencia("proximo ao CEMA")
                 .contatos(
                         List.of(
-                                CreateContatoModel.builder()
+                                CreateContato.builder()
                                         .tipoDeContato(TipoDeContatoEnum.EMAIL)
                                         .enderecoEmail("person@mymail.com")
                                         .build()))

@@ -1,6 +1,5 @@
 package io.github.edsongustavotofolo.microservicetemplate.usecases.ports.input.dtos;
 
-import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.input.dtos.CreateContatoModel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,7 +11,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class CreateFornecedorModel {
+public class CreateFornecedor {
     private String cnpj;
     private String razaoSocial;
     private String nomeFantasia;
@@ -24,6 +23,6 @@ public class CreateFornecedorModel {
     private String pontoDeReferencia;
     private String cep;
     private Integer cidadeId;
-    private List<CreateContatoModel> contatos;
+    private List<CreateContato> contatos;
     private String observacaoContatos;
 }

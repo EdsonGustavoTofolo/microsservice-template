@@ -1,8 +1,8 @@
 package io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.converters;
 
 import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.dtos.CreateFornecedorRequestModel;
-import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.input.dtos.CreateContatoModel;
-import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.input.dtos.CreateFornecedorModel;
+import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.input.dtos.CreateContato;
+import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.input.dtos.CreateFornecedor;
 
 public class CreateFornecedorConverter {
 
@@ -10,8 +10,8 @@ public class CreateFornecedorConverter {
         throw new IllegalStateException("Unity class");
     }
 
-    public static CreateFornecedorModel toModel(final CreateFornecedorRequestModel requestModel) {
-        return CreateFornecedorModel.builder()
+    public static CreateFornecedor toModel(final CreateFornecedorRequestModel requestModel) {
+        return CreateFornecedor.builder()
                 .cnpj(requestModel.getCnpj())
                 .razaoSocial(requestModel.getRazaoSocial())
                 .nomeFantasia(requestModel.getNomeFantasia())
@@ -28,15 +28,15 @@ public class CreateFornecedorConverter {
                                 .map(contatoRequestModel ->
                                     switch (contatoRequestModel.getTipoDeContato()) {
                                         case EMAIL:
-                                            yield CreateContatoModel.email(contatoRequestModel.getEnderecoEmail());
+                                            yield CreateContato.email(contatoRequestModel.getEnderecoEmail());
                                         case TELEFONE:
-                                            yield CreateContatoModel.telefone(contatoRequestModel.getDdd(), contatoRequestModel.getNumero());
+                                            yield CreateContato.telefone(contatoRequestModel.getDdd(), contatoRequestModel.getNumero());
                                         case CELULAR:
-                                            yield CreateContatoModel.celular(contatoRequestModel.getDdd(), contatoRequestModel.getNumero());
+                                            yield CreateContato.celular(contatoRequestModel.getDdd(), contatoRequestModel.getNumero());
                                         case SITE:
-                                            yield CreateContatoModel.site(contatoRequestModel.getUrlSite());
+                                            yield CreateContato.site(contatoRequestModel.getUrlSite());
                                         case OUTRO:
-                                            yield CreateContatoModel.outro(contatoRequestModel.getTexto());
+                                            yield CreateContato.outro(contatoRequestModel.getTexto());
                                     }
                                 ).toList()
                 )

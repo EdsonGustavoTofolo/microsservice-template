@@ -1,6 +1,6 @@
 package io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.dtos;
 
-import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.input.dtos.UpdateContatoModel;
+import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.input.dtos.UpdateContato;
 import lombok.Builder;
 import lombok.Data;
 
@@ -42,6 +42,6 @@ public class UpdateFornecedorModel {
     @NotNull(message = "Cidade: Campo obrigatório")
     private Integer cidadeId;
     @NotEmpty(message = "Contatos: Campo obrigatório")
-    private List<@Valid UpdateContatoModel> contatos;
+    private List<@Valid UpdateContato> contatos;
     private String observacaoContatos;
 }

@@ -1,7 +1,7 @@
 package io.github.edsongustavotofolo.microservicetemplate.usecases.models.builders;
 
 import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.dtos.TipoDeContatoEnum;
-import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.input.dtos.UpdateContatoModel;
+import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.input.dtos.UpdateContato;
 import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.dtos.UpdateFornecedorModel;
 
 import java.util.ArrayList;
@@ -26,29 +26,29 @@ public class UpdateFornecedorRequestModelBuilder {
                 .cep("85601000")
                 .cidadeId(4115200)
                 .contatos(new ArrayList<>(List.of(
-                        UpdateContatoModel.builder()
+                        UpdateContato.builder()
                                 .id(1)
                                 .tipoDeContato(TipoDeContatoEnum.EMAIL)
                                 .enderecoEmail("person@mymail.com")
                                 .build(),
-                        UpdateContatoModel.builder()
+                        UpdateContato.builder()
                                 .id(2)
                                 .tipoDeContato(TipoDeContatoEnum.TELEFONE)
                                 .ddd("49")
                                 .numero("35202222")
                                 .build(),
-                        UpdateContatoModel.builder()
+                        UpdateContato.builder()
                                 .id(3)
                                 .tipoDeContato(TipoDeContatoEnum.CELULAR)
                                 .ddd("49")
                                 .numero("991053588")
                                 .build(),
-                        UpdateContatoModel.builder()
+                        UpdateContato.builder()
                                 .id(4)
                                 .tipoDeContato(TipoDeContatoEnum.SITE)
                                 .urlSite("https://provider.dot")
                                 .build(),
-                        UpdateContatoModel.builder()
+                        UpdateContato.builder()
                                 .id(5)
                                 .tipoDeContato(TipoDeContatoEnum.OUTRO)
                                 .texto("0800 9004 9004")
@@ -58,8 +58,8 @@ public class UpdateFornecedorRequestModelBuilder {
         return builder;
     }
 
-    public UpdateFornecedorRequestModelBuilder adicionarContato(UpdateContatoModel updateContatoModel) {
-        this.requestModel.getContatos().add(updateContatoModel);
+    public UpdateFornecedorRequestModelBuilder adicionarContato(UpdateContato updateContato) {
+        this.requestModel.getContatos().add(updateContato);
         return this;
     }
 

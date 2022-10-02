@@ -14,7 +14,7 @@ import javax.validation.constraints.Size;
 @Conditional(selected = "tipoDeContato", values = "EMAIL", required = "enderecoEmail", message = "Informe o endereco de e-mail")
 @Conditional(selected = "tipoDeContato", values = "SITE", required = "urlSite", message = "Informe uma URL valida")
 @Conditional(selected = "tipoDeContato", values = "OUTRO", required = "texto", message = "Informe um texto")
-public class UpdateContatoModel {
+public class UpdateContato {
     @NotNull
     private Integer id;
     @NotNull(message = "Tipo de Contato deve ser informado")

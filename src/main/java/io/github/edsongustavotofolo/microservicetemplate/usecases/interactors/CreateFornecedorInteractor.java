@@ -5,8 +5,8 @@ import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.output.e
 import io.github.edsongustavotofolo.microservicetemplate.usecases.interactors.mappers.FornecedorMapper;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.input.CreateFornecedorInputPort;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.output.CreatedFornecedorOutputPort;
-import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.input.dtos.CreateFornecedorModel;
-import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.output.dtos.CreatedFornecedorModel;
+import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.input.dtos.CreateFornecedor;
+import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.output.dtos.CreatedFornecedor;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.providers.FornecedorProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,7 +20,7 @@ public class CreateFornecedorInteractor implements CreateFornecedorInputPort {
 
     @Transactional
     @Override
-    public CreatedFornecedorModel execute(final CreateFornecedorModel requestModel) throws BusinessRuleException {
+    public CreatedFornecedor execute(final CreateFornecedor requestModel) throws BusinessRuleException {
         if (Cnpj.numeroInvalido(requestModel.getCnpj())) {
             this.presenter.cnpjIsInvalid();
         }

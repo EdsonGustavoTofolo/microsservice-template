@@ -1,19 +1,19 @@
 package io.github.edsongustavotofolo.microservicetemplate.usecases.models.builders;
 
-import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.input.dtos.CreateContatoModel;
-import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.input.dtos.CreateFornecedorModel;
+import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.input.dtos.CreateContato;
+import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.input.dtos.CreateFornecedor;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.dtos.TipoDeContatoEnum;
 
 import java.util.List;
 
 public class CreateFornecedorRequestModelBuilder {
-    private CreateFornecedorModel requestModel;
+    private CreateFornecedor requestModel;
 
     private CreateFornecedorRequestModelBuilder() {}
 
     public static CreateFornecedorRequestModelBuilder umFornecedor() {
         var builder = new CreateFornecedorRequestModelBuilder();
-        builder.requestModel = CreateFornecedorModel.builder()
+        builder.requestModel = CreateFornecedor.builder()
                 .cnpj("45135006000104")
                 .razaoSocial("Fornecedor Ltda")
                 .nomeFantasia("Fornecedor & Cia")
@@ -25,25 +25,25 @@ public class CreateFornecedorRequestModelBuilder {
                 .cep("85601000")
                 .cidadeId(4115200)
                 .contatos(List.of(
-                        CreateContatoModel.builder()
+                        CreateContato.builder()
                                 .tipoDeContato(TipoDeContatoEnum.EMAIL)
                                 .enderecoEmail("person@mymail.com")
                                 .build(),
-                        CreateContatoModel.builder()
+                        CreateContato.builder()
                                 .tipoDeContato(TipoDeContatoEnum.TELEFONE)
                                 .ddd("49")
                                 .numero("35202222")
                                 .build(),
-                        CreateContatoModel.builder()
+                        CreateContato.builder()
                                 .tipoDeContato(TipoDeContatoEnum.CELULAR)
                                 .ddd("49")
                                 .numero("991053588")
                                 .build(),
-                        CreateContatoModel.builder()
+                        CreateContato.builder()
                                 .tipoDeContato(TipoDeContatoEnum.SITE)
                                 .urlSite("https://fornecedor.com")
                                 .build(),
-                        CreateContatoModel.builder()
+                        CreateContato.builder()
                                 .tipoDeContato(TipoDeContatoEnum.OUTRO)
                                 .texto("0800 8080 1234")
                                 .build()
@@ -72,7 +72,7 @@ public class CreateFornecedorRequestModelBuilder {
         return this;
     }
 
-    public CreateFornecedorModel get() {
+    public CreateFornecedor get() {
         return this.requestModel;
     }
 }

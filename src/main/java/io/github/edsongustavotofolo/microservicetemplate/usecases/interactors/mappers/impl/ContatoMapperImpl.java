@@ -2,13 +2,13 @@ package io.github.edsongustavotofolo.microservicetemplate.usecases.interactors.m
 
 import io.github.edsongustavotofolo.microservicetemplate.domain.entities.*;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.interactors.mappers.ContatoMapper;
-import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.input.dtos.CreateContatoModel;
-import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.input.dtos.UpdateContatoModel;
+import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.input.dtos.CreateContato;
+import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.input.dtos.UpdateContato;
 
 public class ContatoMapperImpl implements ContatoMapper {
 
     @Override
-    public Contato toDomain(final CreateContatoModel contatoModel) {
+    public Contato toDomain(final CreateContato contatoModel) {
         return switch (contatoModel.getTipoDeContato()) {
             case EMAIL: yield new Email(contatoModel.getEnderecoEmail());
             case TELEFONE: yield new Telefone(contatoModel.getDdd(), contatoModel.getNumero());
@@ -19,7 +19,7 @@ public class ContatoMapperImpl implements ContatoMapper {
     }
 
     @Override
-    public Contato toDomain(final UpdateContatoModel contatoModel) {
+    public Contato toDomain(final UpdateContato contatoModel) {
         return switch (contatoModel.getTipoDeContato()) {
             case EMAIL: yield new Email(contatoModel.getId(), contatoModel.getEnderecoEmail());
             case TELEFONE: yield new Telefone(contatoModel.getId(), contatoModel.getDdd(), contatoModel.getNumero());

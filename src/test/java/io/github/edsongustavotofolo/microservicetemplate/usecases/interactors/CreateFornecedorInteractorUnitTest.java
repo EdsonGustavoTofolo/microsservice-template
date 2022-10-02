@@ -4,7 +4,7 @@ import io.github.edsongustavotofolo.microservicetemplate.domain.entities.Fornece
 import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.output.exceptions.BusinessRuleException;
 import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.presenters.exceptions.FornecedorCnpjInvalidException;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.providers.FornecedorProvider;
-import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.input.dtos.CreateFornecedorModel;
+import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.input.dtos.CreateFornecedor;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.models.builders.CreateFornecedorRequestModelBuilder;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.interactors.mappers.FornecedorMapper;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.output.CreatedFornecedorOutputPort;
@@ -81,7 +81,7 @@ class CreateFornecedorInteractorUnitTest {
         Fornecedor fornecedor = umFornecedor().get();
 
         when(fornecedorMapper
-                .toDomain(any(CreateFornecedorModel.class))).thenReturn(fornecedor);
+                .toDomain(any(CreateFornecedor.class))).thenReturn(fornecedor);
 
         when(fornecedorProvider.criar(fornecedor)).thenReturn(1);
 
