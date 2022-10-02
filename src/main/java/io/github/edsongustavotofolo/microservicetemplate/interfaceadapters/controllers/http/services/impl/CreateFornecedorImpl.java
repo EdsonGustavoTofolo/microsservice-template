@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class CreateFornecedorImpl implements CreateFornecedor {
 
-    private final CreateFornecedorInputPort<CreatedFornecedor> createFornecedor;
+    private final CreateFornecedorInputPort createFornecedor;
     private final CreateFornecedorOutputPort<CreatedFornecedor> createdFornecedor;
 
     @Override

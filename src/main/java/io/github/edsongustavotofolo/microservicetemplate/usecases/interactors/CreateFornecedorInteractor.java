@@ -13,9 +13,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
-public class CreateFornecedorInteractor<T> implements CreateFornecedorInputPort<T> {
+public class CreateFornecedorInteractor implements CreateFornecedorInputPort {
 
-    private final CreateFornecedorOutputPort<T> presenter;
+    private final CreateFornecedorOutputPort<?> presenter;
     private final FornecedorProvider fornecedorProvider;
     private final FornecedorMapper fornecedorMapper;
 
@@ -33,6 +33,6 @@ public class CreateFornecedorInteractor<T> implements CreateFornecedorInputPort<
 
         final var id = this.fornecedorProvider.criar(fornecedor);
 
-        this.presenter.present(id);
+        this.presenter.show(id);
     }
 }

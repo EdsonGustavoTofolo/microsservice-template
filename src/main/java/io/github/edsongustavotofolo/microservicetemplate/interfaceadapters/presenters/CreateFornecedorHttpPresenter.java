@@ -5,15 +5,19 @@ import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.prese
 import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.output.CreateFornecedorOutputPort;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.output.dtos.CreatedFornecedor;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.output.exceptions.BusinessRuleException;
+import org.springframework.context.annotation.Scope;
+import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Service;
+import org.springframework.web.context.WebApplicationContext;
 
 @Service
-public class FornecedorCriadoHttpPresenter implements CreateFornecedorOutputPort<CreatedFornecedor> {
+@Scope(value = WebApplicationContext.SCOPE_REQUEST, proxyMode = ScopedProxyMode.TARGET_CLASS)
+public class CreateFornecedorHttpPresenter implements CreateFornecedorOutputPort<CreatedFornecedor> {
 
     private CreatedFornecedor createdFornecedor;
 
     @Override
-    public void present(final Integer id) {
+    public void show(final Integer id) {
         this.createdFornecedor = new CreatedFornecedor(id);
     }
 

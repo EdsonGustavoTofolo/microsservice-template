@@ -1,32 +1,33 @@
 package io.github.edsongustavotofolo.microservicetemplate.usecases.interactors;
 
-import io.github.edsongustavotofolo.microservicetemplate.domain.entities.*;
+import io.github.edsongustavotofolo.microservicetemplate.domain.entities.Celular;
+import io.github.edsongustavotofolo.microservicetemplate.domain.entities.Contato;
+import io.github.edsongustavotofolo.microservicetemplate.domain.entities.Email;
+import io.github.edsongustavotofolo.microservicetemplate.domain.entities.OutroContato;
+import io.github.edsongustavotofolo.microservicetemplate.domain.entities.Site;
+import io.github.edsongustavotofolo.microservicetemplate.domain.entities.Telefone;
 import io.github.edsongustavotofolo.microservicetemplate.domain.entities.valueobjects.Cnpj;
-import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.output.exceptions.BusinessRuleException;
-import io.github.edsongustavotofolo.microservicetemplate.usecases.providers.FornecedorProvider;
 import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.dtos.UpdateFornecedor;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.interactors.mappers.ContatoMapper;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.input.AtualizarFornecedorInputPort;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.output.FornecedorAtualizadoOutputPort;
+import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.output.exceptions.BusinessRuleException;
+import io.github.edsongustavotofolo.microservicetemplate.usecases.providers.FornecedorProvider;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Service
+@RequiredArgsConstructor
 public class AtualizarFornecedorInteractor implements AtualizarFornecedorInputPort {
 
     private final FornecedorProvider fornecedorProvider;
     private final FornecedorAtualizadoOutputPort presenter;
     private final ContatoMapper contatoMapper;
-
-    public AtualizarFornecedorInteractor(FornecedorProvider fornecedorProvider,
-                                         FornecedorAtualizadoOutputPort presenter,
-                                         ContatoMapper contatoMapper) {
-        this.fornecedorProvider = fornecedorProvider;
-        this.presenter = presenter;
-        this.contatoMapper = contatoMapper;
-    }
-
+    
     @Transactional
     @Override
     public void execute(final Integer id, final UpdateFornecedor requestModel) throws BusinessRuleException {
