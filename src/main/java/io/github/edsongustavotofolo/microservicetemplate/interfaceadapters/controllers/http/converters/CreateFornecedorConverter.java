@@ -1,6 +1,6 @@
 package io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.converters;
 
-import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.dtos.CreateFornecedorRequestModel;
+import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.dtos.CreateFornecedorRequest;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.input.dtos.CreateContato;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.input.dtos.CreateFornecedor;
 
@@ -10,7 +10,7 @@ public class CreateFornecedorConverter {
         throw new IllegalStateException("Unity class");
     }
 
-    public static CreateFornecedor toModel(final CreateFornecedorRequestModel requestModel) {
+    public static CreateFornecedor toModel(final CreateFornecedorRequest requestModel) {
         return CreateFornecedor.builder()
                 .cnpj(requestModel.getCnpj())
                 .razaoSocial(requestModel.getRazaoSocial())

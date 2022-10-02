@@ -1,9 +1,9 @@
 package io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http;
 
 import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.converters.CreateFornecedorConverter;
-import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.dtos.CreateFornecedorRequestModel;
+import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.dtos.CreateFornecedorRequest;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.output.exceptions.BusinessRuleException;
-import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.dtos.UpdateFornecedorModel;
+import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.dtos.UpdateFornecedor;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.input.AtualizarFornecedorInputPort;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.input.CreateFornecedorInputPort;
 import io.swagger.v3.oas.annotations.Operation;
@@ -47,7 +47,7 @@ public class FornecedorController {
                     description = "Dados do fornecedor inválidos")
     })
     @PostMapping(consumes = APPLICATION_JSON_VALUE)
-    public ResponseEntity<Void> create(@Valid @RequestBody CreateFornecedorRequestModel requestModel) throws BusinessRuleException {
+    public ResponseEntity<Void> create(@Valid @RequestBody CreateFornecedorRequest requestModel) throws BusinessRuleException {
         final var model = CreateFornecedorConverter.toModel(requestModel);
 
         var id = this.createFornecedorInputPort.execute(model);
@@ -72,7 +72,7 @@ public class FornecedorController {
                     description = "Fornecedor não encontrado")
     })
     @PatchMapping(value = "/{id}", consumes = APPLICATION_JSON_VALUE)
-    public ResponseEntity<Void> patch(@PathVariable Integer id, @Valid @RequestBody UpdateFornecedorModel requestModel) {
+    public ResponseEntity<Void> patch(@PathVariable Integer id, @Valid @RequestBody UpdateFornecedor requestModel) throws BusinessRuleException {
         this.atualizarFornecedorInputPort.execute(id, requestModel);
         return ResponseEntity.status(HttpStatus.OK).build();
     }

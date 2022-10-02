@@ -18,7 +18,7 @@ import javax.validation.constraints.Size;
 @Conditional(selected = "tipoDeContato", values = "EMAIL", required = "enderecoEmail", message = "Informe o endereco de e-mail")
 @Conditional(selected = "tipoDeContato", values = "SITE", required = "urlSite", message = "Informe uma URL valida")
 @Conditional(selected = "tipoDeContato", values = "OUTRO", required = "texto", message = "Informe um texto")
-public class CreateContatoRequestModel {
+public class CreateContatoRequest {
     @NotNull(message = "Tipo de Contato deve ser informado")
     private TipoDeContatoEnum tipoDeContato;
     @Size(message = "DDD: tamanho máximo de {max} digitos", min = 2, max = 2)
@@ -32,37 +32,37 @@ public class CreateContatoRequestModel {
     @Size(message = "Texto: tamanho máximo de {max} caracteres", max = 255)
     private String texto;
 
-    public static CreateContatoRequestModel outro(final String texto) {
-        return CreateContatoRequestModel.builder()
+    public static CreateContatoRequest outro(final String texto) {
+        return CreateContatoRequest.builder()
                 .tipoDeContato(TipoDeContatoEnum.OUTRO)
                 .texto(texto)
                 .build();
     }
 
-    public static CreateContatoRequestModel site(final String url) {
-        return CreateContatoRequestModel.builder()
+    public static CreateContatoRequest site(final String url) {
+        return CreateContatoRequest.builder()
                 .tipoDeContato(TipoDeContatoEnum.SITE)
                 .urlSite(url)
                 .build();
     }
 
-    public static CreateContatoRequestModel celular(final String ddd, final String numero) {
-        return CreateContatoRequestModel.builder()
+    public static CreateContatoRequest celular(final String ddd, final String numero) {
+        return CreateContatoRequest.builder()
                 .tipoDeContato(TipoDeContatoEnum.CELULAR)
                 .ddd(ddd)
                 .numero(numero)
                 .build();
     }
 
-    public static CreateContatoRequestModel telefone(final String ddd, final String numero) {
-        return CreateContatoRequestModel.builder()
+    public static CreateContatoRequest telefone(final String ddd, final String numero) {
+        return CreateContatoRequest.builder()
                 .tipoDeContato(TipoDeContatoEnum.TELEFONE)
                 .ddd(ddd)
                 .numero(numero)
                 .build();
     }
-    public static CreateContatoRequestModel email(final String enderecoEmail) {
-        return CreateContatoRequestModel.builder()
+    public static CreateContatoRequest email(final String enderecoEmail) {
+        return CreateContatoRequest.builder()
                 .tipoDeContato(TipoDeContatoEnum.EMAIL)
                 .enderecoEmail(enderecoEmail)
                 .build();

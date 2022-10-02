@@ -2,10 +2,11 @@ package io.github.edsongustavotofolo.microservicetemplate.usecases.interactors;
 
 import io.github.edsongustavotofolo.microservicetemplate.domain.builder.FornecedorBuilder;
 import io.github.edsongustavotofolo.microservicetemplate.domain.entities.*;
+import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.output.exceptions.BusinessRuleException;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.providers.FornecedorProvider;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.dtos.TipoDeContatoEnum;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.input.dtos.UpdateContato;
-import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.dtos.UpdateFornecedorModel;
+import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.dtos.UpdateFornecedor;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.models.builders.UpdateFornecedorRequestModelBuilder;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.interactors.mappers.impl.ContatoMapperImpl;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.output.FornecedorAtualizadoOutputPort;
@@ -33,7 +34,7 @@ class AtualizarFornecedorInteractorUnitTest {
     private AtualizarFornecedorInteractor interactor;
 
     @Test
-    void deveAtualizarFornecedorComSucesso() {
+    void deveAtualizarFornecedorComSucesso() throws BusinessRuleException {
         // plan
         var id = 1;
 
@@ -41,7 +42,7 @@ class AtualizarFornecedorInteractorUnitTest {
         when(fornecedorProvider.buscarPorId(id)).thenReturn(Optional.of(fornecedorResult));
         when(contatoMapper.toDomain(any(UpdateContato.class))).thenCallRealMethod();
 
-        UpdateFornecedorModel expected = UpdateFornecedorRequestModelBuilder.umFornecedor()
+        UpdateFornecedor expected = UpdateFornecedorRequestModelBuilder.umFornecedor()
                 .adicionarContato(UpdateContato.builder()
                         .id(6)
                         .tipoDeContato(TipoDeContatoEnum.EMAIL)

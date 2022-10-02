@@ -12,7 +12,7 @@ import java.util.List;
 
 @Data
 @Builder
-public class UpdateFornecedorModel {
+public class UpdateFornecedor {
     @NotEmpty(message = "CNPJ: Campo obrigatório")
     @Size(message = "Informe o CNPJ sem formatação, com somente {max} digitos", min = 14, max = 14)
     private String cnpj;

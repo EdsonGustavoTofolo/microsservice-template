@@ -15,7 +15,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class CreateFornecedorRequestModel {
+public class CreateFornecedorRequest {
     @NotEmpty(message = "CNPJ: Campo obrigatório")
     @Size(message = "Informe o CNPJ sem formatação, com somente {max} digitos", min = 14, max = 14)
     private String cnpj;
@@ -45,6 +45,6 @@ public class CreateFornecedorRequestModel {
     @NotNull(message = "Cidade: Campo obrigatório")
     private Integer cidade;
     @NotEmpty(message = "Contatos: Campo obrigatório")
-    private List<@Valid CreateContatoRequestModel> contatos;
+    private List<@Valid CreateContatoRequest> contatos;
     private String observacaoContatos;
 }

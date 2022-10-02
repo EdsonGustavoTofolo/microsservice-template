@@ -2,8 +2,9 @@ package io.github.edsongustavotofolo.microservicetemplate.usecases.interactors;
 
 import io.github.edsongustavotofolo.microservicetemplate.domain.entities.*;
 import io.github.edsongustavotofolo.microservicetemplate.domain.entities.valueobjects.Cnpj;
+import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.output.exceptions.BusinessRuleException;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.providers.FornecedorProvider;
-import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.dtos.UpdateFornecedorModel;
+import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.dtos.UpdateFornecedor;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.interactors.mappers.ContatoMapper;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.input.AtualizarFornecedorInputPort;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.output.FornecedorAtualizadoOutputPort;
@@ -28,7 +29,7 @@ public class AtualizarFornecedorInteractor implements AtualizarFornecedorInputPo
 
     @Transactional
     @Override
-    public void execute(final Integer id, final UpdateFornecedorModel requestModel) {
+    public void execute(final Integer id, final UpdateFornecedor requestModel) throws BusinessRuleException {
         var fornecedor = this.fornecedorProvider.buscarPorId(id)
                 .orElse(presenter.fornecedorNaoEncontrado());
 
