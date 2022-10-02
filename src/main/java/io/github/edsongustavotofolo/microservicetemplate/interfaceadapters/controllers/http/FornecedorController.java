@@ -48,9 +48,8 @@ public class FornecedorController {
                             description = "Retorna a URL do Fornecedor criado",
                             schema = @Schema(type = "string"))),
             @ApiResponse(responseCode = "400",
-                    description = "Dados do fornecedor inválidos"),
-            @ApiResponse(responseCode = "400",
-                    description = "Cnpj inválido"),
+                    description = "Dados do fornecedor inválidos\t\n" +
+                            "Cnpj inválido"),
             @ApiResponse(responseCode = "422",
                     description = "Fornecedor já existe")
     })
