@@ -4,7 +4,8 @@ import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.output.e
 import org.springframework.http.HttpStatus;
 
 public class FornecedorAlreadyExistsException extends BaseHttpException {
+
     public FornecedorAlreadyExistsException() {
-        super(HttpStatus.BAD_REQUEST, ErrorType.EXPT004);
+        super(HttpStatus.UNPROCESSABLE_ENTITY, ErrorType.EXPT004);
     }
 }

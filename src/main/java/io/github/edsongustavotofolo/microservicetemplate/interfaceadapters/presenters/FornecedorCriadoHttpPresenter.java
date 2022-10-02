@@ -1,18 +1,25 @@
 package io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.presenters;
 
-import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.output.exceptions.BusinessRuleException;
 import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.presenters.exceptions.FornecedorAlreadyExistsException;
 import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.presenters.exceptions.FornecedorCnpjInvalidException;
+import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.output.CreateFornecedorOutputPort;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.output.dtos.CreatedFornecedor;
-import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.output.CreatedFornecedorOutputPort;
+import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.output.exceptions.BusinessRuleException;
 import org.springframework.stereotype.Service;
 
 @Service
-public class FornecedorCriadoPresenter implements CreatedFornecedorOutputPort {
+public class FornecedorCriadoHttpPresenter implements CreateFornecedorOutputPort<CreatedFornecedor> {
+
+    private CreatedFornecedor createdFornecedor;
 
     @Override
-    public CreatedFornecedor present(final Integer id) {
-        return new CreatedFornecedor(id);
+    public void present(final Integer id) {
+        this.createdFornecedor = new CreatedFornecedor(id);
+    }
+
+    @Override
+    public CreatedFornecedor get() {
+        return this.createdFornecedor;
     }
 
     @Override

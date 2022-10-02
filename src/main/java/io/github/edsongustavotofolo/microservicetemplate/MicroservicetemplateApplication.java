@@ -8,18 +8,19 @@ import org.springframework.data.envers.repository.support.EnversRevisionReposito
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication(scanBasePackages = {
-		"io.github.edsongustavotofolo.microservicetemplate.infrastructure",
-		"io.github.edsongustavotofolo.microservicetemplate.interfaceadapters"
+        "io.github.edsongustavotofolo.microservicetemplate.infrastructure",
+        "io.github.edsongustavotofolo.microservicetemplate.interfaceadapters",
+        "io.github.edsongustavotofolo.microservicetemplate.usecases",
 })
 @EntityScan("io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.gateways.database.model")
 @EnableJpaRepositories(
-		repositoryFactoryBeanClass = EnversRevisionRepositoryFactoryBean.class,
-		basePackages = "io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.gateways.database.repository")
+        repositoryFactoryBeanClass = EnversRevisionRepositoryFactoryBean.class,
+        basePackages = "io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.gateways.database.repository")
 @EnableFeignClients(basePackages = "io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.gateways.clients")
 public class MicroservicetemplateApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(MicroservicetemplateApplication.class, args);
-	}
+    public static void main(final String[] args) {
+        SpringApplication.run(MicroservicetemplateApplication.class, args);
+    }
 
 }

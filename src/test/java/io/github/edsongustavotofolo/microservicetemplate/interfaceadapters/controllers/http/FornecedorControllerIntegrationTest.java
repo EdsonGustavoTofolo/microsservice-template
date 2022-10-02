@@ -1,19 +1,18 @@
 package io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http;
 
 import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.base.ControllerTest;
-import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.output.exceptions.enums.ErrorType;
 import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.presenters.exceptions.FornecedorCnpjInvalidException;
+import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.dtos.TipoDeContatoEnum;
+import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.input.CreateFornecedorInputPort;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.input.dtos.CreateContato;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.input.dtos.CreateFornecedor;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.output.dtos.CreatedFornecedor;
-import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.dtos.TipoDeContatoEnum;
-import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.input.CreateFornecedorInputPort;
+import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.output.exceptions.enums.ErrorType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -24,11 +23,12 @@ import java.util.List;
 import java.util.Locale;
 
 import static io.github.edsongustavotofolo.microservicetemplate.usecases.models.builders.CreateFornecedorRequestModelBuilder.umFornecedor;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doThrow;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith(MockitoExtension.class)
 class FornecedorControllerIntegrationTest extends ControllerTest {
@@ -90,9 +90,9 @@ class FornecedorControllerIntegrationTest extends ControllerTest {
     void deveCriarFornecedorComSucesso() throws Exception {
         // cenario
         var responseModel = new CreatedFornecedor(1);
-        Mockito.when(createFornecedorInputPort
-                .execute(any(CreateFornecedor.class)))
-                .thenReturn(responseModel);
+//        Mockito.when(createFornecedorInputPort
+//                .execute(any(CreateFornecedor.class)))
+//                .thenReturn(responseModel);
 
         var fornecedorRequestModel = CreateFornecedor.builder()
                 .cnpj("45135006000104")

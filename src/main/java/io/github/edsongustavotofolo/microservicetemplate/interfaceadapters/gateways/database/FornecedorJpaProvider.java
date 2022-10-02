@@ -7,11 +7,11 @@ import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.gatew
 import io.github.edsongustavotofolo.microservicetemplate.usecases.providers.FornecedorProvider;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import java.util.Optional;
 
-@Service
+@Component
 @Slf4j
 @RequiredArgsConstructor
 public class FornecedorJpaProvider implements FornecedorProvider {

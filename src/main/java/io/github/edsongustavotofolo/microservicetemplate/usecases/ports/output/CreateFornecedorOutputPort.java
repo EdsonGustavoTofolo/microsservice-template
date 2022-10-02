@@ -1,10 +1,13 @@
 package io.github.edsongustavotofolo.microservicetemplate.usecases.ports.output;
 
 import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.output.exceptions.BusinessRuleException;
-import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.output.dtos.CreatedFornecedor;
 
-public interface CreatedFornecedorOutputPort {
-    CreatedFornecedor present(final Integer id);
+public interface CreateFornecedorOutputPort<T> {
+    void present(final Integer id);
+
+    T get();
+
     void cnpjIsInvalid() throws BusinessRuleException;
+
     void fornecedorAlreadyExists() throws BusinessRuleException;
 }

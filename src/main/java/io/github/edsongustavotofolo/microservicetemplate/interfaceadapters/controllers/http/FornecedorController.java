@@ -1,11 +1,10 @@
 package io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http;
 
-import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.converters.CreateFornecedorConverter;
 import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.dtos.CreateFornecedorRequest;
-import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.output.exceptions.BusinessRuleException;
 import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.dtos.UpdateFornecedor;
+import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.services.CreateFornecedor;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.input.AtualizarFornecedorInputPort;
-import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.input.CreateFornecedorInputPort;
+import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.output.exceptions.BusinessRuleException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.headers.Header;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -16,7 +15,12 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
@@ -32,8 +36,8 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 @Tag(name = "Fornecedor", description = "Cadastro de Fornecedor")
 public class FornecedorController {
 
-    private final CreateFornecedorInputPort createFornecedorInputPort;
-    private final AtualizarFornecedorInputPort atualizarFornecedorInputPort;
+    private final CreateFornecedor createFornecedor;
+    private final AtualizarFornecedorInputPort atualizarFornecedor;
 
     @Operation(summary = "Cria um novo fornecedor",
             description = "Cria um fornecedor com os dados fornecidos")
@@ -44,18 +48,20 @@ public class FornecedorController {
                             description = "Retorna a URL do Fornecedor criado",
                             schema = @Schema(type = "string"))),
             @ApiResponse(responseCode = "400",
-                    description = "Dados do fornecedor inválidos")
+                    description = "Dados do fornecedor inválidos"),
+            @ApiResponse(responseCode = "400",
+                    description = "Cnpj inválido"),
+            @ApiResponse(responseCode = "422",
+                    description = "Fornecedor já existe")
     })
     @PostMapping(consumes = APPLICATION_JSON_VALUE)
-    public ResponseEntity<Void> create(@Valid @RequestBody CreateFornecedorRequest requestModel) throws BusinessRuleException {
-        final var model = CreateFornecedorConverter.toModel(requestModel);
+    public ResponseEntity<Void> create(@Valid @RequestBody final CreateFornecedorRequest request) throws BusinessRuleException {
+        final var id = this.createFornecedor.execute(request);
 
-        var id = this.createFornecedorInputPort.execute(model);
-
-        URI location = ServletUriComponentsBuilder
+        final URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest()
                 .path("/{id}")
-                .buildAndExpand(id.get())
+                .buildAndExpand(id)
                 .toUri();
 
         return ResponseEntity.created(location).build();
@@ -72,8 +78,8 @@ public class FornecedorController {
                     description = "Fornecedor não encontrado")
     })
     @PatchMapping(value = "/{id}", consumes = APPLICATION_JSON_VALUE)
-    public ResponseEntity<Void> patch(@PathVariable Integer id, @Valid @RequestBody UpdateFornecedor requestModel) throws BusinessRuleException {
-        this.atualizarFornecedorInputPort.execute(id, requestModel);
+    public ResponseEntity<Void> patch(@PathVariable final Integer id, @Valid @RequestBody final UpdateFornecedor requestModel) throws BusinessRuleException {
+        this.atualizarFornecedor.execute(id, requestModel);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 }

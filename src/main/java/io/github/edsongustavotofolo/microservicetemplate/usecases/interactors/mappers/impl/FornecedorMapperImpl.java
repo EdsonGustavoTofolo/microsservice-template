@@ -5,22 +5,25 @@ import io.github.edsongustavotofolo.microservicetemplate.domain.entities.impl.Ci
 import io.github.edsongustavotofolo.microservicetemplate.domain.entities.impl.ContatosImpl;
 import io.github.edsongustavotofolo.microservicetemplate.domain.entities.impl.EnderecoImpl;
 import io.github.edsongustavotofolo.microservicetemplate.domain.entities.impl.FornecedorImpl;
-import io.github.edsongustavotofolo.microservicetemplate.domain.entities.valueobjects.*;
+import io.github.edsongustavotofolo.microservicetemplate.domain.entities.valueobjects.Cep;
+import io.github.edsongustavotofolo.microservicetemplate.domain.entities.valueobjects.Cnpj;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.interactors.mappers.ContatoMapper;
-import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.input.dtos.CreateFornecedor;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.interactors.mappers.FornecedorMapper;
+import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.input.dtos.CreateFornecedor;
+import org.springframework.stereotype.Component;
 
+@Component
 public class FornecedorMapperImpl implements FornecedorMapper {
 
     private final ContatoMapper contatoMapper;
 
-    public FornecedorMapperImpl(ContatoMapper contatoMapper) {
+    public FornecedorMapperImpl(final ContatoMapper contatoMapper) {
         this.contatoMapper = contatoMapper;
     }
 
     @Override
     public Fornecedor toDomain(final CreateFornecedor requestModel) {
-        var endereco = new EnderecoImpl(
+        final var endereco = new EnderecoImpl(
                 requestModel.getLogradouro(),
                 requestModel.getNumero(),
                 requestModel.getBairro(),
@@ -29,10 +32,10 @@ public class FornecedorMapperImpl implements FornecedorMapper {
                 new Cep(requestModel.getCep()),
                 new CidadeImpl(requestModel.getCidadeId()));
 
-        var contatos = new ContatosImpl();
+        final var contatos = new ContatosImpl();
         contatos.setObservacao(requestModel.getObservacaoContatos());
         requestModel.getContatos().forEach(contatoModel -> {
-            var contato = this.contatoMapper.toDomain(contatoModel);
+            final var contato = this.contatoMapper.toDomain(contatoModel);
             contatos.adicionar(contato);
         });
 
