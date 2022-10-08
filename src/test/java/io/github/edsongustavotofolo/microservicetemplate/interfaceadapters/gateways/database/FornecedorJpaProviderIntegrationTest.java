@@ -22,7 +22,9 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
 
 import static io.github.edsongustavotofolo.microservicetemplate.domain.builder.FornecedorBuilder.umFornecedor;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.verify;
 
 @DataJpaTest
@@ -49,11 +51,11 @@ class FornecedorJpaProviderIntegrationTest {
     @Test
     void deveRetornarTrueAoVerificarExistenciaDeFornecedorPorCnpj() {
         // cenario
-        var fornecedor = umFornecedor().get();
-        this.fornecedorJpaGateway.criar(fornecedor);
+        final var fornecedor = umFornecedor().get();
+        this.fornecedorJpaGateway.create(fornecedor);
 
         // exec
-        var actualExistsByCnpj = this.fornecedorJpaGateway.existeFornecedorComCnpj(fornecedor.getCnpj().toString());
+        final var actualExistsByCnpj = this.fornecedorJpaGateway.existsFornecedorWithCnpj(fornecedor.getCnpj().toString());
 
         // check
         assertTrue(actualExistsByCnpj);
@@ -62,19 +64,19 @@ class FornecedorJpaProviderIntegrationTest {
     @Test
     void deveCriarFornecedorComSucesso() {
         // cenario
-        var fornecedor = umFornecedor().get();
+        final var fornecedor = umFornecedor().get();
 
         // execucao
-        var id = this.fornecedorJpaGateway.criar(fornecedor);
+        final var id = this.fornecedorJpaGateway.create(fornecedor);
 
         // verificacao
         assertNotNull(id);
 
-        ArgumentCaptor<FornecedorEntity> argumentCaptor = ArgumentCaptor.forClass(FornecedorEntity.class);
+        final ArgumentCaptor<FornecedorEntity> argumentCaptor = ArgumentCaptor.forClass(FornecedorEntity.class);
 
-        verify(fornecedorJpaRepository).persist(argumentCaptor.capture());
+        verify(this.fornecedorJpaRepository).persist(argumentCaptor.capture());
 
-        var actualFornecedorEntity = argumentCaptor.getValue();
+        final var actualFornecedorEntity = argumentCaptor.getValue();
         assertNotNull(actualFornecedorEntity);
         assertNotNull(actualFornecedorEntity.getId());
         assertEquals(id, actualFornecedorEntity.getId());

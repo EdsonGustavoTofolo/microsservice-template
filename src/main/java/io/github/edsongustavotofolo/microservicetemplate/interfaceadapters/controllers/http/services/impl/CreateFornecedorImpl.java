@@ -1,7 +1,7 @@
 package io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.services.impl;
 
-import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.converters.CreateFornecedorConverter;
 import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.dtos.CreateFornecedorRequest;
+import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.mappers.CreateFornecedorMapper;
 import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.services.CreateFornecedor;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.input.CreateFornecedorInputPort;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.output.CreateFornecedorOutputPort;
@@ -19,7 +19,7 @@ public class CreateFornecedorImpl implements CreateFornecedor {
 
     @Override
     public Integer execute(final CreateFornecedorRequest request) throws BusinessRuleException {
-        final var model = CreateFornecedorConverter.toModel(request);
+        final var model = CreateFornecedorMapper.toModel(request);
 
         this.createFornecedor.execute(model);
 

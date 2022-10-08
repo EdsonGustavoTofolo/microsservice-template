@@ -26,14 +26,14 @@ public class CreateFornecedorInteractor implements CreateFornecedorInputPort {
             this.presenter.cnpjIsInvalid();
             return;
         }
-        if (this.fornecedorProvider.existeFornecedorComCnpj(requestModel.getCnpj())) {
+        if (this.fornecedorProvider.existsFornecedorWithCnpj(requestModel.getCnpj())) {
             this.presenter.fornecedorAlreadyExists();
             return;
         }
 
         final var fornecedor = this.fornecedorMapper.toDomain(requestModel);
 
-        final var id = this.fornecedorProvider.criar(fornecedor);
+        final var id = this.fornecedorProvider.create(fornecedor);
 
         this.presenter.show(id);
     }

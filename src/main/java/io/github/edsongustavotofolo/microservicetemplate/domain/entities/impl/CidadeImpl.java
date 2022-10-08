@@ -8,24 +8,30 @@ public final class CidadeImpl implements Cidade {
     private final String nome;
     private final Estado estado;
 
-    public CidadeImpl(Integer id) {
+    public CidadeImpl(final Integer id) {
         this.id = id;
         this.nome = "";
         this.estado = null;
     }
 
+    public CidadeImpl(final Integer id, final String nome, final Estado estado) {
+        this.id = id;
+        this.nome = nome;
+        this.estado = estado;
+    }
+
     @Override
     public Integer getId() {
-        return id;
+        return this.id;
     }
 
     @Override
     public String getNome() {
-        return nome;
+        return this.nome;
     }
 
     @Override
     public Estado getEstado() {
-        return estado;
+        return this.estado;
     }
 }

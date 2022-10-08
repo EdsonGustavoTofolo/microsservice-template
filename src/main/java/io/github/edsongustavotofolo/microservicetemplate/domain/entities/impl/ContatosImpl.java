@@ -1,6 +1,12 @@
 package io.github.edsongustavotofolo.microservicetemplate.domain.entities.impl;
 
-import io.github.edsongustavotofolo.microservicetemplate.domain.entities.*;
+import io.github.edsongustavotofolo.microservicetemplate.domain.entities.Celular;
+import io.github.edsongustavotofolo.microservicetemplate.domain.entities.Contato;
+import io.github.edsongustavotofolo.microservicetemplate.domain.entities.Contatos;
+import io.github.edsongustavotofolo.microservicetemplate.domain.entities.Email;
+import io.github.edsongustavotofolo.microservicetemplate.domain.entities.OutroContato;
+import io.github.edsongustavotofolo.microservicetemplate.domain.entities.Site;
+import io.github.edsongustavotofolo.microservicetemplate.domain.entities.Telefone;
 import lombok.Setter;
 
 import java.util.ArrayList;
@@ -11,54 +17,60 @@ public class ContatosImpl implements Contatos {
     private Integer id;
     @Setter
     private String observacao;
-    private List<Contato> lista;
+    private final List<Contato> lista;
 
     public ContatosImpl() {
         this.lista = new ArrayList<>();
     }
 
+    public ContatosImpl(final Integer id, final String observacao) {
+        this.id = id;
+        this.observacao = observacao;
+        this.lista = new ArrayList<>();
+    }
+
     @Override
     public Integer getId() {
-        return id;
+        return this.id;
     }
 
     @Override
     public String getObservacao() {
-        return observacao;
+        return this.observacao;
     }
 
     @Override
     public List<Contato> getLista() {
-        return Collections.unmodifiableList(lista);
+        return Collections.unmodifiableList(this.lista);
     }
 
     @Override
-    public void adicionar(final Contato contato) {
-        lista.add(contato);
+    public void add(final Contato contato) {
+        this.lista.add(contato);
     }
 
     @Override
-    public Email getEmailAt(int index) {
+    public Email getEmailAt(final int index) {
         return (Email) this.lista.get(index);
     }
 
     @Override
-    public Celular getCelularAt(int index) {
+    public Celular getCelularAt(final int index) {
         return (Celular) this.lista.get(index);
     }
 
     @Override
-    public Telefone getTelefoneAt(int index) {
+    public Telefone getTelefoneAt(final int index) {
         return (Telefone) this.lista.get(index);
     }
 
     @Override
-    public Site getSiteAt(int index) {
+    public Site getSiteAt(final int index) {
         return (Site) this.lista.get(index);
     }
 
     @Override
-    public OutroContato getOutroAt(int index) {
+    public OutroContato getOutroAt(final int index) {
         return (OutroContato) this.lista.get(index);
     }
 }

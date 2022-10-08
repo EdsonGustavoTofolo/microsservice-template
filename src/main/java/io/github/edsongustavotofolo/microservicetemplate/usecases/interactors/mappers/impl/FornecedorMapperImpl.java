@@ -36,7 +36,7 @@ public class FornecedorMapperImpl implements FornecedorMapper {
         contatos.setObservacao(requestModel.getObservacaoContatos());
         requestModel.getContatos().forEach(contatoModel -> {
             final var contato = this.contatoMapper.toDomain(contatoModel);
-            contatos.adicionar(contato);
+            contatos.add(contato);
         });
 
         return new FornecedorImpl(

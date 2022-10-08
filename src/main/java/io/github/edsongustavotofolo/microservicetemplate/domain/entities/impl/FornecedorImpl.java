@@ -7,15 +7,15 @@ import io.github.edsongustavotofolo.microservicetemplate.domain.entities.valueob
 import io.github.edsongustavotofolo.microservicetemplate.domain.entities.valueobjects.Cnpj;
 
 public class FornecedorImpl implements Fornecedor {
-    private Integer id;
+    private final Integer id;
     private Cnpj cnpj;
     private String razaoSocial;
     private String nomeFantasia;
     private String observacao;
     private Endereco endereco;
-    private Contatos contatos;
+    private final Contatos contatos;
 
-    public FornecedorImpl(Cnpj cnpj, String razaoSocial, String nomeFantasia, String observacao, Endereco endereco, Contatos contatos) {
+    public FornecedorImpl(final Cnpj cnpj, final String razaoSocial, final String nomeFantasia, final String observacao, final Endereco endereco, final Contatos contatos) {
         this.id = null;
         this.cnpj = cnpj;
         this.razaoSocial = razaoSocial;
@@ -27,37 +27,37 @@ public class FornecedorImpl implements Fornecedor {
 
     @Override
     public Integer getId() {
-        return id;
+        return this.id;
     }
 
     @Override
     public Cnpj getCnpj() {
-        return cnpj;
+        return this.cnpj;
     }
 
     @Override
     public String getRazaoSocial() {
-        return razaoSocial;
+        return this.razaoSocial;
     }
 
     @Override
     public String getNomeFantasia() {
-        return nomeFantasia;
+        return this.nomeFantasia;
     }
 
     @Override
     public String getObservacao() {
-        return observacao;
+        return this.observacao;
     }
 
     @Override
     public Endereco getEndereco() {
-        return endereco;
+        return this.endereco;
     }
 
     @Override
     public Contatos getContatos() {
-        return contatos;
+        return this.contatos;
     }
 
     @Override

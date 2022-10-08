@@ -21,34 +21,35 @@ public class FornecedorJpaProvider implements FornecedorProvider {
     private final FornecedorEntityMapper fornecedorEntityMapper;
 
     @Override
-    public Integer criar(final Fornecedor fornecedor) {
+    public Integer create(final Fornecedor fornecedor) {
         log.info("Criando fornecedor");
 
-        var cidadeEntity = this.cidadeJpaRepository.getReferenceById(fornecedor.getEndereco().getCidade().getId());
+        final var cidadeEntity = this.cidadeJpaRepository.getReferenceById(fornecedor.getEndereco().getCidade().getId());
 
-        var fornecedorEntity = this.fornecedorEntityMapper.toEntity(fornecedor);
+        final var fornecedorEntity = this.fornecedorEntityMapper.toEntity(fornecedor);
         fornecedorEntity.getEndereco().setCidade(cidadeEntity);
         fornecedorEntity.getEndereco().setFornecedor(fornecedorEntity);
         fornecedorEntity.getContatos().setFornecedor(fornecedorEntity);
 
-        var saved = this.fornecedorJpaRepository.persist(fornecedorEntity);
+        final var saved = this.fornecedorJpaRepository.persist(fornecedorEntity);
 
         return saved.getId();
     }
 
     @Override
-    public boolean existeFornecedorComCnpj(final String cnpj) {
+    public boolean existsFornecedorWithCnpj(final String cnpj) {
         log.info("Verificando existencia de fornecedor pelo cnpj " + cnpj);
         return this.fornecedorJpaRepository.existsByCnpj(cnpj);
     }
 
     @Override
-    public Optional<Fornecedor> buscarPorId(Integer id) {
-        throw new RuntimeException("Not implemented yet");
+    public Optional<Fornecedor> getById(final Integer id) {
+        return this.fornecedorJpaRepository.findById(id)
+                .map(this.fornecedorEntityMapper::toDomain);
     }
 
     @Override
-    public void atualizar(Fornecedor fornecedor) {
+    public void update(final Fornecedor fornecedor) {
         throw new RuntimeException("Not implemented yet");
     }
 }

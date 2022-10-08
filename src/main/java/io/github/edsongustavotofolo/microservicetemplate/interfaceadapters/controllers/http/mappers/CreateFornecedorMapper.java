@@ -1,12 +1,12 @@
-package io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.converters;
+package io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.mappers;
 
 import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.dtos.CreateFornecedorRequest;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.input.dtos.CreateContato;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.input.dtos.CreateFornecedor;
 
-public class CreateFornecedorConverter {
+public class CreateFornecedorMapper {
 
-    private CreateFornecedorConverter() {
+    private CreateFornecedorMapper() {
         throw new IllegalStateException("Unity class");
     }
 
@@ -26,18 +26,18 @@ public class CreateFornecedorConverter {
                 .contatos(
                         requestModel.getContatos().stream()
                                 .map(contatoRequestModel ->
-                                    switch (contatoRequestModel.getTipoDeContato()) {
-                                        case EMAIL:
-                                            yield CreateContato.email(contatoRequestModel.getEnderecoEmail());
-                                        case TELEFONE:
-                                            yield CreateContato.telefone(contatoRequestModel.getDdd(), contatoRequestModel.getNumero());
-                                        case CELULAR:
-                                            yield CreateContato.celular(contatoRequestModel.getDdd(), contatoRequestModel.getNumero());
-                                        case SITE:
-                                            yield CreateContato.site(contatoRequestModel.getUrlSite());
-                                        case OUTRO:
-                                            yield CreateContato.outro(contatoRequestModel.getTexto());
-                                    }
+                                        switch (contatoRequestModel.getTipoDeContato()) {
+                                            case EMAIL:
+                                                yield CreateContato.email(contatoRequestModel.getEnderecoEmail());
+                                            case TELEFONE:
+                                                yield CreateContato.telefone(contatoRequestModel.getDdd(), contatoRequestModel.getNumero());
+                                            case CELULAR:
+                                                yield CreateContato.celular(contatoRequestModel.getDdd(), contatoRequestModel.getNumero());
+                                            case SITE:
+                                                yield CreateContato.site(contatoRequestModel.getUrlSite());
+                                            case OUTRO:
+                                                yield CreateContato.outro(contatoRequestModel.getTexto());
+                                        }
                                 ).toList()
                 )
                 .build();

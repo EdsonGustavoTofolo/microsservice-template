@@ -5,11 +5,11 @@ import io.github.edsongustavotofolo.microservicetemplate.domain.entities.Fornece
 import java.util.Optional;
 
 public interface FornecedorProvider {
-    Integer criar(final Fornecedor fornecedor);
+    Integer create(final Fornecedor fornecedor);
 
-    boolean existeFornecedorComCnpj(final String cnpj);
+    boolean existsFornecedorWithCnpj(final String cnpj);
 
-    Optional<Fornecedor> buscarPorId(final Integer id);
+    Optional<Fornecedor> getById(final Integer id);
 
-    void atualizar(final Fornecedor fornecedor);
+    void update(final Fornecedor fornecedor);
 }

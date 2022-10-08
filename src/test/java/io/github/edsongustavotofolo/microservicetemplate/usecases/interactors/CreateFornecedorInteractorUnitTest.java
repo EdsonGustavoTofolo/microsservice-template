@@ -35,19 +35,19 @@ class CreateFornecedorInteractorUnitTest {
 
     @Test
     void deveLancarExcecaoAoCriarFornecedorComCnpjJaExistenteNaBase() throws BusinessRuleException {
-        var expectedMessage = "Já existe Fornecedor com o CNPJ informado!";
-        var ex = new FornecedorCnpjInvalidException();
-        doThrow(ex).when(presenter).cnpjIsInvalid();
+        final var expectedMessage = "Já existe Fornecedor com o CNPJ informado!";
+        final var ex = new FornecedorCnpjInvalidException();
+        doThrow(ex).when(this.presenter).cnpjIsInvalid();
 
-        var requestModel = CreateFornecedorRequestModelBuilder.umFornecedor().get();
+        final var requestModel = CreateFornecedorRequestModelBuilder.umFornecedor().get();
 
-        when(fornecedorProvider.existeFornecedorComCnpj(requestModel.getCnpj())).thenReturn(true);
+        when(this.fornecedorProvider.existsFornecedorWithCnpj(requestModel.getCnpj())).thenReturn(true);
 
         // execucao
         try {
-            interactor.execute(requestModel);
+            this.interactor.execute(requestModel);
             Assertions.fail("Deveria lançar exceção de fornecedor já existente com cnpj informado");
-        } catch (Exception actualException) {
+        } catch (final Exception actualException) {
             assertEquals(BusinessRuleException.class, actualException.getClass());
             assertEquals(expectedMessage, actualException.getMessage());
         }
@@ -56,19 +56,19 @@ class CreateFornecedorInteractorUnitTest {
     @Test
     void deveLancarExcecaoAoCriarFornecedorComCnpjInvalido() throws BusinessRuleException {
         // cenario
-        var expectedMessage = "CNPJ inválido!";
+        final var expectedMessage = "CNPJ inválido!";
 
-        var expectedException = new FornecedorCnpjInvalidException();
-        doThrow(expectedException).when(presenter).cnpjIsInvalid();
+        final var expectedException = new FornecedorCnpjInvalidException();
+        doThrow(expectedException).when(this.presenter).cnpjIsInvalid();
 
-        var cnpjInvalido = "99999999999999";
-        var requestModel = CreateFornecedorRequestModelBuilder.umFornecedor().comCnpj(cnpjInvalido).get();
+        final var cnpjInvalido = "99999999999999";
+        final var requestModel = CreateFornecedorRequestModelBuilder.umFornecedor().comCnpj(cnpjInvalido).get();
 
         // execucao
         try {
-            interactor.execute(requestModel);
+            this.interactor.execute(requestModel);
             Assertions.fail("Deveria lançar exceção de CNPJ inválido");
-        } catch (Exception actualException) {
+        } catch (final Exception actualException) {
             assertEquals(expectedException.getClass(), actualException.getClass());
             assertEquals(expectedException.getMessage(), actualException.getMessage());
         }
@@ -77,18 +77,18 @@ class CreateFornecedorInteractorUnitTest {
     @Test
     void executarComSucesso() throws BusinessRuleException {
         // cenario
-        Fornecedor fornecedor = umFornecedor().get();
+        final Fornecedor fornecedor = umFornecedor().get();
 
-        when(fornecedorMapper
+        when(this.fornecedorMapper
                 .toDomain(any(CreateFornecedor.class))).thenReturn(fornecedor);
 
-        when(fornecedorProvider.criar(fornecedor)).thenReturn(1);
+        when(this.fornecedorProvider.create(fornecedor)).thenReturn(1);
 
-        var responseModel = umFornecedorResponseModel().get();
+        final var responseModel = umFornecedorResponseModel().get();
 
 //        when(presenter.present(1)).thenReturn(responseModel);
 
-        var requestModel = CreateFornecedorRequestModelBuilder.umFornecedor().get();
+        final var requestModel = CreateFornecedorRequestModelBuilder.umFornecedor().get();
 
         // execucao
 //        var actualResponseModel = interactor.execute(requestModel);

@@ -1,15 +1,20 @@
 package io.github.edsongustavotofolo.microservicetemplate.usecases.interactors;
 
 import io.github.edsongustavotofolo.microservicetemplate.domain.builder.FornecedorBuilder;
-import io.github.edsongustavotofolo.microservicetemplate.domain.entities.*;
-import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.output.exceptions.BusinessRuleException;
-import io.github.edsongustavotofolo.microservicetemplate.usecases.providers.FornecedorProvider;
+import io.github.edsongustavotofolo.microservicetemplate.domain.entities.Celular;
+import io.github.edsongustavotofolo.microservicetemplate.domain.entities.Email;
+import io.github.edsongustavotofolo.microservicetemplate.domain.entities.Fornecedor;
+import io.github.edsongustavotofolo.microservicetemplate.domain.entities.OutroContato;
+import io.github.edsongustavotofolo.microservicetemplate.domain.entities.Site;
+import io.github.edsongustavotofolo.microservicetemplate.domain.entities.Telefone;
+import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.dtos.UpdateFornecedorRequest;
+import io.github.edsongustavotofolo.microservicetemplate.usecases.interactors.mappers.impl.ContatoMapperImpl;
+import io.github.edsongustavotofolo.microservicetemplate.usecases.models.builders.UpdateFornecedorRequestModelBuilder;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.dtos.TipoDeContatoEnum;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.input.dtos.UpdateContato;
-import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.dtos.UpdateFornecedor;
-import io.github.edsongustavotofolo.microservicetemplate.usecases.models.builders.UpdateFornecedorRequestModelBuilder;
-import io.github.edsongustavotofolo.microservicetemplate.usecases.interactors.mappers.impl.ContatoMapperImpl;
-import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.output.FornecedorAtualizadoOutputPort;
+import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.output.UpdateFornecedorOutputPort;
+import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.output.exceptions.BusinessRuleException;
+import io.github.edsongustavotofolo.microservicetemplate.usecases.providers.FornecedorProvider;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
@@ -20,29 +25,32 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class AtualizarFornecedorInteractorUnitTest {
     @Mock
     private FornecedorProvider fornecedorProvider;
     @Mock
-    private FornecedorAtualizadoOutputPort presenter;
+    private UpdateFornecedorOutputPort presenter;
     @Mock
     private ContatoMapperImpl contatoMapper;
     @InjectMocks
-    private AtualizarFornecedorInteractor interactor;
+    private UpdateFornecedorInteractor interactor;
 
     @Test
     void deveAtualizarFornecedorComSucesso() throws BusinessRuleException {
         // plan
-        var id = 1;
+        final var id = 1;
 
-        var fornecedorResult = FornecedorBuilder.umFornecedor().get();
-        when(fornecedorProvider.buscarPorId(id)).thenReturn(Optional.of(fornecedorResult));
-        when(contatoMapper.toDomain(any(UpdateContato.class))).thenCallRealMethod();
+        final var fornecedorResult = FornecedorBuilder.umFornecedor().get();
+        when(this.fornecedorProvider.getById(id)).thenReturn(Optional.of(fornecedorResult));
+        when(this.contatoMapper.toDomain(any(UpdateContato.class))).thenCallRealMethod();
 
-        UpdateFornecedor expected = UpdateFornecedorRequestModelBuilder.umFornecedor()
+        final UpdateFornecedorRequest expected = UpdateFornecedorRequestModelBuilder.umFornecedor()
                 .adicionarContato(UpdateContato.builder()
                         .id(6)
                         .tipoDeContato(TipoDeContatoEnum.EMAIL)
@@ -51,12 +59,12 @@ class AtualizarFornecedorInteractorUnitTest {
                 .get();
 
         // do
-        interactor.execute(id, expected);
+        this.interactor.execute(id, null);
 
         // check
-        ArgumentCaptor<Fornecedor> argumentCaptor = ArgumentCaptor.forClass(Fornecedor.class);
-        verify(fornecedorProvider, times(1)).atualizar(argumentCaptor.capture());
-        var actual = argumentCaptor.getValue();
+        final ArgumentCaptor<Fornecedor> argumentCaptor = ArgumentCaptor.forClass(Fornecedor.class);
+        verify(this.fornecedorProvider, times(1)).update(argumentCaptor.capture());
+        final var actual = argumentCaptor.getValue();
 
         assertEquals(expected.getCnpj(), actual.getCnpj().toString());
         assertEquals(expected.getNomeFantasia(), actual.getNomeFantasia());

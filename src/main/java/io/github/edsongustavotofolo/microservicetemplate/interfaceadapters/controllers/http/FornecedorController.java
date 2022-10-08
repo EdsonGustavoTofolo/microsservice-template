@@ -1,9 +1,9 @@
 package io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http;
 
 import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.dtos.CreateFornecedorRequest;
-import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.dtos.UpdateFornecedor;
+import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.dtos.UpdateFornecedorRequest;
 import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.services.CreateFornecedor;
-import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.input.AtualizarFornecedorInputPort;
+import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.services.UpdateFornecedor;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.output.exceptions.BusinessRuleException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.headers.Header;
@@ -37,7 +37,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 public class FornecedorController {
 
     private final CreateFornecedor createFornecedor;
-    private final AtualizarFornecedorInputPort atualizarFornecedor;
+    private final UpdateFornecedor updateFornecedor;
 
     @Operation(summary = "Cria um novo fornecedor",
             description = "Cria um fornecedor com os dados fornecidos")
@@ -77,8 +77,9 @@ public class FornecedorController {
                     description = "Fornecedor não encontrado")
     })
     @PatchMapping(value = "/{id}", consumes = APPLICATION_JSON_VALUE)
-    public ResponseEntity<Void> patch(@PathVariable final Integer id, @Valid @RequestBody final UpdateFornecedor requestModel) throws BusinessRuleException {
-        this.atualizarFornecedor.execute(id, requestModel);
+    public ResponseEntity<Void> patch(@PathVariable final Integer id,
+                                      @Valid @RequestBody final UpdateFornecedorRequest requestModel) throws BusinessRuleException {
+        this.updateFornecedor.execute(id, requestModel);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 }
