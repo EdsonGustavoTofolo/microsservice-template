@@ -1,5 +1,7 @@
 package io.github.edsongustavotofolo.microservicetemplate;
 
+import io.swagger.v3.oas.annotations.OpenAPIDefinition;
+import io.swagger.v3.oas.annotations.info.Info;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
@@ -7,6 +9,10 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.data.envers.repository.support.EnversRevisionRepositoryFactoryBean;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
+@OpenAPIDefinition(info = @Info(
+        title = "Fornecedores CRUD",
+        version = "${application.version}",
+        description = "API for manage fornecedores"))
 @SpringBootApplication(scanBasePackages = {
         "io.github.edsongustavotofolo.microservicetemplate.infrastructure",
         "io.github.edsongustavotofolo.microservicetemplate.interfaceadapters",

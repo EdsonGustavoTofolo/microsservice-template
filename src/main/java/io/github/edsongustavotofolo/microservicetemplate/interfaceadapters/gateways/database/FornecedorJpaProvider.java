@@ -1,6 +1,7 @@
 package io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.gateways.database;
 
 import io.github.edsongustavotofolo.microservicetemplate.domain.entities.Fornecedor;
+import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.gateways.database.model.FornecedorEntity;
 import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.gateways.database.model.mappers.FornecedorEntityMapper;
 import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.gateways.database.repository.CidadeJpaRepository;
 import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.gateways.database.repository.FornecedorJpaRepository;
@@ -24,16 +25,21 @@ public class FornecedorJpaProvider implements FornecedorProvider {
     public Integer create(final Fornecedor fornecedor) {
         log.info("Criando fornecedor");
 
+        final var fornecedorEntity = this.getFornecedorEntity(fornecedor);
+
+        final var saved = this.fornecedorJpaRepository.persist(fornecedorEntity);
+
+        return saved.getId();
+    }
+
+    private FornecedorEntity getFornecedorEntity(final Fornecedor fornecedor) {
         final var cidadeEntity = this.cidadeJpaRepository.getReferenceById(fornecedor.getEndereco().getCidade().getId());
 
         final var fornecedorEntity = this.fornecedorEntityMapper.toEntity(fornecedor);
         fornecedorEntity.getEndereco().setCidade(cidadeEntity);
         fornecedorEntity.getEndereco().setFornecedor(fornecedorEntity);
         fornecedorEntity.getContatos().setFornecedor(fornecedorEntity);
-
-        final var saved = this.fornecedorJpaRepository.persist(fornecedorEntity);
-
-        return saved.getId();
+        return fornecedorEntity;
     }
 
     @Override
@@ -50,6 +56,8 @@ public class FornecedorJpaProvider implements FornecedorProvider {
 
     @Override
     public void update(final Fornecedor fornecedor) {
-        throw new RuntimeException("Not implemented yet");
+        final var fornecedorEntity = this.getFornecedorEntity(fornecedor);
+
+        this.fornecedorJpaRepository.update(fornecedorEntity);
     }
 }
