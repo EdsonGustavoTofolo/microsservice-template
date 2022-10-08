@@ -10,9 +10,9 @@ import org.springframework.data.envers.repository.support.EnversRevisionReposito
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @OpenAPIDefinition(info = @Info(
-        title = "Fornecedores CRUD",
+        title = "${application.name}",
         version = "${application.version}",
-        description = "API for manage fornecedores"))
+        description = "${application.description}"))
 @SpringBootApplication(scanBasePackages = {
         "io.github.edsongustavotofolo.microservicetemplate.infrastructure",
         "io.github.edsongustavotofolo.microservicetemplate.interfaceadapters",
