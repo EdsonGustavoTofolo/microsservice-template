@@ -1,5 +1,7 @@
 package io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.dtos.annotations;
 
+import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.dtos.annotations.validators.ConditionalValidator;
+
 import javax.validation.Constraint;
 import javax.validation.Payload;
 import java.lang.annotation.*;

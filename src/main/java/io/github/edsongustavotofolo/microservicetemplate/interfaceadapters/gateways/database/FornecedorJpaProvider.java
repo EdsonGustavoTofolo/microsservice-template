@@ -33,7 +33,8 @@ public class FornecedorJpaProvider implements FornecedorProvider {
     }
 
     private FornecedorEntity getFornecedorEntity(final Fornecedor fornecedor) {
-        final var cidadeEntity = this.cidadeJpaRepository.getReferenceById(fornecedor.getEndereco().getCidade().getId());
+        final var cidadeEntity = this.cidadeJpaRepository
+                .getReferenceById(fornecedor.getEndereco().getCidade().getId());
 
         final var fornecedorEntity = this.fornecedorEntityMapper.toEntity(fornecedor);
         fornecedorEntity.getEndereco().setCidade(cidadeEntity);

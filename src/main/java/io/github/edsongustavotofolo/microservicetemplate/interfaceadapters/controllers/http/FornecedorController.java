@@ -55,6 +55,8 @@ public class FornecedorController {
     })
     @PostMapping(consumes = APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> create(@Valid @RequestBody final CreateFornecedorRequest request) throws BusinessRuleException {
+        log.info("Received create fornecedor request.");
+
         final var id = this.createFornecedor.execute(request);
 
         final URI location = ServletUriComponentsBuilder
@@ -62,6 +64,8 @@ public class FornecedorController {
                 .path("/{id}")
                 .buildAndExpand(id)
                 .toUri();
+
+        log.info("Create fornecedor request performed successfully.");
 
         return ResponseEntity.created(location).build();
     }
@@ -79,7 +83,12 @@ public class FornecedorController {
     @PatchMapping(value = "/{id}", consumes = APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> patch(@PathVariable final Integer id,
                                       @Valid @RequestBody final UpdateFornecedorRequest requestModel) throws BusinessRuleException {
+        log.info("Received update fornecedor request.");
+
         this.updateFornecedor.execute(id, requestModel);
+
+        log.info("Update fornecedor request performed successfully.");
+
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 }

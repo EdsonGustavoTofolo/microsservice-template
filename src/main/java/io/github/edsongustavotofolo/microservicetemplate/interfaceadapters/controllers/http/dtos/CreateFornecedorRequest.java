@@ -1,5 +1,6 @@
 package io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.dtos;
 
+import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.dtos.annotations.ExistsCountry;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -40,9 +41,10 @@ public class CreateFornecedorRequest {
     @Size(message = "Ponto de referência: Tamanho máximo de {max} caracteres", max = 100)
     private String pontoDeReferencia;
     @NotEmpty(message = "CEP: Campo obrigatório")
-    @Size(message = "CEP: Tamanho máximo de {max} caracteres", max = 8)
+    @Size(message = "CEP: Deve possuir tamanho de {max} caracteres", min = 8, max = 8)
     private String cep;
     @NotNull(message = "Cidade: Campo obrigatório")
+    @ExistsCountry
     private Integer cidade;
     @NotEmpty(message = "Contatos: Campo obrigatório")
     private List<@Valid CreateContatoRequest> contatos;
