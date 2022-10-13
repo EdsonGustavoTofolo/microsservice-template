@@ -1,7 +1,7 @@
-package io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.dtos;
+package io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.entrypoints.fornecedores.dtos;
 
+import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.entrypoints.annotations.Conditional;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.dtos.TipoDeContatoEnum;
-import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.dtos.annotations.Conditional;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

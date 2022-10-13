@@ -1,6 +1,6 @@
-package io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.dtos;
+package io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.entrypoints.fornecedores.dtos;
 
-import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.dtos.annotations.ExistsCountry;
+import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.entrypoints.annotations.ExistsCountry;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

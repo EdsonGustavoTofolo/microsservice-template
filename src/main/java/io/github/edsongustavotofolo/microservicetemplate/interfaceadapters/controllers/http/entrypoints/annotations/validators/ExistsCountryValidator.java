@@ -1,6 +1,6 @@
-package io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.dtos.annotations.validators;
+package io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.entrypoints.annotations.validators;
 
-import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.dtos.annotations.ExistsCountry;
+import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.entrypoints.annotations.ExistsCountry;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.providers.CidadeProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 

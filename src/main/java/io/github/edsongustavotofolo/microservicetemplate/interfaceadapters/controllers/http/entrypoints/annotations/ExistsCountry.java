@@ -1,6 +1,6 @@
-package io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.dtos.annotations;
+package io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.entrypoints.annotations;
 
-import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.dtos.annotations.validators.ExistsCountryValidator;
+import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.entrypoints.annotations.validators.ExistsCountryValidator;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;

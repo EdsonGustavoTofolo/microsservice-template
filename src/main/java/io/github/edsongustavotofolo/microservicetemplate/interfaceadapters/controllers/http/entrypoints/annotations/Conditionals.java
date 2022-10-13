@@ -1,4 +1,4 @@
-package io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.dtos.annotations;
+package io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.entrypoints.annotations;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

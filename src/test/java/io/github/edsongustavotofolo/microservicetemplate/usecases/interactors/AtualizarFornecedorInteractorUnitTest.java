@@ -7,7 +7,7 @@ import io.github.edsongustavotofolo.microservicetemplate.domain.entities.Fornece
 import io.github.edsongustavotofolo.microservicetemplate.domain.entities.OutroContato;
 import io.github.edsongustavotofolo.microservicetemplate.domain.entities.Site;
 import io.github.edsongustavotofolo.microservicetemplate.domain.entities.Telefone;
-import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.dtos.UpdateFornecedorRequest;
+import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.entrypoints.fornecedores.dtos.UpdateFornecedorRequest;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.interactors.mappers.impl.ContatoMapperImpl;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.models.builders.UpdateFornecedorRequestModelBuilder;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.dtos.TipoDeContatoEnum;

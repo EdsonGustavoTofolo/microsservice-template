@@ -1,9 +1,9 @@
-package io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http;
+package io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.entrypoints.fornecedores;
 
-import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.dtos.CreateFornecedorRequest;
-import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.dtos.UpdateFornecedorRequest;
-import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.services.CreateFornecedor;
-import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.services.UpdateFornecedor;
+import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.entrypoints.fornecedores.dtos.CreateFornecedorRequest;
+import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.entrypoints.fornecedores.dtos.UpdateFornecedorRequest;
+import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.entrypoints.fornecedores.services.CreateFornecedor;
+import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.entrypoints.fornecedores.services.UpdateFornecedor;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.output.exceptions.BusinessRuleException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.headers.Header;

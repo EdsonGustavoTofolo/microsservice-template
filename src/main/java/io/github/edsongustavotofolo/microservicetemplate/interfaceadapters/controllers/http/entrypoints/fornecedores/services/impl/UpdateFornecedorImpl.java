@@ -1,8 +1,8 @@
-package io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.services.impl;
+package io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.entrypoints.fornecedores.services.impl;
 
-import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.dtos.UpdateFornecedorRequest;
-import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.mappers.UpdateFornecedorMapper;
-import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.services.UpdateFornecedor;
+import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.entrypoints.fornecedores.dtos.UpdateFornecedorRequest;
+import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.entrypoints.fornecedores.mappers.UpdateFornecedorMapper;
+import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.entrypoints.fornecedores.services.UpdateFornecedor;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.input.UpdateFornecedorInputPort;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.output.exceptions.BusinessRuleException;
 import lombok.RequiredArgsConstructor;

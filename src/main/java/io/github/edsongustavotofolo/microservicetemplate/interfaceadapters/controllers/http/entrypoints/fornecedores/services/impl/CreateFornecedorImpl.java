@@ -1,8 +1,8 @@
-package io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.services.impl;
+package io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.entrypoints.fornecedores.services.impl;
 
-import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.dtos.CreateFornecedorRequest;
-import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.mappers.CreateFornecedorMapper;
-import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.services.CreateFornecedor;
+import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.entrypoints.fornecedores.dtos.CreateFornecedorRequest;
+import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.entrypoints.fornecedores.mappers.CreateFornecedorMapper;
+import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.entrypoints.fornecedores.services.CreateFornecedor;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.input.CreateFornecedorInputPort;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.output.CreateFornecedorOutputPort;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.output.dtos.CreatedFornecedor;
