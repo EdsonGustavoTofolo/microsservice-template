@@ -6,7 +6,7 @@ import org.springframework.data.auditing.DateTimeProvider;
 import org.springframework.data.domain.AuditorAware;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.Optional;
 
 @Configuration
@@ -20,6 +20,6 @@ public class AuditConfig {
 
     @Bean
     public DateTimeProvider dateTimeProvider() {
-        return () -> Optional.of(LocalDateTime.now());
+        return () -> Optional.of(ZonedDateTime.now());
     }
 }

@@ -10,7 +10,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import javax.persistence.Column;
 import javax.persistence.EntityListeners;
 import javax.persistence.MappedSuperclass;
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 
 @Data
 @MappedSuperclass
@@ -19,7 +19,7 @@ public class AuditableEntity {
 
     @Column(name = "created_at", nullable = false, updatable = false)
     @CreatedDate
-    private LocalDateTime createdAt;
+    private ZonedDateTime createdAt;
 
     @Column(name = "created_by", nullable = false, length = 60, updatable = false)
     @CreatedBy
@@ -31,5 +31,5 @@ public class AuditableEntity {
 
     @Column(name = "last_modified_at")
     @LastModifiedDate
-    private LocalDateTime lastModifiedAt;
+    private ZonedDateTime lastModifiedAt;
 }
