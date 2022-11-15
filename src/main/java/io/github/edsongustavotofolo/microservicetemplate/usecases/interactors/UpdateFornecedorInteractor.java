@@ -47,7 +47,7 @@ public class UpdateFornecedorInteractor implements UpdateFornecedorInputPort {
                 updateFornecedor.getCep(),
                 updateFornecedor.getCidadeId());
 
-        final List<Contato> contatosParaAdicionar = new ArrayList<>();
+        final List<Contato> novoContato = new ArrayList<>();
 
         updateFornecedor.getContatos()
                 .forEach(contatoRequestModel -> {
@@ -79,13 +79,11 @@ public class UpdateFornecedorInteractor implements UpdateFornecedorInputPort {
                                         outro.update(contatoRequestModel.getTexto());
                                     }
                                 }
-                            }, () -> {
-                                contatosParaAdicionar.add(contatoRequest);
-                            });
+                            }, () -> novoContato.add(contatoRequest));
 
                 });
-        if (!contatosParaAdicionar.isEmpty()) {
-            contatosParaAdicionar.forEach(contato -> fornecedor.getContatos().add(contato));
+        if (!novoContato.isEmpty()) {
+            novoContato.forEach(contato -> fornecedor.getContatos().add(contato));
         }
         this.fornecedorProvider.update(fornecedor);
     }
