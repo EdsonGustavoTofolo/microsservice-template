@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class GetCidadeByNameInteractor implements GetCidadesByNameInputPort {
 
-    private final GetCidadesByNameOuputPort presenter;
+    private final GetCidadesByNameOuputPort<?> presenter;
     private final CidadeProvider cidadeProvider;
 
     @Override
