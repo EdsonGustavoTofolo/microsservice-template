@@ -1,5 +1,6 @@
 package io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.entrypoints.v1.fornecedores;
 
+import io.github.edsongustavotofolo.microservicetemplate.infrastructure.configuration.bundles.MessageSourceConfig;
 import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.base.BaseControllerTest;
 import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.entrypoints.v1.fornecedores.dtos.CreateFornecedorRequest;
 import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.entrypoints.v1.fornecedores.services.CreateFornecedor;
@@ -7,7 +8,6 @@ import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.contr
 import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.handlers.ControllerExceptionHandler;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.output.exceptions.enums.ErrorType;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.providers.CidadeProvider;
-import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -30,6 +30,9 @@ import java.util.stream.Stream;
 import static io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.entrypoints.v1.fornecedores.FornecedorControllerPaths.BASE_PATH;
 import static io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.entrypoints.v1.fornecedores.dtos.fixtures.CreateFornecedorRequestFixture.umFornecedorRequest;
 import static io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.entrypoints.v1.fornecedores.dtos.fixtures.CreateFornecedorRequestFixture.umFornecedorRequestComCnpj;
+import static io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.entrypoints.v1.fornecedores.dtos.fixtures.CreateFornecedorRequestFixture.umFornecedorRequestComNomeFantasia;
+import static io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.entrypoints.v1.fornecedores.dtos.fixtures.CreateFornecedorRequestFixture.umFornecedorRequestComRazaoSocial;
+import static org.hamcrest.Matchers.hasItem;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
@@ -42,9 +45,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @AutoConfigureMockMvc
-@ContextConfiguration(classes = {ControllerExceptionHandler.class, FornecedorController.class, CreateFornecedor.class, UpdateFornecedor.class})
+@ContextConfiguration(classes = {MessageSourceConfig.class, ControllerExceptionHandler.class, FornecedorController.class, CreateFornecedor.class, UpdateFornecedor.class})
 @WebMvcTest
 class FornecedorControllerIntegrationTest extends BaseControllerTest {
+
+    private static final String ACCEPT_LANGUAGE_PT_BR = "pt-BR";
 
     @Autowired
     private MockMvc mockMvc;
@@ -62,29 +67,36 @@ class FornecedorControllerIntegrationTest extends BaseControllerTest {
 
     private static Stream<Arguments> provideInvalidCreateFornecedorBody() {
         return Stream.of(
-                Arguments.of(true, umFornecedorRequestComCnpj(""), "cnpj", List.of("Campo obrigatório", "Informe o CNPJ sem formatação, com somente 14 digitos")),
-                Arguments.of(true, umFornecedorRequestComCnpj(null), "cnpj", List.of("Campo obrigatório")),
-                Arguments.of(true, umFornecedorRequestComCnpj(" "), "cnpj", List.of("Campo obrigatório", "Informe o CNPJ sem formatação, com somente 14 digitos")),
-                Arguments.of(true, umFornecedorRequestComCnpj("123456789"), "cnpj", List.of("Informe o CNPJ sem formatação, com somente 14 digitos")),
-                Arguments.of(true, umFornecedorRequestComCnpj("1234567890123456"), "cnpj", List.of("Informe o CNPJ sem formatação, com somente 14 digitos"))
+                Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, umFornecedorRequestComCnpj(""), "cnpj", List.of("campo obrigatório", "informe o CNPJ sem formatação, com somente 14 digitos")),
+                Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, umFornecedorRequestComCnpj(null), "cnpj", List.of("campo obrigatório")),
+                Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, umFornecedorRequestComCnpj(" "), "cnpj", List.of("campo obrigatório", "informe o CNPJ sem formatação, com somente 14 digitos")),
+                Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, umFornecedorRequestComCnpj("123456789"), "cnpj", List.of("informe o CNPJ sem formatação, com somente 14 digitos")),
+                Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, umFornecedorRequestComCnpj("1234567890123456"), "cnpj", List.of("informe o CNPJ sem formatação, com somente 14 digitos")),
+
+                Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, umFornecedorRequestComRazaoSocial(""), "razaoSocial", List.of("campo obrigatório")),
+                Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, umFornecedorRequestComRazaoSocial(" "), "razaoSocial", List.of("campo obrigatório")),
+                Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, umFornecedorRequestComRazaoSocial(null), "razaoSocial", List.of("campo obrigatório")),
+                Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, umFornecedorRequestComRazaoSocial("Nome".repeat(64)), "razaoSocial", List.of("tamanho máximo de 255 caracteres")),
+
+                Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, umFornecedorRequestComNomeFantasia("Nome".repeat(64)), "nomeFantasia", List.of("tamanho máximo de 255 caracteres")),
         );
     }
 
     @ParameterizedTest
     @MethodSource("provideInvalidCreateFornecedorBody")
     void shouldResponseWithBadRequestWhenCreateFornecedorIsCalledWithInvalidBody(final boolean existsCidade,
+                                                                                 final String language,
                                                                                  final CreateFornecedorRequest request,
                                                                                  final String fieldName,
                                                                                  final List<String> messages) throws Exception {
         when(this.cidadeProvider.existsById(any())).thenReturn(existsCidade);
 
-        // execucao
         final var perform = this.mockMvc.perform(
                 post(BASE_PATH)
+                        .header(HttpHeaders.ACCEPT_LANGUAGE, language)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(this.mapToJson(request)));
 
-        // verificacao
         perform
                 .andDo(print())
                 .andExpect(status().isBadRequest())
@@ -92,9 +104,9 @@ class FornecedorControllerIntegrationTest extends BaseControllerTest {
                         .andExpect(jsonPath("$.error.code").value(ErrorType.EXPT001.name()))
                         .andExpect(jsonPath("$.error.fields." + fieldName).isArray());
 
-        messages.forEach(s -> {
+        messages.forEach(message -> {
             try {
-                perform.andExpect(jsonPath("$.error.fields." + fieldName, Matchers.hasItem(s)));
+                perform.andExpect(jsonPath("$.error.fields." + fieldName, hasItem(message)));
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }

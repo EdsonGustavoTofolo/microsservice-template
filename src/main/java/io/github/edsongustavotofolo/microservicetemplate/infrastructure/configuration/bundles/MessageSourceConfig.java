@@ -16,7 +16,7 @@ import java.util.Locale;
 public class MessageSourceConfig implements WebMvcConfigurer {
 
     @Bean
-    public LocaleResolver localeResolver(@Value("${application.default-locale:en}") String defaultLanguage) {
+    public LocaleResolver localeResolver(@Value("${application.default-locale:en-US}") String defaultLanguage) {
         var acceptHeaderLocaleResolver = new AcceptHeaderLocaleResolver();
         acceptHeaderLocaleResolver.setDefaultLocale(new Locale(defaultLanguage));
         return acceptHeaderLocaleResolver;
