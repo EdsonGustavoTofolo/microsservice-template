@@ -19,9 +19,11 @@
 	<properties>
 		<java.version>17</java.version>
 		<spring-cloud.version>2021.0.3</spring-cloud.version>
-		<org.springdoc.version>1.6.11</org.springdoc.version>
+		<org.springdoc.version>1.6.14</org.springdoc.version>
 		<org.lombok.version>1.18.24</org.lombok.version>
-		<org.mapstruct.version>1.5.2.Final</org.mapstruct.version>
+		<org.mapstruct.version>1.5.3.Final</org.mapstruct.version>
+		<pitest.version>1.9.11</pitest.version>
+		<pitest-junit5.version>1.1.0</pitest-junit5.version>
 	</properties>
 
 	<dependencies>
@@ -96,6 +98,27 @@
 	<build>
 		<plugins>
 			<plugin>
+				<groupId>org.pitest</groupId>
+				<artifactId>pitest-maven</artifactId>
+				<version>${pitest.version}</version>
+				<dependencies>
+					<dependency>
+						<groupId>org.pitest</groupId>
+						<artifactId>pitest-junit5-plugin</artifactId>
+						<version>${pitest-junit5.version}</version>
+					</dependency>
+				</dependencies>
+				<configuration>
+					<excludedClasses>
+						<param>io.github.edsongustavotofolo.microservicetemplate.MicroservicetemplateApplication</param>
+						<param>io.github.edsongustavotofolo.microservicetemplate.infrastructure.configuration.*</param>
+						<param>io.github.edsongustavotofolo.microservicetemplate.*Exception</param>
+						<param>io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.handlers.ExceptionControllerHandler</param>
+						<param>io.github.edsongustavotofolo.microservicetemplate.*MapperImpl</param>
+					</excludedClasses>
+				</configuration>
+			</plugin>
+			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
@@ -129,14 +152,6 @@
 							<version>0.2.0</version>
 						</path>
 					</annotationProcessorPaths>
-					<compilerArgs>
-						<compilerArg>
-							-Amapstruct.defaultComponentModel=spring
-						</compilerArg>
-						<compilerArg>
-							-Amapstruct.defaultInjectionStrategy=constructor
-						</compilerArg>
-					</compilerArgs>
 				</configuration>
 			</plugin>
 		</plugins>

@@ -24,11 +24,14 @@ import org.apache.commons.lang3.StringUtils;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
+import org.mapstruct.factory.Mappers;
 
 import java.util.List;
 
 @Mapper
 public interface FornecedorEntityMapper {
+
+    FornecedorEntityMapper INSTANCE = Mappers.getMapper(FornecedorEntityMapper.class);
 
     default Cnpj toCnpj(final String cnpj) {
         return StringUtils.isEmpty(cnpj) ? null : new Cnpj(cnpj);

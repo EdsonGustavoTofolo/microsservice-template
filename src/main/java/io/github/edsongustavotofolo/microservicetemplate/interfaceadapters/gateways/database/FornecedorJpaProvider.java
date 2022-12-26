@@ -19,7 +19,6 @@ public class FornecedorJpaProvider implements FornecedorProvider {
 
     private final FornecedorJpaRepository fornecedorJpaRepository;
     private final CidadeJpaRepository cidadeJpaRepository;
-    private final FornecedorEntityMapper fornecedorEntityMapper;
 
     @Override
     public Integer create(final Fornecedor fornecedor) {
@@ -36,7 +35,7 @@ public class FornecedorJpaProvider implements FornecedorProvider {
         final var cidadeEntity = this.cidadeJpaRepository
                 .getReferenceById(fornecedor.getEndereco().getCidade().getId());
 
-        final var fornecedorEntity = this.fornecedorEntityMapper.toEntity(fornecedor);
+        final var fornecedorEntity = FornecedorEntityMapper.INSTANCE.toEntity(fornecedor);
         fornecedorEntity.getEndereco().setCidade(cidadeEntity);
         fornecedorEntity.getEndereco().setFornecedor(fornecedorEntity);
         fornecedorEntity.getContatos().setFornecedor(fornecedorEntity);
@@ -52,7 +51,7 @@ public class FornecedorJpaProvider implements FornecedorProvider {
     @Override
     public Optional<Fornecedor> getById(final Integer id) {
         return this.fornecedorJpaRepository.findById(id)
-                .map(this.fornecedorEntityMapper::toDomain);
+                .map(FornecedorEntityMapper.INSTANCE::toDomain);
     }
 
     @Override

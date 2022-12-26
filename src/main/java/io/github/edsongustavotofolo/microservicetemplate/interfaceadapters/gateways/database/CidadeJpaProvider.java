@@ -14,12 +14,11 @@ import java.util.List;
 public class CidadeJpaProvider implements CidadeProvider {
 
     private final CidadeJpaRepository cidadeJpaRepository;
-    private final CidadeEntityMapper cidadeEntityMapper;
 
     @Override
     public List<Cidade> getByName(final String name) {
         return this.cidadeJpaRepository.findByNomeContains(name).stream()
-                .map(this.cidadeEntityMapper::toDomain)
+                .map(CidadeEntityMapper.INSTANCE::toDomain)
                 .toList();
     }
 

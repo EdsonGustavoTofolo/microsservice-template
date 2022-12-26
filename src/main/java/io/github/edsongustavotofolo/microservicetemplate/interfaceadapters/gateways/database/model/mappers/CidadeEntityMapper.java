@@ -6,9 +6,13 @@ import io.github.edsongustavotofolo.microservicetemplate.domain.entities.impl.Es
 import io.github.edsongustavotofolo.microservicetemplate.domain.entities.impl.PaisImpl;
 import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.gateways.database.model.CidadeEntity;
 import org.mapstruct.Mapper;
+import org.mapstruct.factory.Mappers;
 
 @Mapper
 public interface CidadeEntityMapper {
+
+    CidadeEntityMapper INSTANCE = Mappers.getMapper(CidadeEntityMapper.class);
+
     default Cidade toDomain(final CidadeEntity entity) {
         return new CidadeImpl(
                 entity.getId(),
