@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 
 @ControllerAdvice
 @Slf4j
-public class ExceptionControllerHandler {
+public class ControllerExceptionHandler {
 
     @ExceptionHandler(value = BaseHttpException.class)
     public ResponseEntity<StandardErrorApi> businessRuleExceptionHander(final BaseHttpException ex,
@@ -46,6 +46,7 @@ public class ExceptionControllerHandler {
                         Collectors.mapping(DefaultMessageSourceResolvable::getDefaultMessage, Collectors.toList())
                 ));
         var errorApi = StandardErrorApi.builder()
+                .path(request.getRequestURI())
                 .timestamp(ZonedDateTime.now())
                 .status(HttpStatus.BAD_REQUEST.value())
                 .error(ErrorApiResponse.builder()
@@ -54,6 +55,7 @@ public class ExceptionControllerHandler {
                         .fields(fields)
                         .build())
                 .build();
+
         return ResponseEntity.badRequest().body(errorApi);
     }
 

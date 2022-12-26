@@ -113,7 +113,7 @@
 						<param>io.github.edsongustavotofolo.microservicetemplate.MicroservicetemplateApplication</param>
 						<param>io.github.edsongustavotofolo.microservicetemplate.infrastructure.configuration.*</param>
 						<param>io.github.edsongustavotofolo.microservicetemplate.*Exception</param>
-						<param>io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.handlers.ExceptionControllerHandler</param>
+						<param>io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.handlers.ControllerExceptionHandler</param>
 						<param>io.github.edsongustavotofolo.microservicetemplate.*MapperImpl</param>
 					</excludedClasses>
 				</configuration>
