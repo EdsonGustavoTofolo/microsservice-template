@@ -1,7 +1,7 @@
 package io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.presenters;
 
 import io.github.edsongustavotofolo.microservicetemplate.domain.entities.Cidade;
-import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.entrypoints.cidades.dtos.GetCidadesByNameResponse;
+import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.entrypoints.v1.cidades.dtos.GetCidadesByNameResponse;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.output.GetCidadesByNameOuputPort;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
