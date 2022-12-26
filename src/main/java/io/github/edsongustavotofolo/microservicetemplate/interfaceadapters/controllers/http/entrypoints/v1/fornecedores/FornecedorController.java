@@ -15,9 +15,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -26,11 +26,13 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import javax.validation.Valid;
 import java.net.URI;
 
+import static io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.entrypoints.v1.fornecedores.FornecedorControllerPaths.BASE_PATH;
+import static io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.entrypoints.v1.fornecedores.FornecedorControllerPaths.UPDATE_FORNECEDOR_PATH;
 import static org.springframework.http.HttpHeaders.LOCATION;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RestController
-@RequestMapping(value = "/api/v1/fornecedores")
+@RequestMapping(value = BASE_PATH, consumes = APPLICATION_JSON_VALUE)
 @RequiredArgsConstructor
 @Slf4j
 @Tag(name = "Fornecedor", description = "Cadastro de Fornecedor")
@@ -53,7 +55,7 @@ public class FornecedorController {
             @ApiResponse(responseCode = "422",
                     description = "Fornecedor já existe")
     })
-    @PostMapping(consumes = APPLICATION_JSON_VALUE)
+    @PostMapping
     public ResponseEntity<Void> create(@Valid @RequestBody final CreateFornecedorRequest request) throws BusinessRuleException {
         log.info("Received create fornecedor request.");
 
@@ -80,9 +82,9 @@ public class FornecedorController {
             @ApiResponse(responseCode = "404",
                     description = "Fornecedor não encontrado")
     })
-    @PatchMapping(value = "/{id}", consumes = APPLICATION_JSON_VALUE)
-    public ResponseEntity<Void> patch(@PathVariable final Integer id,
-                                      @Valid @RequestBody final UpdateFornecedorRequest requestModel) throws BusinessRuleException {
+    @PutMapping(UPDATE_FORNECEDOR_PATH)
+    public ResponseEntity<Void> update(@PathVariable final Integer id,
+                                       @Valid @RequestBody final UpdateFornecedorRequest requestModel) throws BusinessRuleException {
         log.info("Received update fornecedor request.");
 
         this.updateFornecedor.execute(id, requestModel);

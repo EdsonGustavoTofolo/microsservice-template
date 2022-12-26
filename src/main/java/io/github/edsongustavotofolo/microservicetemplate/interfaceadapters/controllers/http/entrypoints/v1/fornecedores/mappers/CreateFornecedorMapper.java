@@ -4,11 +4,9 @@ import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.contr
 import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.input.dtos.CreateContato;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.input.dtos.CreateFornecedor;
 
-public class CreateFornecedorMapper {
+public final class CreateFornecedorMapper {
 
-    private CreateFornecedorMapper() {
-        throw new IllegalStateException("Unity class");
-    }
+    private CreateFornecedorMapper() {}
 
     public static CreateFornecedor toModel(final CreateFornecedorRequest requestModel) {
         return CreateFornecedor.builder()

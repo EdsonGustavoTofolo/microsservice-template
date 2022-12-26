@@ -45,7 +45,7 @@ class FornecedorJpaProviderIntegrationTest {
 
     @BeforeEach
     public void setup() {
-        this.fornecedorJpaGateway = new FornecedorJpaProvider(this.fornecedorJpaRepository, this.cidadeJpaRepository, this.fornecedorEntityMapper);
+        this.fornecedorJpaGateway = new FornecedorJpaProvider(this.fornecedorJpaRepository, this.cidadeJpaRepository);
     }
 
     @Test

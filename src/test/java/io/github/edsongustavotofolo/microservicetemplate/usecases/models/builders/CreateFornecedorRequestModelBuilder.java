@@ -7,6 +7,7 @@ import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.dtos.Tip
 import java.util.List;
 
 public class CreateFornecedorRequestModelBuilder {
+
     private CreateFornecedor requestModel;
 
     private CreateFornecedorRequestModelBuilder() {}
