@@ -1,6 +1,7 @@
 package io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.entrypoints.v1.fornecedores.mappers;
 
 import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.entrypoints.v1.fornecedores.dtos.CreateFornecedorRequest;
+import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.dtos.TipoDeContatoEnum;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.input.dtos.CreateContato;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.input.dtos.CreateFornecedor;
 
@@ -24,7 +25,7 @@ public final class CreateFornecedorMapper {
                 .contatos(
                         requestModel.getContatos().stream()
                                 .map(contatoRequestModel ->
-                                        switch (contatoRequestModel.getTipoDeContato()) {
+                                        switch (TipoDeContatoEnum.valueOf(contatoRequestModel.getTipoDeContato())) {
                                             case EMAIL:
                                                 yield CreateContato.email(contatoRequestModel.getEnderecoEmail());
                                             case TELEFONE:

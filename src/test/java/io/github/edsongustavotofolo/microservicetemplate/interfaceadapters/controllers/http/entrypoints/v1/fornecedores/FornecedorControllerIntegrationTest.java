@@ -50,7 +50,6 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -82,6 +81,9 @@ class FornecedorControllerIntegrationTest extends BaseControllerTest {
                 Arguments.of(ACCEPT_LANGUAGE_PT_BR, umFornecedorRequestComContatos(new ArrayList<>()), "contatos", List.of("campo obrigatório")),
 
                 Arguments.of(ACCEPT_LANGUAGE_PT_BR, umFornecedorRequestComContatos(List.of(createContatoRequestComTipoDeContato(null))), "contatos[0].tipoDeContato", List.of("campo obrigatório")),
+                Arguments.of(ACCEPT_LANGUAGE_PT_BR, umFornecedorRequestComContatos(List.of(createContatoRequestComTipoDeContato("XPTO"))), "contatos[0].tipoDeContato", List.of("valor inválido")),
+                Arguments.of(ACCEPT_LANGUAGE_PT_BR, umFornecedorRequestComContatos(List.of(createContatoRequestComTipoDeContato(""))), "contatos[0].tipoDeContato", List.of("campo obrigatório")),
+                Arguments.of(ACCEPT_LANGUAGE_PT_BR, umFornecedorRequestComContatos(List.of(createContatoRequestComTipoDeContato(" "))), "contatos[0].tipoDeContato", List.of("campo obrigatório")),
 
                 Arguments.of(ACCEPT_LANGUAGE_PT_BR, umFornecedorRequestComContatos(List.of(CreateContatoRequest.celular(null, "123"))), "contatos[0].ddd", List.of("campo obrigatório")),
                 Arguments.of(ACCEPT_LANGUAGE_PT_BR, umFornecedorRequestComContatos(List.of(CreateContatoRequest.celular(" ", "123"))), "contatos[0].ddd", List.of("campo obrigatório")),
@@ -217,7 +219,6 @@ class FornecedorControllerIntegrationTest extends BaseControllerTest {
                         .content(this.mapToJson(request)));
 
         perform
-                .andDo(print())
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.status").value(HttpStatus.BAD_REQUEST.value()))
                 .andExpect(jsonPath("$.error.code").value(ErrorType.EXPT001.name()))

@@ -10,7 +10,8 @@ public enum ErrorType {
     EXPT002,
     EXPT003,
     EXPT004,
-    EXPT005;
+    EXPT005,
+    EXPT006;
 
     public String getMessage(final Locale locale) {
         var bundle = ResourceBundle.getBundle("i18n/exceptions", locale);

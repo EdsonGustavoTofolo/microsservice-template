@@ -1,12 +1,14 @@
 package io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.entrypoints.v1.fornecedores.dtos;
 
 import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.entrypoints.annotations.Conditional;
+import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.entrypoints.annotations.Enum;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.dtos.TipoDeContatoEnum;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
 import lombok.Data;
 import lombok.Value;
 
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 @Data
@@ -17,8 +19,10 @@ import javax.validation.constraints.Size;
 @Conditional(selected = "tipoDeContato", values = "SITE", required = "urlSite")
 @Conditional(selected = "tipoDeContato", values = "OUTRO", required = "texto")
 public class CreateContatoRequest {
-    @NotNull(message = "{fields.required}")
-    TipoDeContatoEnum tipoDeContato;
+    @NotBlank(message = "{fields.required}")
+    @Schema(implementation = TipoDeContatoEnum.class)
+    @Enum(enumClass = TipoDeContatoEnum.class)
+    String tipoDeContato;
     @Size(message = "{fields.fixedLength}", min = 2, max = 2)
     String ddd;
     @Size(message = "{fields.maxLength}", max = 10)
@@ -32,21 +36,21 @@ public class CreateContatoRequest {
 
     public static CreateContatoRequest outro(final String texto) {
         return CreateContatoRequest.builder()
-                .tipoDeContato(TipoDeContatoEnum.OUTRO)
+                .tipoDeContato(TipoDeContatoEnum.OUTRO.name())
                 .texto(texto)
                 .build();
     }
 
     public static CreateContatoRequest site(final String url) {
         return CreateContatoRequest.builder()
-                .tipoDeContato(TipoDeContatoEnum.SITE)
+                .tipoDeContato(TipoDeContatoEnum.SITE.name())
                 .urlSite(url)
                 .build();
     }
 
     public static CreateContatoRequest celular(final String ddd, final String numero) {
         return CreateContatoRequest.builder()
-                .tipoDeContato(TipoDeContatoEnum.CELULAR)
+                .tipoDeContato(TipoDeContatoEnum.CELULAR.name())
                 .ddd(ddd)
                 .numero(numero)
                 .build();
@@ -54,14 +58,14 @@ public class CreateContatoRequest {
 
     public static CreateContatoRequest telefone(final String ddd, final String numero) {
         return CreateContatoRequest.builder()
-                .tipoDeContato(TipoDeContatoEnum.TELEFONE)
+                .tipoDeContato(TipoDeContatoEnum.TELEFONE.name())
                 .ddd(ddd)
                 .numero(numero)
                 .build();
     }
     public static CreateContatoRequest email(final String enderecoEmail) {
         return CreateContatoRequest.builder()
-                .tipoDeContato(TipoDeContatoEnum.EMAIL)
+                .tipoDeContato(TipoDeContatoEnum.EMAIL.name())
                 .enderecoEmail(enderecoEmail)
                 .build();
     }

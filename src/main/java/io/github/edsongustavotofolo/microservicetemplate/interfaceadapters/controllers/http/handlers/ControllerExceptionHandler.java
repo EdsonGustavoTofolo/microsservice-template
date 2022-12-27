@@ -10,6 +10,7 @@ import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -33,10 +34,29 @@ public class ControllerExceptionHandler {
                 .body(ex.getStandardErrorApi(request.getRequestURI(), request.getLocale()));
     }
 
+    @ExceptionHandler(value = HttpMessageNotReadableException.class)
+    public ResponseEntity<StandardErrorApi> httpMessageNotReadableExceptionHandler(final HttpMessageNotReadableException ex,
+                                                                                   final HttpServletRequest request) {
+        log.error("Falha na validacao dos dados de requisicao", ex);
+
+        final var errorApi = StandardErrorApi.builder()
+                .path(request.getRequestURI())
+                .timestamp(ZonedDateTime.now())
+                .status(HttpStatus.BAD_REQUEST.value())
+                .error(ErrorApiResponse.builder()
+                        .code(ErrorType.EXPT006.name())
+                        .message(ErrorType.EXPT006.getMessage(request.getLocale()))
+                        .fields(null)
+                        .build())
+                .build();
+
+        return ResponseEntity.badRequest().body(errorApi);
+    }
+
     @ExceptionHandler(value = MethodArgumentNotValidException.class)
     public ResponseEntity<StandardErrorApi> methodArgumentNotValidExceptionHandler(final MethodArgumentNotValidException ex,
                                                                                    final HttpServletRequest request) {
-        log.error("Falha na validacao dos dados de requisicao");
+        log.error("Falha na validacao dos dados de requisicao", ex);
 
         final var fieldErrors = ex.getBindingResult().getFieldErrors();
 
@@ -68,6 +88,7 @@ public class ControllerExceptionHandler {
     public ResponseEntity<StandardErrorApi> dataIntegrityViolationExceptionHandler(final DataIntegrityViolationException ex,
                                                                                    final HttpServletRequest request) {
         log.error("Violacao de integridade no banco de dados", ex);
+
         var errorApi = StandardErrorApi.builder()
                 .timestamp(ZonedDateTime.now())
                 .status(HttpStatus.INTERNAL_SERVER_ERROR.value())
