@@ -7,7 +7,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
-import java.util.Map;
 
 @Getter
 @Builder
@@ -17,5 +16,5 @@ import java.util.Map;
 public class ErrorApiResponse {
     private String code;
     private String message;
-    private Map<String, List<String>> fields;
+    private List<ErrorField> fields;
 }

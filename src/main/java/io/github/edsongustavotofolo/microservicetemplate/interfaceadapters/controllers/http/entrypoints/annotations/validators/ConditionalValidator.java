@@ -1,7 +1,7 @@
 package io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.entrypoints.annotations.validators;
 
 import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.entrypoints.annotations.Conditional;
-import org.springframework.util.ObjectUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
@@ -32,10 +32,10 @@ public class ConditionalValidator implements ConstraintValidator<Conditional, Ob
         if (Arrays.asList(this.values).contains(actualValue)) {
             for (String propName : this.required) {
                 Object requiredValue = getProperty(object, propName);
-                boolean valid = requiredValue != null && !ObjectUtils.isEmpty(requiredValue);
+                boolean valid = requiredValue != null && StringUtils.isNotBlank((CharSequence) requiredValue);
                 if (!valid) {
                     context.disableDefaultConstraintViolation();
-                    context.buildConstraintViolationWithTemplate(actualValue + ": " + this.message).addPropertyNode(propName).addConstraintViolation();
+                    context.buildConstraintViolationWithTemplate(this.message).addPropertyNode(propName).addConstraintViolation();
                 }
                 isInvalid |= !valid;
             }

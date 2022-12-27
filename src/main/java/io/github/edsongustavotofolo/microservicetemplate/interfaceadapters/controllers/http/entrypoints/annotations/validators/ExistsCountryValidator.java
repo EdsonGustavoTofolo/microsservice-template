@@ -13,7 +13,7 @@ public class ExistsCountryValidator implements ConstraintValidator<ExistsCountry
     private CidadeProvider cidadeProvider;
 
     @Override
-    public boolean isValid(Integer integer, ConstraintValidatorContext constraintValidatorContext) {
-        return this.cidadeProvider.existsById(integer);
+    public boolean isValid(Integer value, ConstraintValidatorContext constraintValidatorContext) {
+        return value == null || (value > 0 && this.cidadeProvider.existsById(value));
     }
 }

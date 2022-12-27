@@ -2,6 +2,7 @@ package io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.cont
 
 import io.github.edsongustavotofolo.microservicetemplate.infrastructure.configuration.bundles.MessageSourceConfig;
 import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.base.BaseControllerTest;
+import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.entrypoints.v1.fornecedores.dtos.CreateContatoRequest;
 import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.entrypoints.v1.fornecedores.dtos.CreateFornecedorRequest;
 import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.entrypoints.v1.fornecedores.services.CreateFornecedor;
 import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.entrypoints.v1.fornecedores.services.UpdateFornecedor;
@@ -24,13 +25,23 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
 import static io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.entrypoints.v1.fornecedores.FornecedorControllerPaths.BASE_PATH;
+import static io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.entrypoints.v1.fornecedores.dtos.fixtures.CreateContatoRequestFixture.createContatoRequestComTipoDeContato;
 import static io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.entrypoints.v1.fornecedores.dtos.fixtures.CreateFornecedorRequestFixture.umFornecedorRequest;
+import static io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.entrypoints.v1.fornecedores.dtos.fixtures.CreateFornecedorRequestFixture.umFornecedorRequestComBairro;
+import static io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.entrypoints.v1.fornecedores.dtos.fixtures.CreateFornecedorRequestFixture.umFornecedorRequestComCep;
+import static io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.entrypoints.v1.fornecedores.dtos.fixtures.CreateFornecedorRequestFixture.umFornecedorRequestComCidade;
 import static io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.entrypoints.v1.fornecedores.dtos.fixtures.CreateFornecedorRequestFixture.umFornecedorRequestComCnpj;
+import static io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.entrypoints.v1.fornecedores.dtos.fixtures.CreateFornecedorRequestFixture.umFornecedorRequestComComplemento;
+import static io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.entrypoints.v1.fornecedores.dtos.fixtures.CreateFornecedorRequestFixture.umFornecedorRequestComContatos;
+import static io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.entrypoints.v1.fornecedores.dtos.fixtures.CreateFornecedorRequestFixture.umFornecedorRequestComLogradouro;
 import static io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.entrypoints.v1.fornecedores.dtos.fixtures.CreateFornecedorRequestFixture.umFornecedorRequestComNomeFantasia;
+import static io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.entrypoints.v1.fornecedores.dtos.fixtures.CreateFornecedorRequestFixture.umFornecedorRequestComNumero;
+import static io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.entrypoints.v1.fornecedores.dtos.fixtures.CreateFornecedorRequestFixture.umFornecedorRequestComPontoDeReferencia;
 import static io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.entrypoints.v1.fornecedores.dtos.fixtures.CreateFornecedorRequestFixture.umFornecedorRequestComRazaoSocial;
 import static org.hamcrest.Matchers.hasItem;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -78,7 +89,47 @@ class FornecedorControllerIntegrationTest extends BaseControllerTest {
                 Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, umFornecedorRequestComRazaoSocial(null), "razaoSocial", List.of("campo obrigatório")),
                 Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, umFornecedorRequestComRazaoSocial("Nome".repeat(64)), "razaoSocial", List.of("tamanho máximo de 255 caracteres")),
 
+                Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, umFornecedorRequestComNomeFantasia(""), "nomeFantasia", List.of("campo obrigatório")),
+                Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, umFornecedorRequestComNomeFantasia(" "), "nomeFantasia", List.of("campo obrigatório")),
+                Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, umFornecedorRequestComNomeFantasia(null), "nomeFantasia", List.of("campo obrigatório")),
                 Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, umFornecedorRequestComNomeFantasia("Nome".repeat(64)), "nomeFantasia", List.of("tamanho máximo de 255 caracteres")),
+
+                Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, umFornecedorRequestComLogradouro(""), "logradouro", List.of("campo obrigatório")),
+                Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, umFornecedorRequestComLogradouro(" "), "logradouro", List.of("campo obrigatório")),
+                Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, umFornecedorRequestComLogradouro(null), "logradouro", List.of("campo obrigatório")),
+                Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, umFornecedorRequestComLogradouro("Nome".repeat(64)), "logradouro", List.of("tamanho máximo de 255 caracteres")),
+
+                Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, umFornecedorRequestComNumero(""), "numero", List.of("campo obrigatório. Caso não exista infomar 'SN'")),
+                Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, umFornecedorRequestComNumero(" "), "numero", List.of("campo obrigatório. Caso não exista infomar 'SN'")),
+                Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, umFornecedorRequestComNumero(null), "numero", List.of("campo obrigatório. Caso não exista infomar 'SN'")),
+                Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, umFornecedorRequestComNumero("SN".repeat(6)), "numero", List.of("tamanho máximo de 10 caracteres")),
+
+                Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, umFornecedorRequestComBairro(""), "bairro", List.of("campo obrigatório")),
+                Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, umFornecedorRequestComBairro(" "), "bairro", List.of("campo obrigatório")),
+                Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, umFornecedorRequestComBairro(null), "bairro", List.of("campo obrigatório")),
+                Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, umFornecedorRequestComBairro("Nome".repeat(16)), "bairro", List.of("tamanho máximo de 60 caracteres")),
+
+                Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, umFornecedorRequestComComplemento("Nome".repeat(26)), "complemento", List.of("tamanho máximo de 100 caracteres")),
+
+                Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, umFornecedorRequestComPontoDeReferencia("Nome".repeat(26)), "pontoDeReferencia", List.of("tamanho máximo de 100 caracteres")),
+
+                Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, umFornecedorRequestComCep(""), "cep", List.of("campo obrigatório")),
+                Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, umFornecedorRequestComCep(" "), "cep", List.of("campo obrigatório")),
+                Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, umFornecedorRequestComCep(null), "cep", List.of("campo obrigatório")),
+                Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, umFornecedorRequestComCep("cep".repeat(3)), "cep", List.of("tamanho máximo de 8 caracteres")),
+
+                Arguments.of(false, ACCEPT_LANGUAGE_PT_BR, umFornecedorRequestComCidade(null), "cidade", List.of("campo obrigatório")),
+                Arguments.of(false, ACCEPT_LANGUAGE_PT_BR, umFornecedorRequestComCidade(0), "cidade", List.of("valor inválido")),
+                Arguments.of(false, ACCEPT_LANGUAGE_PT_BR, umFornecedorRequestComCidade(123), "cidade", List.of("valor inválido")),
+
+                Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, umFornecedorRequestComContatos(null), "contatos", List.of("campo obrigatório")),
+                Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, umFornecedorRequestComContatos(new ArrayList<>()), "contatos", List.of("campo obrigatório")),
+                Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, umFornecedorRequestComContatos(List.of(createContatoRequestComTipoDeContato(null))), "contatos[0].tipoDeContato", List.of("campo obrigatório")),
+                Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, umFornecedorRequestComContatos(List.of(CreateContatoRequest.celular(null, "123"))), "contatos[0].ddd", List.of("campo obrigatório")),
+                Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, umFornecedorRequestComContatos(List.of(CreateContatoRequest.celular(" ", "123"))), "contatos[0].ddd", List.of("campo obrigatório")),
+                Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, umFornecedorRequestComContatos(List.of(CreateContatoRequest.celular("", "123"))), "contatos[0].ddd", List.of("campo obrigatório")),
+                Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, umFornecedorRequestComContatos(List.of(CreateContatoRequest.celular("1", "123"))), "contatos[0].ddd", List.of("deve ter 2 caracteres")),
+                Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, umFornecedorRequestComContatos(List.of(CreateContatoRequest.celular("123", "123"))), "contatos[0].ddd", List.of("deve ter 2 caracteres"))
         );
     }
 
@@ -100,13 +151,15 @@ class FornecedorControllerIntegrationTest extends BaseControllerTest {
         perform
                 .andDo(print())
                 .andExpect(status().isBadRequest())
-                        .andExpect(jsonPath("$.status").value(HttpStatus.BAD_REQUEST.value()))
-                        .andExpect(jsonPath("$.error.code").value(ErrorType.EXPT001.name()))
-                        .andExpect(jsonPath("$.error.fields." + fieldName).isArray());
+                .andExpect(jsonPath("$.status").value(HttpStatus.BAD_REQUEST.value()))
+                .andExpect(jsonPath("$.error.code").value(ErrorType.EXPT001.name()))
+                .andExpect(jsonPath("$.error.fields").isArray())
+                .andExpect(jsonPath("$.error.fields[0].field").value(fieldName))
+                .andExpect(jsonPath("$.error.fields[0].messages").isArray());
 
         messages.forEach(message -> {
             try {
-                perform.andExpect(jsonPath("$.error.fields." + fieldName, hasItem(message)));
+                perform.andExpect(jsonPath("$.error.fields[0].messages", hasItem(message)));
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }

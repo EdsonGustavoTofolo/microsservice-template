@@ -1,6 +1,7 @@
 package io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.handlers;
 
 import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.handlers.models.ErrorApiResponse;
+import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.handlers.models.ErrorField;
 import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.handlers.models.StandardErrorApi;
 import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.presenters.exceptions.BaseHttpException;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.output.exceptions.enums.ErrorType;
@@ -9,7 +10,6 @@ import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import javax.servlet.http.HttpServletRequest;
 import java.time.ZonedDateTime;
-import java.util.List;
 import java.util.stream.Collectors;
 
 @ControllerAdvice
@@ -37,14 +36,20 @@ public class ControllerExceptionHandler {
     @ExceptionHandler(value = MethodArgumentNotValidException.class)
     public ResponseEntity<StandardErrorApi> methodArgumentNotValidExceptionHandler(final MethodArgumentNotValidException ex,
                                                                                    final HttpServletRequest request) {
-        log.warn("Falha na validacao dos dados de requisicao");
-        BindingResult bindingResult = ex.getBindingResult();
-        List<FieldError> fieldErrors = bindingResult.getFieldErrors();
-        var fields = fieldErrors.stream().collect(
+        log.error("Falha na validacao dos dados de requisicao");
+
+        final var fieldErrors = ex.getBindingResult().getFieldErrors();
+
+        var fields = fieldErrors.stream()
+                .collect(
                 Collectors.groupingBy(
                         FieldError::getField,
                         Collectors.mapping(DefaultMessageSourceResolvable::getDefaultMessage, Collectors.toList())
-                ));
+                ))
+                .entrySet().stream()
+                .map(entry -> new ErrorField(entry.getKey(), entry.getValue()))
+                .toList();
+
         var errorApi = StandardErrorApi.builder()
                 .path(request.getRequestURI())
                 .timestamp(ZonedDateTime.now())

@@ -12,7 +12,7 @@ import java.lang.annotation.*;
 @Constraint(validatedBy = {ConditionalValidator.class})
 public @interface Conditional {
 
-    String message() default "This field is required.";
+    String message() default "{fields.required}";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
 

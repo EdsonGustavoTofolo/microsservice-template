@@ -13,7 +13,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Constraint(validatedBy = {ExistsCountryValidator.class})
 public @interface ExistsCountry {
-    String message() default "valor inválido";
+    String message() default "{fields.invalidValue}";
 
     Class<?>[] groups() default {};
 
