@@ -1,28 +1,26 @@
 package io.github.edsongustavotofolo.microservicetemplate.usecases.ports.input.dtos;
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.Value;
 
 import java.util.List;
 
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
 @Builder
+@Value
 public class CreateFornecedor {
-    private String cnpj;
-    private String razaoSocial;
-    private String nomeFantasia;
-    private String observacao;
-    private String logradouro;
-    private String numero;
-    private String bairro;
-    private String complemento;
-    private String pontoDeReferencia;
-    private String cep;
-    private Integer cidadeId;
-    private List<CreateContato> contatos;
-    private String observacaoContatos;
+    String cnpj;
+    String razaoSocial;
+    String nomeFantasia;
+    String observacao;
+    String logradouro;
+    String numero;
+    String bairro;
+    String complemento;
+    String pontoDeReferencia;
+    String cep;
+    Integer cidadeId;
+    List<CreateContato> contatos;
+    String observacaoContatos;
 }

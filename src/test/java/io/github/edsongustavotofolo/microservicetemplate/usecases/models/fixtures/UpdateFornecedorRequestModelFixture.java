@@ -1,16 +1,16 @@
-package io.github.edsongustavotofolo.microservicetemplate.usecases.models.builders;
+package io.github.edsongustavotofolo.microservicetemplate.usecases.models.fixtures;
 
 import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.entrypoints.v1.fornecedores.dtos.UpdateFornecedorRequest;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.input.dtos.UpdateContato;
 
-public class UpdateFornecedorRequestModelBuilder {
+public class UpdateFornecedorRequestModelFixture {
     private UpdateFornecedorRequest requestModel;
 
-    private UpdateFornecedorRequestModelBuilder() {
+    private UpdateFornecedorRequestModelFixture() {
     }
 
-    public static UpdateFornecedorRequestModelBuilder umFornecedor() {
-        final var builder = new UpdateFornecedorRequestModelBuilder();
+    public static UpdateFornecedorRequestModelFixture umFornecedor() {
+        final var builder = new UpdateFornecedorRequestModelFixture();
         builder.requestModel = UpdateFornecedorRequest.builder()
                 .cnpj("45135006000104")
                 .razaoSocial("Fornecedor Ltda")
@@ -57,7 +57,7 @@ public class UpdateFornecedorRequestModelBuilder {
         return builder;
     }
 
-    public UpdateFornecedorRequestModelBuilder adicionarContato(final UpdateContato updateContato) {
+    public UpdateFornecedorRequestModelFixture adicionarContato(final UpdateContato updateContato) {
         this.requestModel.getContatos().add(null);
         return this;
     }

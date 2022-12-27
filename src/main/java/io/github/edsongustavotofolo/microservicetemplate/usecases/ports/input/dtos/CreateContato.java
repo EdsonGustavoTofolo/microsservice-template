@@ -1,22 +1,20 @@
 package io.github.edsongustavotofolo.microservicetemplate.usecases.ports.input.dtos;
 
 import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.dtos.TipoDeContatoEnum;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.Value;
 
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
 @Builder
+@Value
 public class CreateContato {
-    private TipoDeContatoEnum tipoDeContato;
-    private String ddd;
-    private String numero;
-    private String enderecoEmail;
-    private String urlSite;
-    private String texto;
+    TipoDeContatoEnum tipoDeContato;
+    String ddd;
+    String numero;
+    String enderecoEmail;
+    String urlSite;
+    String texto;
 
     public static CreateContato outro(final String texto) {
         return CreateContato.builder()

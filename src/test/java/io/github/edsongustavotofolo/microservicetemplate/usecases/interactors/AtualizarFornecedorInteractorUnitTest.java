@@ -9,7 +9,7 @@ import io.github.edsongustavotofolo.microservicetemplate.domain.entities.Site;
 import io.github.edsongustavotofolo.microservicetemplate.domain.entities.Telefone;
 import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.entrypoints.v1.fornecedores.dtos.UpdateFornecedorRequest;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.interactors.mappers.impl.ContatoMapperImpl;
-import io.github.edsongustavotofolo.microservicetemplate.usecases.models.builders.UpdateFornecedorRequestModelBuilder;
+import io.github.edsongustavotofolo.microservicetemplate.usecases.models.fixtures.UpdateFornecedorRequestModelFixture;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.dtos.TipoDeContatoEnum;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.input.dtos.UpdateContato;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.output.UpdateFornecedorOutputPort;
@@ -50,7 +50,7 @@ class AtualizarFornecedorInteractorUnitTest {
         when(this.fornecedorProvider.getById(id)).thenReturn(Optional.of(fornecedorResult));
         when(this.contatoMapper.toDomain(any(UpdateContato.class))).thenCallRealMethod();
 
-        final UpdateFornecedorRequest expected = UpdateFornecedorRequestModelBuilder.umFornecedor()
+        final UpdateFornecedorRequest expected = UpdateFornecedorRequestModelFixture.umFornecedor()
                 .adicionarContato(UpdateContato.builder()
                         .id(6)
                         .tipoDeContato(TipoDeContatoEnum.EMAIL)

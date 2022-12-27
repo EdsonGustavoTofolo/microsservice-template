@@ -3,7 +3,7 @@ package io.github.edsongustavotofolo.microservicetemplate.usecases.interactors;
 import io.github.edsongustavotofolo.microservicetemplate.domain.entities.Fornecedor;
 import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.presenters.exceptions.FornecedorCnpjInvalidException;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.interactors.mappers.FornecedorMapper;
-import io.github.edsongustavotofolo.microservicetemplate.usecases.models.builders.CreateFornecedorRequestModelBuilder;
+import io.github.edsongustavotofolo.microservicetemplate.usecases.models.fixtures.CreateFornecedorRequestModelFixture;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.input.dtos.CreateFornecedor;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.output.CreateFornecedorOutputPort;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.output.exceptions.BusinessRuleException;
@@ -16,7 +16,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import static io.github.edsongustavotofolo.microservicetemplate.domain.builder.FornecedorBuilder.umFornecedor;
-import static io.github.edsongustavotofolo.microservicetemplate.usecases.models.builders.NovoFornecedorResponseModelBuilder.umFornecedorResponseModel;
+import static io.github.edsongustavotofolo.microservicetemplate.usecases.models.fixtures.NovoFornecedorResponseModelFixture.umFornecedorResponseModel;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doThrow;
@@ -39,7 +39,7 @@ class CreateFornecedorInteractorUnitTest {
         final var ex = new FornecedorCnpjInvalidException();
         doThrow(ex).when(this.presenter).cnpjIsInvalid();
 
-        final var requestModel = CreateFornecedorRequestModelBuilder.umFornecedor().get();
+        final var requestModel = CreateFornecedorRequestModelFixture.createFornecedor();
 
         when(this.fornecedorProvider.existsFornecedorWithCnpj(requestModel.getCnpj())).thenReturn(true);
 
@@ -62,7 +62,7 @@ class CreateFornecedorInteractorUnitTest {
         doThrow(expectedException).when(this.presenter).cnpjIsInvalid();
 
         final var cnpjInvalido = "99999999999999";
-        final var requestModel = CreateFornecedorRequestModelBuilder.umFornecedor().comCnpj(cnpjInvalido).get();
+        final var requestModel = CreateFornecedorRequestModelFixture.createFornecedorComCnpj(cnpjInvalido);
 
         // execucao
         try {
@@ -88,7 +88,7 @@ class CreateFornecedorInteractorUnitTest {
 
 //        when(presenter.present(1)).thenReturn(responseModel);
 
-        final var requestModel = CreateFornecedorRequestModelBuilder.umFornecedor().get();
+        final var requestModel = CreateFornecedorRequestModelFixture.createFornecedor();
 
         // execucao
 //        var actualResponseModel = interactor.execute(requestModel);

@@ -22,6 +22,7 @@ public final class CreateFornecedorMapper {
                 .pontoDeReferencia(requestModel.getPontoDeReferencia())
                 .cep(requestModel.getCep())
                 .cidadeId(requestModel.getCidade())
+                .observacaoContatos(requestModel.getObservacaoContatos())
                 .contatos(
                         requestModel.getContatos().stream()
                                 .map(contatoRequestModel ->
