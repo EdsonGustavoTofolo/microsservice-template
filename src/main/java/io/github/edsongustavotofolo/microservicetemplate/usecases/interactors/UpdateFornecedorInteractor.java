@@ -30,8 +30,8 @@ public class UpdateFornecedorInteractor implements UpdateFornecedorInputPort {
 
     @Transactional
     @Override
-    public void execute(final Integer id, final UpdateFornecedor updateFornecedor) throws BusinessRuleException {
-        final var fornecedor = this.fornecedorProvider.getById(id)
+    public void execute(final UpdateFornecedor updateFornecedor) throws BusinessRuleException {
+        final var fornecedor = this.fornecedorProvider.getById(updateFornecedor.getId())
                 .orElse(this.presenter.fornecedorNaoEncontrado());
 
         fornecedor.setCnpj(new Cnpj(updateFornecedor.getCnpj()));

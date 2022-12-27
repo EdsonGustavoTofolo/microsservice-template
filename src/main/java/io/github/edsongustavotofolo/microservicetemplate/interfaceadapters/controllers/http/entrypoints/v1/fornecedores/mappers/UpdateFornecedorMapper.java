@@ -10,5 +10,5 @@ public interface UpdateFornecedorMapper {
 
     UpdateFornecedorMapper INSTANCE = Mappers.getMapper(UpdateFornecedorMapper.class);
 
-    UpdateFornecedor toModel(final UpdateFornecedorRequest updateFornecedorRequest);
+    UpdateFornecedor toModel(final Integer id, final UpdateFornecedorRequest updateFornecedorRequest);
 }

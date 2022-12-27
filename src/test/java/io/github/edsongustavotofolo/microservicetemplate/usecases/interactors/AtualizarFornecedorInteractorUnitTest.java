@@ -59,7 +59,7 @@ class AtualizarFornecedorInteractorUnitTest {
                 .get();
 
         // do
-        this.interactor.execute(id, null);
+        this.interactor.execute(null);
 
         // check
         final ArgumentCaptor<Fornecedor> argumentCaptor = ArgumentCaptor.forClass(Fornecedor.class);

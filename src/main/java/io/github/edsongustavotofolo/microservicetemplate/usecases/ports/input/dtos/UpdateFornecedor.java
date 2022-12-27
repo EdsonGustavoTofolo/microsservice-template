@@ -2,23 +2,26 @@ package io.github.edsongustavotofolo.microservicetemplate.usecases.ports.input.d
 
 import lombok.Builder;
 import lombok.Data;
+import lombok.Value;
 
 import java.util.List;
 
 @Data
 @Builder
-public final class UpdateFornecedor {
-    private final String cnpj;
-    private final String razaoSocial;
-    private final String nomeFantasia;
-    private final String observacao;
-    private final String logradouro;
-    private final String numero;
-    private final String bairro;
-    private final String complemento;
-    private final String pontoDeReferencia;
-    private final String cep;
-    private final Integer cidadeId;
-    private final List<UpdateContato> contatos;
-    private final String observacaoContatos;
+@Value
+public class UpdateFornecedor {
+    Integer id;
+    String cnpj;
+    String razaoSocial;
+    String nomeFantasia;
+    String observacao;
+    String logradouro;
+    String numero;
+    String bairro;
+    String complemento;
+    String pontoDeReferencia;
+    String cep;
+    Integer cidadeId;
+    List<UpdateContato> contatos;
+    String observacaoContatos;
 }

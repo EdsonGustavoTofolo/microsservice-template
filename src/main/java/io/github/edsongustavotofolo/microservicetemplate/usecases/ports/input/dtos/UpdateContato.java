@@ -3,15 +3,17 @@ package io.github.edsongustavotofolo.microservicetemplate.usecases.ports.input.d
 import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.dtos.TipoDeContatoEnum;
 import lombok.Builder;
 import lombok.Data;
+import lombok.Value;
 
 @Data
 @Builder
-public final class UpdateContato {
-    private final Integer id;
-    private final TipoDeContatoEnum tipoDeContato;
-    private final String ddd;
-    private final String numero;
-    private final String enderecoEmail;
-    private final String urlSite;
-    private final String texto;
+@Value
+public class UpdateContato {
+    Integer id;
+    TipoDeContatoEnum tipoDeContato;
+    String ddd;
+    String numero;
+    String enderecoEmail;
+    String urlSite;
+    String texto;
 }
