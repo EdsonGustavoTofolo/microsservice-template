@@ -76,24 +76,92 @@ class FornecedorControllerIntegrationTest extends BaseControllerTest {
     @Captor
     private ArgumentCaptor<CreateFornecedorRequest> createFornecedorRequestArgumentCaptor;
 
-    private static Stream<Arguments> provideInvalidCreateFornecedorBody() {
+    private static Stream<Arguments> provideInvalidContatosCreateFornecedorBody() {
         return Stream.of(
-                Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, umFornecedorRequestComCnpj(""), "cnpj", List.of("campo obrigatório", "informe o CNPJ sem formatação, com somente 14 digitos")),
-                Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, umFornecedorRequestComCnpj(null), "cnpj", List.of("campo obrigatório")),
-                Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, umFornecedorRequestComCnpj(" "), "cnpj", List.of("campo obrigatório", "informe o CNPJ sem formatação, com somente 14 digitos")),
-                Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, umFornecedorRequestComCnpj("123456789"), "cnpj", List.of("informe o CNPJ sem formatação, com somente 14 digitos")),
-                Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, umFornecedorRequestComCnpj("1234567890123456"), "cnpj", List.of("informe o CNPJ sem formatação, com somente 14 digitos")),
+                Arguments.of(ACCEPT_LANGUAGE_PT_BR, umFornecedorRequestComContatos(null), "contatos", List.of("campo obrigatório")),
+                Arguments.of(ACCEPT_LANGUAGE_PT_BR, umFornecedorRequestComContatos(new ArrayList<>()), "contatos", List.of("campo obrigatório")),
 
-                Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, umFornecedorRequestComRazaoSocial(""), "razaoSocial", List.of("campo obrigatório")),
-                Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, umFornecedorRequestComRazaoSocial(" "), "razaoSocial", List.of("campo obrigatório")),
-                Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, umFornecedorRequestComRazaoSocial(null), "razaoSocial", List.of("campo obrigatório")),
-                Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, umFornecedorRequestComRazaoSocial("Nome".repeat(64)), "razaoSocial", List.of("tamanho máximo de 255 caracteres")),
+                Arguments.of(ACCEPT_LANGUAGE_PT_BR, umFornecedorRequestComContatos(List.of(createContatoRequestComTipoDeContato(null))), "contatos[0].tipoDeContato", List.of("campo obrigatório")),
 
-                Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, umFornecedorRequestComNomeFantasia(""), "nomeFantasia", List.of("campo obrigatório")),
-                Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, umFornecedorRequestComNomeFantasia(" "), "nomeFantasia", List.of("campo obrigatório")),
-                Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, umFornecedorRequestComNomeFantasia(null), "nomeFantasia", List.of("campo obrigatório")),
-                Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, umFornecedorRequestComNomeFantasia("Nome".repeat(64)), "nomeFantasia", List.of("tamanho máximo de 255 caracteres")),
+                Arguments.of(ACCEPT_LANGUAGE_PT_BR, umFornecedorRequestComContatos(List.of(CreateContatoRequest.celular(null, "123"))), "contatos[0].ddd", List.of("campo obrigatório")),
+                Arguments.of(ACCEPT_LANGUAGE_PT_BR, umFornecedorRequestComContatos(List.of(CreateContatoRequest.celular(" ", "123"))), "contatos[0].ddd", List.of("campo obrigatório")),
+                Arguments.of(ACCEPT_LANGUAGE_PT_BR, umFornecedorRequestComContatos(List.of(CreateContatoRequest.celular("", "123"))), "contatos[0].ddd", List.of("campo obrigatório")),
+                Arguments.of(ACCEPT_LANGUAGE_PT_BR, umFornecedorRequestComContatos(List.of(CreateContatoRequest.celular("1", "123"))), "contatos[0].ddd", List.of("deve ter 2 caracteres")),
+                Arguments.of(ACCEPT_LANGUAGE_PT_BR, umFornecedorRequestComContatos(List.of(CreateContatoRequest.celular("123", "123"))), "contatos[0].ddd", List.of("deve ter 2 caracteres")),
 
+                Arguments.of(ACCEPT_LANGUAGE_PT_BR, umFornecedorRequestComContatos(List.of(CreateContatoRequest.celular("46", null))), "contatos[0].numero", List.of("campo obrigatório")),
+                Arguments.of(ACCEPT_LANGUAGE_PT_BR, umFornecedorRequestComContatos(List.of(CreateContatoRequest.celular("46", ""))), "contatos[0].numero", List.of("campo obrigatório")),
+                Arguments.of(ACCEPT_LANGUAGE_PT_BR, umFornecedorRequestComContatos(List.of(CreateContatoRequest.celular("46", " "))), "contatos[0].numero", List.of("campo obrigatório")),
+                Arguments.of(ACCEPT_LANGUAGE_PT_BR, umFornecedorRequestComContatos(List.of(CreateContatoRequest.celular("46", "12345678901"))), "contatos[0].numero", List.of("tamanho máximo de 10 caracteres")),
+
+                Arguments.of(ACCEPT_LANGUAGE_PT_BR, umFornecedorRequestComContatos(List.of(CreateContatoRequest.telefone(null, "123"))), "contatos[0].ddd", List.of("campo obrigatório")),
+                Arguments.of(ACCEPT_LANGUAGE_PT_BR, umFornecedorRequestComContatos(List.of(CreateContatoRequest.telefone(" ", "123"))), "contatos[0].ddd", List.of("campo obrigatório")),
+                Arguments.of(ACCEPT_LANGUAGE_PT_BR, umFornecedorRequestComContatos(List.of(CreateContatoRequest.telefone("", "123"))), "contatos[0].ddd", List.of("campo obrigatório")),
+                Arguments.of(ACCEPT_LANGUAGE_PT_BR, umFornecedorRequestComContatos(List.of(CreateContatoRequest.telefone("1", "123"))), "contatos[0].ddd", List.of("deve ter 2 caracteres")),
+                Arguments.of(ACCEPT_LANGUAGE_PT_BR, umFornecedorRequestComContatos(List.of(CreateContatoRequest.telefone("123", "123"))), "contatos[0].ddd", List.of("deve ter 2 caracteres")),
+
+                Arguments.of(ACCEPT_LANGUAGE_PT_BR, umFornecedorRequestComContatos(List.of(CreateContatoRequest.telefone("46", null))), "contatos[0].numero", List.of("campo obrigatório")),
+                Arguments.of(ACCEPT_LANGUAGE_PT_BR, umFornecedorRequestComContatos(List.of(CreateContatoRequest.telefone("46", ""))), "contatos[0].numero", List.of("campo obrigatório")),
+                Arguments.of(ACCEPT_LANGUAGE_PT_BR, umFornecedorRequestComContatos(List.of(CreateContatoRequest.telefone("46", " "))), "contatos[0].numero", List.of("campo obrigatório")),
+                Arguments.of(ACCEPT_LANGUAGE_PT_BR, umFornecedorRequestComContatos(List.of(CreateContatoRequest.telefone("46", "12345678901"))), "contatos[0].numero", List.of("tamanho máximo de 10 caracteres")),
+
+                Arguments.of(ACCEPT_LANGUAGE_PT_BR, umFornecedorRequestComContatos(List.of(CreateContatoRequest.email(null))), "contatos[0].enderecoEmail", List.of("campo obrigatório")),
+                Arguments.of(ACCEPT_LANGUAGE_PT_BR, umFornecedorRequestComContatos(List.of(CreateContatoRequest.email(""))), "contatos[0].enderecoEmail", List.of("campo obrigatório")),
+                Arguments.of(ACCEPT_LANGUAGE_PT_BR, umFornecedorRequestComContatos(List.of(CreateContatoRequest.email(" "))), "contatos[0].enderecoEmail", List.of("campo obrigatório")),
+                Arguments.of(ACCEPT_LANGUAGE_PT_BR, umFornecedorRequestComContatos(List.of(CreateContatoRequest.email("email".repeat(52)))), "contatos[0].enderecoEmail", List.of("tamanho máximo de 255 caracteres")),
+
+                Arguments.of(ACCEPT_LANGUAGE_PT_BR, umFornecedorRequestComContatos(List.of(CreateContatoRequest.site(null))), "contatos[0].urlSite", List.of("campo obrigatório")),
+                Arguments.of(ACCEPT_LANGUAGE_PT_BR, umFornecedorRequestComContatos(List.of(CreateContatoRequest.site(""))), "contatos[0].urlSite", List.of("campo obrigatório")),
+                Arguments.of(ACCEPT_LANGUAGE_PT_BR, umFornecedorRequestComContatos(List.of(CreateContatoRequest.site(" "))), "contatos[0].urlSite", List.of("campo obrigatório")),
+                Arguments.of(ACCEPT_LANGUAGE_PT_BR, umFornecedorRequestComContatos(List.of(CreateContatoRequest.site("www".repeat(86)))), "contatos[0].urlSite", List.of("tamanho máximo de 255 caracteres")),
+
+                Arguments.of(ACCEPT_LANGUAGE_PT_BR, umFornecedorRequestComContatos(List.of(CreateContatoRequest.outro(null))), "contatos[0].texto", List.of("campo obrigatório")),
+                Arguments.of(ACCEPT_LANGUAGE_PT_BR, umFornecedorRequestComContatos(List.of(CreateContatoRequest.outro(""))), "contatos[0].texto", List.of("campo obrigatório")),
+                Arguments.of(ACCEPT_LANGUAGE_PT_BR, umFornecedorRequestComContatos(List.of(CreateContatoRequest.outro(" "))), "contatos[0].texto", List.of("campo obrigatório")),
+                Arguments.of(ACCEPT_LANGUAGE_PT_BR, umFornecedorRequestComContatos(List.of(CreateContatoRequest.outro("www".repeat(86)))), "contatos[0].texto", List.of("tamanho máximo de 255 caracteres"))
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("provideInvalidContatosCreateFornecedorBody")
+    void shouldResponseWithBadRequestWhenCreateFornecedorIsCalledWithInvalidContatos(final String language,
+                                                                                     final CreateFornecedorRequest request,
+                                                                                     final String fieldName,
+                                                                                     final List<String> messages) throws Exception {
+        this.requestToCreateFornecedor(true, language, request, fieldName, messages);
+    }
+
+    private static Stream<Arguments> provideInvalidFornecedorDataCreateFornecedorBody() {
+        return Stream.of(
+                Arguments.of(ACCEPT_LANGUAGE_PT_BR, umFornecedorRequestComCnpj(""), "cnpj", List.of("campo obrigatório", "informe o CNPJ sem formatação, com somente 14 digitos")),
+                Arguments.of(ACCEPT_LANGUAGE_PT_BR, umFornecedorRequestComCnpj(null), "cnpj", List.of("campo obrigatório")),
+                Arguments.of(ACCEPT_LANGUAGE_PT_BR, umFornecedorRequestComCnpj(" "), "cnpj", List.of("campo obrigatório", "informe o CNPJ sem formatação, com somente 14 digitos")),
+                Arguments.of(ACCEPT_LANGUAGE_PT_BR, umFornecedorRequestComCnpj("123456789"), "cnpj", List.of("informe o CNPJ sem formatação, com somente 14 digitos")),
+                Arguments.of(ACCEPT_LANGUAGE_PT_BR, umFornecedorRequestComCnpj("1234567890123456"), "cnpj", List.of("informe o CNPJ sem formatação, com somente 14 digitos")),
+
+                Arguments.of(ACCEPT_LANGUAGE_PT_BR, umFornecedorRequestComRazaoSocial(""), "razaoSocial", List.of("campo obrigatório")),
+                Arguments.of(ACCEPT_LANGUAGE_PT_BR, umFornecedorRequestComRazaoSocial(" "), "razaoSocial", List.of("campo obrigatório")),
+                Arguments.of(ACCEPT_LANGUAGE_PT_BR, umFornecedorRequestComRazaoSocial(null), "razaoSocial", List.of("campo obrigatório")),
+                Arguments.of(ACCEPT_LANGUAGE_PT_BR, umFornecedorRequestComRazaoSocial("Nome".repeat(64)), "razaoSocial", List.of("tamanho máximo de 255 caracteres")),
+
+                Arguments.of(ACCEPT_LANGUAGE_PT_BR, umFornecedorRequestComNomeFantasia(""), "nomeFantasia", List.of("campo obrigatório")),
+                Arguments.of(ACCEPT_LANGUAGE_PT_BR, umFornecedorRequestComNomeFantasia(" "), "nomeFantasia", List.of("campo obrigatório")),
+                Arguments.of(ACCEPT_LANGUAGE_PT_BR, umFornecedorRequestComNomeFantasia(null), "nomeFantasia", List.of("campo obrigatório")),
+                Arguments.of(ACCEPT_LANGUAGE_PT_BR, umFornecedorRequestComNomeFantasia("Nome".repeat(64)), "nomeFantasia", List.of("tamanho máximo de 255 caracteres"))
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("provideInvalidFornecedorDataCreateFornecedorBody")
+    void shouldResponseWithBadRequestWhenCreateFornecedorIsCalledWithInvalidFornecedorData(final String language,
+                                                                                           final CreateFornecedorRequest request,
+                                                                                           final String fieldName,
+                                                                                           final List<String> messages) throws Exception {
+        this.requestToCreateFornecedor(true, language, request, fieldName, messages);
+    }
+
+    private static Stream<Arguments> provideInvalidEnderecoCreateFornecedorBody() {
+        return Stream.of(
                 Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, umFornecedorRequestComLogradouro(""), "logradouro", List.of("campo obrigatório")),
                 Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, umFornecedorRequestComLogradouro(" "), "logradouro", List.of("campo obrigatório")),
                 Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, umFornecedorRequestComLogradouro(null), "logradouro", List.of("campo obrigatório")),
@@ -120,59 +188,26 @@ class FornecedorControllerIntegrationTest extends BaseControllerTest {
 
                 Arguments.of(false, ACCEPT_LANGUAGE_PT_BR, umFornecedorRequestComCidade(null), "cidade", List.of("campo obrigatório")),
                 Arguments.of(false, ACCEPT_LANGUAGE_PT_BR, umFornecedorRequestComCidade(0), "cidade", List.of("valor inválido")),
-                Arguments.of(false, ACCEPT_LANGUAGE_PT_BR, umFornecedorRequestComCidade(123), "cidade", List.of("valor inválido")),
-
-                Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, umFornecedorRequestComContatos(null), "contatos", List.of("campo obrigatório")),
-                Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, umFornecedorRequestComContatos(new ArrayList<>()), "contatos", List.of("campo obrigatório")),
-
-                Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, umFornecedorRequestComContatos(List.of(createContatoRequestComTipoDeContato(null))), "contatos[0].tipoDeContato", List.of("campo obrigatório")),
-
-                Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, umFornecedorRequestComContatos(List.of(CreateContatoRequest.celular(null, "123"))), "contatos[0].ddd", List.of("campo obrigatório")),
-                Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, umFornecedorRequestComContatos(List.of(CreateContatoRequest.celular(" ", "123"))), "contatos[0].ddd", List.of("campo obrigatório")),
-                Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, umFornecedorRequestComContatos(List.of(CreateContatoRequest.celular("", "123"))), "contatos[0].ddd", List.of("campo obrigatório")),
-                Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, umFornecedorRequestComContatos(List.of(CreateContatoRequest.celular("1", "123"))), "contatos[0].ddd", List.of("deve ter 2 caracteres")),
-                Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, umFornecedorRequestComContatos(List.of(CreateContatoRequest.celular("123", "123"))), "contatos[0].ddd", List.of("deve ter 2 caracteres")),
-
-                Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, umFornecedorRequestComContatos(List.of(CreateContatoRequest.celular("46", null))), "contatos[0].numero", List.of("campo obrigatório")),
-                Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, umFornecedorRequestComContatos(List.of(CreateContatoRequest.celular("46", ""))), "contatos[0].numero", List.of("campo obrigatório")),
-                Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, umFornecedorRequestComContatos(List.of(CreateContatoRequest.celular("46", " "))), "contatos[0].numero", List.of("campo obrigatório")),
-                Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, umFornecedorRequestComContatos(List.of(CreateContatoRequest.celular("46", "12345678901"))), "contatos[0].numero", List.of("tamanho máximo de 10 caracteres")),
-
-                Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, umFornecedorRequestComContatos(List.of(CreateContatoRequest.telefone(null, "123"))), "contatos[0].ddd", List.of("campo obrigatório")),
-                Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, umFornecedorRequestComContatos(List.of(CreateContatoRequest.telefone(" ", "123"))), "contatos[0].ddd", List.of("campo obrigatório")),
-                Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, umFornecedorRequestComContatos(List.of(CreateContatoRequest.telefone("", "123"))), "contatos[0].ddd", List.of("campo obrigatório")),
-                Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, umFornecedorRequestComContatos(List.of(CreateContatoRequest.telefone("1", "123"))), "contatos[0].ddd", List.of("deve ter 2 caracteres")),
-                Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, umFornecedorRequestComContatos(List.of(CreateContatoRequest.telefone("123", "123"))), "contatos[0].ddd", List.of("deve ter 2 caracteres")),
-
-                Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, umFornecedorRequestComContatos(List.of(CreateContatoRequest.telefone("46", null))), "contatos[0].numero", List.of("campo obrigatório")),
-                Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, umFornecedorRequestComContatos(List.of(CreateContatoRequest.telefone("46", ""))), "contatos[0].numero", List.of("campo obrigatório")),
-                Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, umFornecedorRequestComContatos(List.of(CreateContatoRequest.telefone("46", " "))), "contatos[0].numero", List.of("campo obrigatório")),
-                Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, umFornecedorRequestComContatos(List.of(CreateContatoRequest.telefone("46", "12345678901"))), "contatos[0].numero", List.of("tamanho máximo de 10 caracteres")),
-
-                Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, umFornecedorRequestComContatos(List.of(CreateContatoRequest.email(null))), "contatos[0].enderecoEmail", List.of("campo obrigatório")),
-                Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, umFornecedorRequestComContatos(List.of(CreateContatoRequest.email(""))), "contatos[0].enderecoEmail", List.of("campo obrigatório")),
-                Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, umFornecedorRequestComContatos(List.of(CreateContatoRequest.email(" "))), "contatos[0].enderecoEmail", List.of("campo obrigatório")),
-                Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, umFornecedorRequestComContatos(List.of(CreateContatoRequest.email("email".repeat(52)))), "contatos[0].enderecoEmail", List.of("tamanho máximo de 255 caracteres")),
-
-                Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, umFornecedorRequestComContatos(List.of(CreateContatoRequest.site(null))), "contatos[0].urlSite", List.of("campo obrigatório")),
-                Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, umFornecedorRequestComContatos(List.of(CreateContatoRequest.site(""))), "contatos[0].urlSite", List.of("campo obrigatório")),
-                Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, umFornecedorRequestComContatos(List.of(CreateContatoRequest.site(" "))), "contatos[0].urlSite", List.of("campo obrigatório")),
-                Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, umFornecedorRequestComContatos(List.of(CreateContatoRequest.site("www".repeat(86)))), "contatos[0].urlSite", List.of("tamanho máximo de 255 caracteres")),
-
-                Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, umFornecedorRequestComContatos(List.of(CreateContatoRequest.outro(null))), "contatos[0].texto", List.of("campo obrigatório")),
-                Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, umFornecedorRequestComContatos(List.of(CreateContatoRequest.outro(""))), "contatos[0].texto", List.of("campo obrigatório")),
-                Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, umFornecedorRequestComContatos(List.of(CreateContatoRequest.outro(" "))), "contatos[0].texto", List.of("campo obrigatório")),
-                Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, umFornecedorRequestComContatos(List.of(CreateContatoRequest.outro("www".repeat(86)))), "contatos[0].texto", List.of("tamanho máximo de 255 caracteres"))
+                Arguments.of(false, ACCEPT_LANGUAGE_PT_BR, umFornecedorRequestComCidade(123), "cidade", List.of("valor inválido"))
         );
     }
 
     @ParameterizedTest
-    @MethodSource("provideInvalidCreateFornecedorBody")
-    void shouldResponseWithBadRequestWhenCreateFornecedorIsCalledWithInvalidBody(final boolean existsCidade,
-                                                                                 final String language,
-                                                                                 final CreateFornecedorRequest request,
-                                                                                 final String fieldName,
-                                                                                 final List<String> messages) throws Exception {
+    @MethodSource("provideInvalidEnderecoCreateFornecedorBody")
+    void shouldResponseWithBadRequestWhenCreateFornecedorIsCalledWithInvalidEndereco(final boolean existsCidade,
+                                                                                     final String language,
+                                                                                     final CreateFornecedorRequest request,
+                                                                                     final String fieldName,
+                                                                                     final List<String> messages) throws Exception {
+        this.requestToCreateFornecedor(existsCidade, language, request, fieldName, messages);
+    }
+
+
+    private void requestToCreateFornecedor(final boolean existsCidade,
+                                           final String language,
+                                           final CreateFornecedorRequest request,
+                                           final String fieldName,
+                                           final List<String> messages) throws Exception {
         when(this.cidadeProvider.existsById(any())).thenReturn(existsCidade);
 
         final var perform = this.mockMvc.perform(
@@ -193,7 +228,7 @@ class FornecedorControllerIntegrationTest extends BaseControllerTest {
         messages.forEach(message -> {
             try {
                 perform.andExpect(jsonPath("$.error.fields[0].messages", hasItem(message)));
-            } catch (Exception e) {
+            } catch (final Exception e) {
                 throw new RuntimeException(e);
             }
         });
