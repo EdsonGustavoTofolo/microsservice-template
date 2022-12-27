@@ -8,4 +8,8 @@ public final class FornecedorControllerPaths {
     private FornecedorControllerPaths() {
         throw new IllegalStateException("Utility class.");
     }
+
+    public static String getFullPath(final String path) {
+        return BASE_PATH + path;
+    }
 }

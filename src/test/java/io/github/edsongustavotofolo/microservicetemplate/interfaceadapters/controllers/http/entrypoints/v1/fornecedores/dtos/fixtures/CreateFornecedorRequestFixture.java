@@ -9,7 +9,7 @@ public class CreateFornecedorRequestFixture {
 
     private CreateFornecedorRequestFixture() {}
 
-    public static CreateFornecedorRequest umFornecedorRequest() {
+    public static CreateFornecedorRequest createFornecedorRequest() {
         return CreateFornecedorRequest.builder()
                 .cnpj("68278677000120")
                 .razaoSocial("Razao Social")
@@ -29,7 +29,7 @@ public class CreateFornecedorRequestFixture {
                 .build();
     }
 
-    public static CreateFornecedorRequest umFornecedorRequestComCnpj(final String value) {
+    public static CreateFornecedorRequest createFornecedorRequestComCnpj(final String value) {
         return CreateFornecedorRequest.builder()
                 .cnpj(value)
                 .razaoSocial("Razao Social")
@@ -49,7 +49,7 @@ public class CreateFornecedorRequestFixture {
                 .build();
     }
 
-    public static CreateFornecedorRequest umFornecedorRequestComRazaoSocial(final String value) {
+    public static CreateFornecedorRequest createFornecedorRequestComRazaoSocial(final String value) {
         return CreateFornecedorRequest.builder()
                 .cnpj("68278677000120")
                 .razaoSocial(value)
@@ -69,7 +69,7 @@ public class CreateFornecedorRequestFixture {
                 .build();
     }
 
-    public static CreateFornecedorRequest umFornecedorRequestComNomeFantasia(final String value) {
+    public static CreateFornecedorRequest createFornecedorRequestComNomeFantasia(final String value) {
         return CreateFornecedorRequest.builder()
                 .cnpj("68278677000120")
                 .razaoSocial("Razao Social")
@@ -89,7 +89,7 @@ public class CreateFornecedorRequestFixture {
                 .build();
     }
 
-    public static CreateFornecedorRequest umFornecedorRequestComLogradouro(final String value) {
+    public static CreateFornecedorRequest createFornecedorRequestComLogradouro(final String value) {
         return CreateFornecedorRequest.builder()
                 .cnpj("68278677000120")
                 .razaoSocial("Razao Social")
@@ -109,7 +109,7 @@ public class CreateFornecedorRequestFixture {
                 .build();
     }
 
-    public static CreateFornecedorRequest umFornecedorRequestComNumero(final String value) {
+    public static CreateFornecedorRequest createFornecedorRequestComNumero(final String value) {
         return CreateFornecedorRequest.builder()
                 .cnpj("68278677000120")
                 .razaoSocial("Razao Social")
@@ -129,7 +129,7 @@ public class CreateFornecedorRequestFixture {
                 .build();
     }
 
-    public static CreateFornecedorRequest umFornecedorRequestComBairro(final String value) {
+    public static CreateFornecedorRequest createFornecedorRequestComBairro(final String value) {
         return CreateFornecedorRequest.builder()
                 .cnpj("68278677000120")
                 .razaoSocial("Razao Social")
@@ -149,7 +149,7 @@ public class CreateFornecedorRequestFixture {
                 .build();
     }
 
-    public static CreateFornecedorRequest umFornecedorRequestComComplemento(final String value) {
+    public static CreateFornecedorRequest createFornecedorRequestComComplemento(final String value) {
         return CreateFornecedorRequest.builder()
                 .cnpj("68278677000120")
                 .razaoSocial("Razao Social")
@@ -169,7 +169,7 @@ public class CreateFornecedorRequestFixture {
                 .build();
     }
 
-    public static CreateFornecedorRequest umFornecedorRequestComPontoDeReferencia(final String value) {
+    public static CreateFornecedorRequest createFornecedorRequestComPontoDeReferencia(final String value) {
         return CreateFornecedorRequest.builder()
                 .cnpj("68278677000120")
                 .razaoSocial("Razao Social")
@@ -189,7 +189,7 @@ public class CreateFornecedorRequestFixture {
                 .build();
     }
 
-    public static CreateFornecedorRequest umFornecedorRequestComCep(final String value) {
+    public static CreateFornecedorRequest createFornecedorRequestComCep(final String value) {
         return CreateFornecedorRequest.builder()
                 .cnpj("68278677000120")
                 .razaoSocial("Razao Social")
@@ -209,7 +209,7 @@ public class CreateFornecedorRequestFixture {
                 .build();
     }
 
-    public static CreateFornecedorRequest umFornecedorRequestComCidade(final Integer value) {
+    public static CreateFornecedorRequest createFornecedorRequestComCidade(final Integer value) {
         return CreateFornecedorRequest.builder()
                 .cnpj("68278677000120")
                 .razaoSocial("Razao Social")
@@ -229,7 +229,7 @@ public class CreateFornecedorRequestFixture {
                 .build();
     }
 
-    public static CreateFornecedorRequest umFornecedorRequestComContatos(final List<CreateContatoRequest> value) {
+    public static CreateFornecedorRequest createFornecedorRequestComContatos(final List<CreateContatoRequest> value) {
         return CreateFornecedorRequest.builder()
                 .cnpj("68278677000120")
                 .razaoSocial("Razao Social")

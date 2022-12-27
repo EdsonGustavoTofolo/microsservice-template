@@ -17,7 +17,7 @@ import java.util.List;
 @Value
 public class CreateFornecedorRequest {
     @NotBlank(message = "{fields.required}")
-    @Size(message = "{createfornecedor.fields.cnpj}", min = 14, max = 14)
+    @Size(message = "{fornecedor.fields.cnpj}", min = 14, max = 14)
     String cnpj;
     @NotBlank(message = "{fields.required}")
     @Size(message = "{fields.maxLength}", max = 255)
@@ -29,7 +29,7 @@ public class CreateFornecedorRequest {
     @NotBlank(message = "{fields.required}")
     @Size(message = "{fields.maxLength}", max = 255)
     String logradouro;
-    @NotBlank(message = "{createfornecedor.fields.numero}")
+    @NotBlank(message = "{fornecedor.fields.numero}")
     @Size(message = "{fields.maxLength}", max = 10)
     String numero;
     @NotBlank(message = "{fields.required}")

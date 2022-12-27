@@ -21,7 +21,7 @@ public class UpdateFornecedorRequestModelBuilder {
                 .complemento("edificio")
                 .pontoDeReferencia("proximo a Farmacia do Povo")
                 .cep("85601000")
-                .cidadeId(4115200)
+                .cidade(4115200)
                 .contatos(null
 //                        new ArrayList<>(List.of(
 //                        UpdateContato.builder()

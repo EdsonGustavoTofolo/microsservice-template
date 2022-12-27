@@ -77,7 +77,7 @@ class AtualizarFornecedorInteractorUnitTest {
         assertEquals(expected.getComplemento(), actual.getEndereco().getComplemento());
         assertEquals(expected.getPontoDeReferencia(), actual.getEndereco().getPontoDeReferencia());
         assertEquals(expected.getCep(), actual.getEndereco().getCep().toString());
-        assertEquals(expected.getCidadeId(), actual.getEndereco().getCidade().getId());
+        assertEquals(expected.getCidade(), actual.getEndereco().getCidade().getId());
 
         assertEquals(6, actual.getContatos().getLista().size());
 
