@@ -21,7 +21,7 @@ public class CreateFornecedorRequestModelFixture {
                 .complemento("edificio")
                 .pontoDeReferencia("proximo a Farmacia do Povo")
                 .cep("85601000")
-                .cidadeId(4115200)
+                .cidade(4115200)
                 .contatos(List.of(
                         CreateContato.builder()
                                 .tipoDeContato(TipoDeContatoEnum.EMAIL)
@@ -60,7 +60,7 @@ public class CreateFornecedorRequestModelFixture {
                 .complemento("edificio")
                 .pontoDeReferencia("proximo a Farmacia do Povo")
                 .cep("85601000")
-                .cidadeId(4115200)
+                .cidade(4115200)
                 .contatos(List.of(
                         CreateContato.builder()
                                 .tipoDeContato(TipoDeContatoEnum.EMAIL)

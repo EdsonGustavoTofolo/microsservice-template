@@ -20,7 +20,7 @@ public class CreateFornecedor {
     String complemento;
     String pontoDeReferencia;
     String cep;
-    Integer cidadeId;
+    Integer cidade;
     List<CreateContato> contatos;
     String observacaoContatos;
 }

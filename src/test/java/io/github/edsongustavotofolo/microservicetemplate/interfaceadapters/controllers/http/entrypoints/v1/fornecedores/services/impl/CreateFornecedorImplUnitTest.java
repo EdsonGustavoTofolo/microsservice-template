@@ -59,7 +59,7 @@ class CreateFornecedorImplUnitTest {
         assertEquals(request.getComplemento(), model.getComplemento());
         assertEquals(request.getPontoDeReferencia(), model.getPontoDeReferencia());
         assertEquals(request.getCep(), model.getCep());
-        assertEquals(request.getCidade(), model.getCidadeId());
+        assertEquals(request.getCidade(), model.getCidade());
 
         assertNotNull(model.getContatos());
         assertEquals(2, model.getContatos().size());

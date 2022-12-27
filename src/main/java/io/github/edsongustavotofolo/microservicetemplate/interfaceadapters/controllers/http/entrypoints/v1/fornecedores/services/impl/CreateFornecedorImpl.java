@@ -19,7 +19,7 @@ public class CreateFornecedorImpl implements CreateFornecedor {
 
     @Override
     public Integer execute(final CreateFornecedorRequest request) throws BusinessRuleException {
-        final var model = CreateFornecedorMapper.toModel(request);
+        final var model = CreateFornecedorMapper.INSTANCE.toModel(request);
 
         this.createFornecedor.execute(model);
 

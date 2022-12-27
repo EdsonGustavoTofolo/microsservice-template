@@ -30,7 +30,7 @@ public class FornecedorMapperImpl implements FornecedorMapper {
                 requestModel.getComplemento(),
                 requestModel.getPontoDeReferencia(),
                 new Cep(requestModel.getCep()),
-                new CidadeImpl(requestModel.getCidadeId()));
+                new CidadeImpl(requestModel.getCidade()));
 
         final var contatos = new ContatosImpl();
         contatos.setObservacao(requestModel.getObservacaoContatos());
