@@ -33,19 +33,8 @@ import java.util.stream.Stream;
 import static io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.entrypoints.v1.fornecedores.FornecedorControllerPaths.BASE_PATH;
 import static io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.entrypoints.v1.fornecedores.FornecedorControllerPaths.UPDATE_FORNECEDOR_PATH;
 import static io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.entrypoints.v1.fornecedores.FornecedorControllerPaths.getFullPath;
-import static io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.entrypoints.v1.fornecedores.dtos.fixtures.CreateContatoRequestFixture.createContatoRequestComTipoDeContato;
-import static io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.entrypoints.v1.fornecedores.dtos.fixtures.CreateFornecedorRequestFixture.createFornecedorRequest;
-import static io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.entrypoints.v1.fornecedores.dtos.fixtures.CreateFornecedorRequestFixture.createFornecedorRequestComBairro;
-import static io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.entrypoints.v1.fornecedores.dtos.fixtures.CreateFornecedorRequestFixture.createFornecedorRequestComCep;
-import static io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.entrypoints.v1.fornecedores.dtos.fixtures.CreateFornecedorRequestFixture.createFornecedorRequestComCidade;
-import static io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.entrypoints.v1.fornecedores.dtos.fixtures.CreateFornecedorRequestFixture.createFornecedorRequestComCnpj;
-import static io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.entrypoints.v1.fornecedores.dtos.fixtures.CreateFornecedorRequestFixture.createFornecedorRequestComComplemento;
-import static io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.entrypoints.v1.fornecedores.dtos.fixtures.CreateFornecedorRequestFixture.createFornecedorRequestComContatos;
-import static io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.entrypoints.v1.fornecedores.dtos.fixtures.CreateFornecedorRequestFixture.createFornecedorRequestComLogradouro;
-import static io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.entrypoints.v1.fornecedores.dtos.fixtures.CreateFornecedorRequestFixture.createFornecedorRequestComNomeFantasia;
-import static io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.entrypoints.v1.fornecedores.dtos.fixtures.CreateFornecedorRequestFixture.createFornecedorRequestComNumero;
-import static io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.entrypoints.v1.fornecedores.dtos.fixtures.CreateFornecedorRequestFixture.createFornecedorRequestComPontoDeReferencia;
-import static io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.entrypoints.v1.fornecedores.dtos.fixtures.CreateFornecedorRequestFixture.createFornecedorRequestComRazaoSocial;
+import static io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.entrypoints.v1.fornecedores.dtos.builders.CreateFornecedorRequestBuilder.umFornecedorRequest;
+import static io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.entrypoints.v1.fornecedores.dtos.builders.CreateContatoRequestBuilder.umContatoRequest;
 import static io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.entrypoints.v1.fornecedores.dtos.fixtures.UpdateFornecedorRequestFixture.updateFornecedorRequest;
 import static org.hamcrest.Matchers.hasItem;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -87,50 +76,50 @@ class FornecedorControllerIntegrationTest extends BaseControllerTest {
 
     private static Stream<Arguments> provideInvalidContatosCreateFornecedorBody() {
         return Stream.of(
-                Arguments.of(ACCEPT_LANGUAGE_PT_BR, createFornecedorRequestComContatos(null), "contatos", List.of("campo obrigatório")),
-                Arguments.of(ACCEPT_LANGUAGE_PT_BR, createFornecedorRequestComContatos(new ArrayList<>()), "contatos", List.of("campo obrigatório")),
+                Arguments.of(ACCEPT_LANGUAGE_PT_BR, umFornecedorRequest().contatos(null).build(), "contatos", List.of("campo obrigatório")),
+                Arguments.of(ACCEPT_LANGUAGE_PT_BR, umFornecedorRequest().contatos(new ArrayList<>()).build(), "contatos", List.of("campo obrigatório")),
 
-                Arguments.of(ACCEPT_LANGUAGE_PT_BR, createFornecedorRequestComContatos(List.of(createContatoRequestComTipoDeContato(null))), "contatos[0].tipoDeContato", List.of("campo obrigatório")),
-                Arguments.of(ACCEPT_LANGUAGE_PT_BR, createFornecedorRequestComContatos(List.of(createContatoRequestComTipoDeContato("XPTO"))), "contatos[0].tipoDeContato", List.of("valor inválido")),
-                Arguments.of(ACCEPT_LANGUAGE_PT_BR, createFornecedorRequestComContatos(List.of(createContatoRequestComTipoDeContato(""))), "contatos[0].tipoDeContato", List.of("campo obrigatório")),
-                Arguments.of(ACCEPT_LANGUAGE_PT_BR, createFornecedorRequestComContatos(List.of(createContatoRequestComTipoDeContato(" "))), "contatos[0].tipoDeContato", List.of("campo obrigatório")),
+                Arguments.of(ACCEPT_LANGUAGE_PT_BR, umFornecedorRequest().contatos(List.of(umContatoRequest().tipoDeContato(null).build())).build(), "contatos[0].tipoDeContato", List.of("campo obrigatório")),
+                Arguments.of(ACCEPT_LANGUAGE_PT_BR, umFornecedorRequest().contatos(List.of(umContatoRequest().tipoDeContato("XPTO").build())).build(), "contatos[0].tipoDeContato", List.of("valor inválido")),
+                Arguments.of(ACCEPT_LANGUAGE_PT_BR, umFornecedorRequest().contatos(List.of(umContatoRequest().tipoDeContato("").build())).build(), "contatos[0].tipoDeContato", List.of("campo obrigatório")),
+                Arguments.of(ACCEPT_LANGUAGE_PT_BR, umFornecedorRequest().contatos(List.of(umContatoRequest().tipoDeContato(" ").build())).build(), "contatos[0].tipoDeContato", List.of("campo obrigatório")),
 
-                Arguments.of(ACCEPT_LANGUAGE_PT_BR, createFornecedorRequestComContatos(List.of(CreateContatoRequest.celular(null, "123"))), "contatos[0].ddd", List.of("campo obrigatório")),
-                Arguments.of(ACCEPT_LANGUAGE_PT_BR, createFornecedorRequestComContatos(List.of(CreateContatoRequest.celular(" ", "123"))), "contatos[0].ddd", List.of("campo obrigatório")),
-                Arguments.of(ACCEPT_LANGUAGE_PT_BR, createFornecedorRequestComContatos(List.of(CreateContatoRequest.celular("", "123"))), "contatos[0].ddd", List.of("campo obrigatório")),
-                Arguments.of(ACCEPT_LANGUAGE_PT_BR, createFornecedorRequestComContatos(List.of(CreateContatoRequest.celular("1", "123"))), "contatos[0].ddd", List.of("deve ter 2 caracteres")),
-                Arguments.of(ACCEPT_LANGUAGE_PT_BR, createFornecedorRequestComContatos(List.of(CreateContatoRequest.celular("123", "123"))), "contatos[0].ddd", List.of("deve ter 2 caracteres")),
+                Arguments.of(ACCEPT_LANGUAGE_PT_BR, umFornecedorRequest().contatos(List.of(CreateContatoRequest.celular(null, "123"))).build(), "contatos[0].ddd", List.of("campo obrigatório")),
+                Arguments.of(ACCEPT_LANGUAGE_PT_BR, umFornecedorRequest().contatos(List.of(CreateContatoRequest.celular(" ", "123"))).build(), "contatos[0].ddd", List.of("campo obrigatório")),
+                Arguments.of(ACCEPT_LANGUAGE_PT_BR, umFornecedorRequest().contatos(List.of(CreateContatoRequest.celular("", "123"))).build(), "contatos[0].ddd", List.of("campo obrigatório")),
+                Arguments.of(ACCEPT_LANGUAGE_PT_BR, umFornecedorRequest().contatos(List.of(CreateContatoRequest.celular("1", "123"))).build(), "contatos[0].ddd", List.of("deve ter 2 caracteres")),
+                Arguments.of(ACCEPT_LANGUAGE_PT_BR, umFornecedorRequest().contatos(List.of(CreateContatoRequest.celular("123", "123"))).build(), "contatos[0].ddd", List.of("deve ter 2 caracteres")),
 
-                Arguments.of(ACCEPT_LANGUAGE_PT_BR, createFornecedorRequestComContatos(List.of(CreateContatoRequest.celular("46", null))), "contatos[0].numero", List.of("campo obrigatório")),
-                Arguments.of(ACCEPT_LANGUAGE_PT_BR, createFornecedorRequestComContatos(List.of(CreateContatoRequest.celular("46", ""))), "contatos[0].numero", List.of("campo obrigatório")),
-                Arguments.of(ACCEPT_LANGUAGE_PT_BR, createFornecedorRequestComContatos(List.of(CreateContatoRequest.celular("46", " "))), "contatos[0].numero", List.of("campo obrigatório")),
-                Arguments.of(ACCEPT_LANGUAGE_PT_BR, createFornecedorRequestComContatos(List.of(CreateContatoRequest.celular("46", "12345678901"))), "contatos[0].numero", List.of("tamanho máximo de 10 caracteres")),
+                Arguments.of(ACCEPT_LANGUAGE_PT_BR, umFornecedorRequest().contatos(List.of(CreateContatoRequest.celular("46", null))).build(), "contatos[0].numero", List.of("campo obrigatório")),
+                Arguments.of(ACCEPT_LANGUAGE_PT_BR, umFornecedorRequest().contatos(List.of(CreateContatoRequest.celular("46", ""))).build(), "contatos[0].numero", List.of("campo obrigatório")),
+                Arguments.of(ACCEPT_LANGUAGE_PT_BR, umFornecedorRequest().contatos(List.of(CreateContatoRequest.celular("46", " "))).build(), "contatos[0].numero", List.of("campo obrigatório")),
+                Arguments.of(ACCEPT_LANGUAGE_PT_BR, umFornecedorRequest().contatos(List.of(CreateContatoRequest.celular("46", "12345678901"))).build(), "contatos[0].numero", List.of("tamanho máximo de 10 caracteres")),
 
-                Arguments.of(ACCEPT_LANGUAGE_PT_BR, createFornecedorRequestComContatos(List.of(CreateContatoRequest.telefone(null, "123"))), "contatos[0].ddd", List.of("campo obrigatório")),
-                Arguments.of(ACCEPT_LANGUAGE_PT_BR, createFornecedorRequestComContatos(List.of(CreateContatoRequest.telefone(" ", "123"))), "contatos[0].ddd", List.of("campo obrigatório")),
-                Arguments.of(ACCEPT_LANGUAGE_PT_BR, createFornecedorRequestComContatos(List.of(CreateContatoRequest.telefone("", "123"))), "contatos[0].ddd", List.of("campo obrigatório")),
-                Arguments.of(ACCEPT_LANGUAGE_PT_BR, createFornecedorRequestComContatos(List.of(CreateContatoRequest.telefone("1", "123"))), "contatos[0].ddd", List.of("deve ter 2 caracteres")),
-                Arguments.of(ACCEPT_LANGUAGE_PT_BR, createFornecedorRequestComContatos(List.of(CreateContatoRequest.telefone("123", "123"))), "contatos[0].ddd", List.of("deve ter 2 caracteres")),
+                Arguments.of(ACCEPT_LANGUAGE_PT_BR, umFornecedorRequest().contatos(List.of(CreateContatoRequest.telefone(null, "123"))).build(), "contatos[0].ddd", List.of("campo obrigatório")),
+                Arguments.of(ACCEPT_LANGUAGE_PT_BR, umFornecedorRequest().contatos(List.of(CreateContatoRequest.telefone(" ", "123"))).build(), "contatos[0].ddd", List.of("campo obrigatório")),
+                Arguments.of(ACCEPT_LANGUAGE_PT_BR, umFornecedorRequest().contatos(List.of(CreateContatoRequest.telefone("", "123"))).build(), "contatos[0].ddd", List.of("campo obrigatório")),
+                Arguments.of(ACCEPT_LANGUAGE_PT_BR, umFornecedorRequest().contatos(List.of(CreateContatoRequest.telefone("1", "123"))).build(), "contatos[0].ddd", List.of("deve ter 2 caracteres")),
+                Arguments.of(ACCEPT_LANGUAGE_PT_BR, umFornecedorRequest().contatos(List.of(CreateContatoRequest.telefone("123", "123"))).build(), "contatos[0].ddd", List.of("deve ter 2 caracteres")),
 
-                Arguments.of(ACCEPT_LANGUAGE_PT_BR, createFornecedorRequestComContatos(List.of(CreateContatoRequest.telefone("46", null))), "contatos[0].numero", List.of("campo obrigatório")),
-                Arguments.of(ACCEPT_LANGUAGE_PT_BR, createFornecedorRequestComContatos(List.of(CreateContatoRequest.telefone("46", ""))), "contatos[0].numero", List.of("campo obrigatório")),
-                Arguments.of(ACCEPT_LANGUAGE_PT_BR, createFornecedorRequestComContatos(List.of(CreateContatoRequest.telefone("46", " "))), "contatos[0].numero", List.of("campo obrigatório")),
-                Arguments.of(ACCEPT_LANGUAGE_PT_BR, createFornecedorRequestComContatos(List.of(CreateContatoRequest.telefone("46", "12345678901"))), "contatos[0].numero", List.of("tamanho máximo de 10 caracteres")),
+                Arguments.of(ACCEPT_LANGUAGE_PT_BR, umFornecedorRequest().contatos(List.of(CreateContatoRequest.telefone("46", null))).build(), "contatos[0].numero", List.of("campo obrigatório")),
+                Arguments.of(ACCEPT_LANGUAGE_PT_BR, umFornecedorRequest().contatos(List.of(CreateContatoRequest.telefone("46", ""))).build(), "contatos[0].numero", List.of("campo obrigatório")),
+                Arguments.of(ACCEPT_LANGUAGE_PT_BR, umFornecedorRequest().contatos(List.of(CreateContatoRequest.telefone("46", " "))).build(), "contatos[0].numero", List.of("campo obrigatório")),
+                Arguments.of(ACCEPT_LANGUAGE_PT_BR, umFornecedorRequest().contatos(List.of(CreateContatoRequest.telefone("46", "12345678901"))).build(), "contatos[0].numero", List.of("tamanho máximo de 10 caracteres")),
 
-                Arguments.of(ACCEPT_LANGUAGE_PT_BR, createFornecedorRequestComContatos(List.of(CreateContatoRequest.email(null))), "contatos[0].enderecoEmail", List.of("campo obrigatório")),
-                Arguments.of(ACCEPT_LANGUAGE_PT_BR, createFornecedorRequestComContatos(List.of(CreateContatoRequest.email(""))), "contatos[0].enderecoEmail", List.of("campo obrigatório")),
-                Arguments.of(ACCEPT_LANGUAGE_PT_BR, createFornecedorRequestComContatos(List.of(CreateContatoRequest.email(" "))), "contatos[0].enderecoEmail", List.of("campo obrigatório")),
-                Arguments.of(ACCEPT_LANGUAGE_PT_BR, createFornecedorRequestComContatos(List.of(CreateContatoRequest.email("email".repeat(52)))), "contatos[0].enderecoEmail", List.of("tamanho máximo de 255 caracteres")),
+                Arguments.of(ACCEPT_LANGUAGE_PT_BR, umFornecedorRequest().contatos(List.of(CreateContatoRequest.email(null))).build(), "contatos[0].enderecoEmail", List.of("campo obrigatório")),
+                Arguments.of(ACCEPT_LANGUAGE_PT_BR, umFornecedorRequest().contatos(List.of(CreateContatoRequest.email(""))).build(), "contatos[0].enderecoEmail", List.of("campo obrigatório")),
+                Arguments.of(ACCEPT_LANGUAGE_PT_BR, umFornecedorRequest().contatos(List.of(CreateContatoRequest.email(" "))).build(), "contatos[0].enderecoEmail", List.of("campo obrigatório")),
+                Arguments.of(ACCEPT_LANGUAGE_PT_BR, umFornecedorRequest().contatos(List.of(CreateContatoRequest.email("email".repeat(52)))).build(), "contatos[0].enderecoEmail", List.of("tamanho máximo de 255 caracteres")),
 
-                Arguments.of(ACCEPT_LANGUAGE_PT_BR, createFornecedorRequestComContatos(List.of(CreateContatoRequest.site(null))), "contatos[0].urlSite", List.of("campo obrigatório")),
-                Arguments.of(ACCEPT_LANGUAGE_PT_BR, createFornecedorRequestComContatos(List.of(CreateContatoRequest.site(""))), "contatos[0].urlSite", List.of("campo obrigatório")),
-                Arguments.of(ACCEPT_LANGUAGE_PT_BR, createFornecedorRequestComContatos(List.of(CreateContatoRequest.site(" "))), "contatos[0].urlSite", List.of("campo obrigatório")),
-                Arguments.of(ACCEPT_LANGUAGE_PT_BR, createFornecedorRequestComContatos(List.of(CreateContatoRequest.site("www".repeat(86)))), "contatos[0].urlSite", List.of("tamanho máximo de 255 caracteres")),
+                Arguments.of(ACCEPT_LANGUAGE_PT_BR, umFornecedorRequest().contatos(List.of(CreateContatoRequest.site(null))).build(), "contatos[0].urlSite", List.of("campo obrigatório")),
+                Arguments.of(ACCEPT_LANGUAGE_PT_BR, umFornecedorRequest().contatos(List.of(CreateContatoRequest.site(""))).build(), "contatos[0].urlSite", List.of("campo obrigatório")),
+                Arguments.of(ACCEPT_LANGUAGE_PT_BR, umFornecedorRequest().contatos(List.of(CreateContatoRequest.site(" "))).build(), "contatos[0].urlSite", List.of("campo obrigatório")),
+                Arguments.of(ACCEPT_LANGUAGE_PT_BR, umFornecedorRequest().contatos(List.of(CreateContatoRequest.site("www".repeat(86)))).build(), "contatos[0].urlSite", List.of("tamanho máximo de 255 caracteres")),
 
-                Arguments.of(ACCEPT_LANGUAGE_PT_BR, createFornecedorRequestComContatos(List.of(CreateContatoRequest.outro(null))), "contatos[0].texto", List.of("campo obrigatório")),
-                Arguments.of(ACCEPT_LANGUAGE_PT_BR, createFornecedorRequestComContatos(List.of(CreateContatoRequest.outro(""))), "contatos[0].texto", List.of("campo obrigatório")),
-                Arguments.of(ACCEPT_LANGUAGE_PT_BR, createFornecedorRequestComContatos(List.of(CreateContatoRequest.outro(" "))), "contatos[0].texto", List.of("campo obrigatório")),
-                Arguments.of(ACCEPT_LANGUAGE_PT_BR, createFornecedorRequestComContatos(List.of(CreateContatoRequest.outro("www".repeat(86)))), "contatos[0].texto", List.of("tamanho máximo de 255 caracteres"))
+                Arguments.of(ACCEPT_LANGUAGE_PT_BR, umFornecedorRequest().contatos(List.of(CreateContatoRequest.outro(null))).build(), "contatos[0].texto", List.of("campo obrigatório")),
+                Arguments.of(ACCEPT_LANGUAGE_PT_BR, umFornecedorRequest().contatos(List.of(CreateContatoRequest.outro(""))).build(), "contatos[0].texto", List.of("campo obrigatório")),
+                Arguments.of(ACCEPT_LANGUAGE_PT_BR, umFornecedorRequest().contatos(List.of(CreateContatoRequest.outro(" "))).build(), "contatos[0].texto", List.of("campo obrigatório")),
+                Arguments.of(ACCEPT_LANGUAGE_PT_BR, umFornecedorRequest().contatos(List.of(CreateContatoRequest.outro("www".repeat(86)))).build(), "contatos[0].texto", List.of("tamanho máximo de 255 caracteres"))
         );
     }
 
@@ -145,21 +134,21 @@ class FornecedorControllerIntegrationTest extends BaseControllerTest {
 
     private static Stream<Arguments> provideInvalidFornecedorDataCreateFornecedorBody() {
         return Stream.of(
-                Arguments.of(ACCEPT_LANGUAGE_PT_BR, createFornecedorRequestComCnpj(""), "cnpj", List.of("campo obrigatório", "informe o CNPJ sem formatação, com somente 14 digitos")),
-                Arguments.of(ACCEPT_LANGUAGE_PT_BR, createFornecedorRequestComCnpj(null), "cnpj", List.of("campo obrigatório")),
-                Arguments.of(ACCEPT_LANGUAGE_PT_BR, createFornecedorRequestComCnpj(" "), "cnpj", List.of("campo obrigatório", "informe o CNPJ sem formatação, com somente 14 digitos")),
-                Arguments.of(ACCEPT_LANGUAGE_PT_BR, createFornecedorRequestComCnpj("123456789"), "cnpj", List.of("informe o CNPJ sem formatação, com somente 14 digitos")),
-                Arguments.of(ACCEPT_LANGUAGE_PT_BR, createFornecedorRequestComCnpj("1234567890123456"), "cnpj", List.of("informe o CNPJ sem formatação, com somente 14 digitos")),
+                Arguments.of(ACCEPT_LANGUAGE_PT_BR, umFornecedorRequest().cnpj("").build(), "cnpj", List.of("campo obrigatório", "informe o CNPJ sem formatação, com somente 14 digitos")),
+                Arguments.of(ACCEPT_LANGUAGE_PT_BR, umFornecedorRequest().cnpj(null).build(), "cnpj", List.of("campo obrigatório")),
+                Arguments.of(ACCEPT_LANGUAGE_PT_BR, umFornecedorRequest().cnpj(" ").build(), "cnpj", List.of("campo obrigatório", "informe o CNPJ sem formatação, com somente 14 digitos")),
+                Arguments.of(ACCEPT_LANGUAGE_PT_BR, umFornecedorRequest().cnpj("123456789").build(), "cnpj", List.of("informe o CNPJ sem formatação, com somente 14 digitos")),
+                Arguments.of(ACCEPT_LANGUAGE_PT_BR, umFornecedorRequest().cnpj("1234567890123456").build(), "cnpj", List.of("informe o CNPJ sem formatação, com somente 14 digitos")),
 
-                Arguments.of(ACCEPT_LANGUAGE_PT_BR, createFornecedorRequestComRazaoSocial(""), "razaoSocial", List.of("campo obrigatório")),
-                Arguments.of(ACCEPT_LANGUAGE_PT_BR, createFornecedorRequestComRazaoSocial(" "), "razaoSocial", List.of("campo obrigatório")),
-                Arguments.of(ACCEPT_LANGUAGE_PT_BR, createFornecedorRequestComRazaoSocial(null), "razaoSocial", List.of("campo obrigatório")),
-                Arguments.of(ACCEPT_LANGUAGE_PT_BR, createFornecedorRequestComRazaoSocial("Nome".repeat(64)), "razaoSocial", List.of("tamanho máximo de 255 caracteres")),
+                Arguments.of(ACCEPT_LANGUAGE_PT_BR, umFornecedorRequest().razaoSocial("").build(), "razaoSocial", List.of("campo obrigatório")),
+                Arguments.of(ACCEPT_LANGUAGE_PT_BR, umFornecedorRequest().razaoSocial(" ").build(), "razaoSocial", List.of("campo obrigatório")),
+                Arguments.of(ACCEPT_LANGUAGE_PT_BR, umFornecedorRequest().razaoSocial(null).build(), "razaoSocial", List.of("campo obrigatório")),
+                Arguments.of(ACCEPT_LANGUAGE_PT_BR, umFornecedorRequest().razaoSocial("Nome".repeat(64)).build(), "razaoSocial", List.of("tamanho máximo de 255 caracteres")),
 
-                Arguments.of(ACCEPT_LANGUAGE_PT_BR, createFornecedorRequestComNomeFantasia(""), "nomeFantasia", List.of("campo obrigatório")),
-                Arguments.of(ACCEPT_LANGUAGE_PT_BR, createFornecedorRequestComNomeFantasia(" "), "nomeFantasia", List.of("campo obrigatório")),
-                Arguments.of(ACCEPT_LANGUAGE_PT_BR, createFornecedorRequestComNomeFantasia(null), "nomeFantasia", List.of("campo obrigatório")),
-                Arguments.of(ACCEPT_LANGUAGE_PT_BR, createFornecedorRequestComNomeFantasia("Nome".repeat(64)), "nomeFantasia", List.of("tamanho máximo de 255 caracteres"))
+                Arguments.of(ACCEPT_LANGUAGE_PT_BR, umFornecedorRequest().nomeFantasia("").build(), "nomeFantasia", List.of("campo obrigatório")),
+                Arguments.of(ACCEPT_LANGUAGE_PT_BR, umFornecedorRequest().nomeFantasia(" ").build(), "nomeFantasia", List.of("campo obrigatório")),
+                Arguments.of(ACCEPT_LANGUAGE_PT_BR, umFornecedorRequest().nomeFantasia(null).build(), "nomeFantasia", List.of("campo obrigatório")),
+                Arguments.of(ACCEPT_LANGUAGE_PT_BR, umFornecedorRequest().nomeFantasia("Nome".repeat(64)).build(), "nomeFantasia", List.of("tamanho máximo de 255 caracteres"))
         );
     }
 
@@ -174,33 +163,33 @@ class FornecedorControllerIntegrationTest extends BaseControllerTest {
 
     private static Stream<Arguments> provideInvalidEnderecoCreateFornecedorBody() {
         return Stream.of(
-                Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, createFornecedorRequestComLogradouro(""), "logradouro", List.of("campo obrigatório")),
-                Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, createFornecedorRequestComLogradouro(" "), "logradouro", List.of("campo obrigatório")),
-                Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, createFornecedorRequestComLogradouro(null), "logradouro", List.of("campo obrigatório")),
-                Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, createFornecedorRequestComLogradouro("Nome".repeat(64)), "logradouro", List.of("tamanho máximo de 255 caracteres")),
+                Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, umFornecedorRequest().logradouro("").build(), "logradouro", List.of("campo obrigatório")),
+                Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, umFornecedorRequest().logradouro(" ").build(), "logradouro", List.of("campo obrigatório")),
+                Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, umFornecedorRequest().logradouro(null).build(), "logradouro", List.of("campo obrigatório")),
+                Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, umFornecedorRequest().logradouro("Nome".repeat(64)).build(), "logradouro", List.of("tamanho máximo de 255 caracteres")),
 
-                Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, createFornecedorRequestComNumero(""), "numero", List.of("campo obrigatório. Caso não exista infomar 'SN'")),
-                Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, createFornecedorRequestComNumero(" "), "numero", List.of("campo obrigatório. Caso não exista infomar 'SN'")),
-                Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, createFornecedorRequestComNumero(null), "numero", List.of("campo obrigatório. Caso não exista infomar 'SN'")),
-                Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, createFornecedorRequestComNumero("SN".repeat(6)), "numero", List.of("tamanho máximo de 10 caracteres")),
+                Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, umFornecedorRequest().numero("").build(), "numero", List.of("campo obrigatório. Caso não exista infomar 'SN'")),
+                Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, umFornecedorRequest().numero(" ").build(), "numero", List.of("campo obrigatório. Caso não exista infomar 'SN'")),
+                Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, umFornecedorRequest().numero(null).build(), "numero", List.of("campo obrigatório. Caso não exista infomar 'SN'")),
+                Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, umFornecedorRequest().numero("SN".repeat(6)).build(), "numero", List.of("tamanho máximo de 10 caracteres")),
 
-                Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, createFornecedorRequestComBairro(""), "bairro", List.of("campo obrigatório")),
-                Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, createFornecedorRequestComBairro(" "), "bairro", List.of("campo obrigatório")),
-                Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, createFornecedorRequestComBairro(null), "bairro", List.of("campo obrigatório")),
-                Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, createFornecedorRequestComBairro("Nome".repeat(16)), "bairro", List.of("tamanho máximo de 60 caracteres")),
+                Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, umFornecedorRequest().bairro("").build(), "bairro", List.of("campo obrigatório")),
+                Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, umFornecedorRequest().bairro(" ").build(), "bairro", List.of("campo obrigatório")),
+                Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, umFornecedorRequest().bairro(null).build(), "bairro", List.of("campo obrigatório")),
+                Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, umFornecedorRequest().bairro("Nome".repeat(16)).build(), "bairro", List.of("tamanho máximo de 60 caracteres")),
 
-                Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, createFornecedorRequestComComplemento("Nome".repeat(26)), "complemento", List.of("tamanho máximo de 100 caracteres")),
+                Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, umFornecedorRequest().complemento("Nome".repeat(26)).build(), "complemento", List.of("tamanho máximo de 100 caracteres")),
 
-                Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, createFornecedorRequestComPontoDeReferencia("Nome".repeat(26)), "pontoDeReferencia", List.of("tamanho máximo de 100 caracteres")),
+                Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, umFornecedorRequest().pontoDeReferencia("Nome".repeat(26)).build(), "pontoDeReferencia", List.of("tamanho máximo de 100 caracteres")),
 
-                Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, createFornecedorRequestComCep(""), "cep", List.of("campo obrigatório")),
-                Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, createFornecedorRequestComCep(" "), "cep", List.of("campo obrigatório")),
-                Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, createFornecedorRequestComCep(null), "cep", List.of("campo obrigatório")),
-                Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, createFornecedorRequestComCep("cep".repeat(3)), "cep", List.of("tamanho máximo de 8 caracteres")),
+                Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, umFornecedorRequest().cep("").build(), "cep", List.of("campo obrigatório")),
+                Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, umFornecedorRequest().cep(" ").build(), "cep", List.of("campo obrigatório")),
+                Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, umFornecedorRequest().cep(null).build(), "cep", List.of("campo obrigatório")),
+                Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, umFornecedorRequest().cep("cep".repeat(3)).build(), "cep", List.of("tamanho máximo de 8 caracteres")),
 
-                Arguments.of(false, ACCEPT_LANGUAGE_PT_BR, createFornecedorRequestComCidade(null), "cidade", List.of("campo obrigatório")),
-                Arguments.of(false, ACCEPT_LANGUAGE_PT_BR, createFornecedorRequestComCidade(0), "cidade", List.of("valor inválido")),
-                Arguments.of(false, ACCEPT_LANGUAGE_PT_BR, createFornecedorRequestComCidade(123), "cidade", List.of("valor inválido"))
+                Arguments.of(false, ACCEPT_LANGUAGE_PT_BR, umFornecedorRequest().cidade(null).build(), "cidade", List.of("campo obrigatório")),
+                Arguments.of(false, ACCEPT_LANGUAGE_PT_BR, umFornecedorRequest().cidade(0).build(), "cidade", List.of("valor inválido")),
+                Arguments.of(false, ACCEPT_LANGUAGE_PT_BR, umFornecedorRequest().cidade(123).build(), "cidade", List.of("valor inválido"))
         );
     }
 
@@ -256,7 +245,7 @@ class FornecedorControllerIntegrationTest extends BaseControllerTest {
         final var perform = this.mockMvc.perform(
                 post(BASE_PATH)
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(this.mapToJson(createFornecedorRequest())));
+                        .content(this.mapToJson(umFornecedorRequest().build())));
 
         // verificacao
         perform

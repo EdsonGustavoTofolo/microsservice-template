@@ -1,7 +1,7 @@
 package io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.entrypoints.v1.fornecedores.services.impl;
 
 import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.entrypoints.v1.fornecedores.dtos.CreateFornecedorRequest;
-import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.entrypoints.v1.fornecedores.dtos.fixtures.CreateFornecedorRequestFixture;
+import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.entrypoints.v1.fornecedores.dtos.builders.CreateFornecedorRequestBuilder;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.input.CreateFornecedorInputPort;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.input.dtos.CreateFornecedor;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.output.CreateFornecedorOutputPort;
@@ -37,7 +37,7 @@ class CreateFornecedorImplUnitTest {
     void shouldCreateFornecedorSuccessfully() throws BusinessRuleException {
         when(this.outputPort.get()).thenReturn(new CreatedFornecedor(1));
 
-        final var request = CreateFornecedorRequestFixture.createFornecedorRequest();
+        final var request = CreateFornecedorRequestBuilder.umFornecedorRequest().build();
 
         final var id = this.createFornecedor.execute(request);
 
