@@ -37,7 +37,7 @@ class CreateFornecedorImplUnitTest {
     void shouldCreateFornecedorSuccessfully() throws BusinessRuleException {
         when(this.outputPort.get()).thenReturn(new CreatedFornecedor(1));
 
-        final var request = CreateFornecedorRequestBuilder.umFornecedorRequest().build();
+        final var request = CreateFornecedorRequestBuilder.createFornecedorRequest().build();
 
         final var id = this.createFornecedor.execute(request);
 

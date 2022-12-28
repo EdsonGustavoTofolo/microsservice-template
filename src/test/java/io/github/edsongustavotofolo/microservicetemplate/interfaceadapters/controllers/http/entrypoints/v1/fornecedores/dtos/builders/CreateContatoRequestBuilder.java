@@ -8,7 +8,7 @@ public final class CreateContatoRequestBuilder {
 
     private CreateContatoRequestBuilder() {}
 
-    public static CreateContatoRequest.CreateContatoRequestBuilder umContatoRequest() {
+    public static CreateContatoRequest.CreateContatoRequestBuilder createContatoRequest() {
         final var builder = new CreateContatoRequestBuilder();
         builder.request = CreateContatoRequest.builder();
         return builder.request;

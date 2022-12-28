@@ -11,7 +11,7 @@ public final class CreateFornecedorRequestBuilder {
 
     private CreateFornecedorRequestBuilder() {}
 
-    public static CreateFornecedorRequest.CreateFornecedorRequestBuilder umFornecedorRequest() {
+    public static CreateFornecedorRequest.CreateFornecedorRequestBuilder createFornecedorRequest() {
         final var builder = new CreateFornecedorRequestBuilder();
 
         builder.request = CreateFornecedorRequest.builder();
