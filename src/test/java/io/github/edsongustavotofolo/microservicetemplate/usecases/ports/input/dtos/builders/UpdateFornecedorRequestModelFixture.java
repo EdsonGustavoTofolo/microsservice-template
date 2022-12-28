@@ -1,4 +1,4 @@
-package io.github.edsongustavotofolo.microservicetemplate.usecases.models.fixtures;
+package io.github.edsongustavotofolo.microservicetemplate.usecases.ports.input.dtos.builders;
 
 import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.entrypoints.v1.fornecedores.dtos.UpdateFornecedorRequest;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.input.dtos.UpdateContato;

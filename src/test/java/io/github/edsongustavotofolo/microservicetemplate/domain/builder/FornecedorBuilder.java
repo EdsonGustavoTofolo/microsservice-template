@@ -13,20 +13,20 @@ public class FornecedorBuilder {
     private FornecedorBuilder() {}
 
     public static FornecedorBuilder umFornecedor() {
-        Fornecedor fornecedorImpl = new FornecedorImpl(
+        final var fornecedorImpl = new FornecedorImpl(
                 new Cnpj("45135006000104"),
                 "Fornecedor Ltda",
                 "Fornecedor & Cia",
                 "nenhuma obs",
-                umEndereco().get(),
-                umContatos().get());
+                umEndereco().build(),
+                umContatos().build());
 
         var builder = new FornecedorBuilder();
         builder.fornecedor = fornecedorImpl;
         return builder;
     }
 
-    public Fornecedor get() {
+    public Fornecedor build() {
         return this.fornecedor;
     }
 }

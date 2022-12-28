@@ -23,7 +23,7 @@ public class EnderecoBuilder {
         return builder;
     }
 
-    public Endereco get() {
+    public Endereco build() {
         return this.endereco;
     }
 }

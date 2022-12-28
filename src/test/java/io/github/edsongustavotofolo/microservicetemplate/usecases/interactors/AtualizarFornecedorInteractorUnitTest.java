@@ -8,10 +8,9 @@ import io.github.edsongustavotofolo.microservicetemplate.domain.entities.OutroCo
 import io.github.edsongustavotofolo.microservicetemplate.domain.entities.Site;
 import io.github.edsongustavotofolo.microservicetemplate.domain.entities.Telefone;
 import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.entrypoints.v1.fornecedores.dtos.UpdateFornecedorRequest;
-import io.github.edsongustavotofolo.microservicetemplate.usecases.interactors.mappers.impl.ContatoMapperImpl;
-import io.github.edsongustavotofolo.microservicetemplate.usecases.models.fixtures.UpdateFornecedorRequestModelFixture;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.dtos.TipoDeContatoEnum;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.input.dtos.UpdateContato;
+import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.input.dtos.builders.UpdateFornecedorRequestModelFixture;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.output.UpdateFornecedorOutputPort;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.output.exceptions.BusinessRuleException;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.providers.FornecedorProvider;
@@ -25,7 +24,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -36,8 +34,8 @@ class AtualizarFornecedorInteractorUnitTest {
     private FornecedorProvider fornecedorProvider;
     @Mock
     private UpdateFornecedorOutputPort presenter;
-    @Mock
-    private ContatoMapperImpl contatoMapper;
+//    @Mock
+//    private ContatoMapperImpl contatoMapper;
     @InjectMocks
     private UpdateFornecedorInteractor interactor;
 
@@ -46,9 +44,9 @@ class AtualizarFornecedorInteractorUnitTest {
         // plan
         final var id = 1;
 
-        final var fornecedorResult = FornecedorBuilder.umFornecedor().get();
+        final var fornecedorResult = FornecedorBuilder.umFornecedor().build();
         when(this.fornecedorProvider.getById(id)).thenReturn(Optional.of(fornecedorResult));
-        when(this.contatoMapper.toDomain(any(UpdateContato.class))).thenCallRealMethod();
+//        when(this.contatoMapper.toDomain(any(UpdateContato.class))).thenCallRealMethod();
 
         final UpdateFornecedorRequest expected = UpdateFornecedorRequestModelFixture.umFornecedor()
                 .adicionarContato(UpdateContato.builder()

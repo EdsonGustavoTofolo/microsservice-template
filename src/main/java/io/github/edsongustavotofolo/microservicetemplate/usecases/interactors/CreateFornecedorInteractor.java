@@ -17,7 +17,6 @@ public class CreateFornecedorInteractor implements CreateFornecedorInputPort {
 
     private final CreateFornecedorOutputPort<?> presenter;
     private final FornecedorProvider fornecedorProvider;
-    private final FornecedorMapper fornecedorMapper;
 
     @Transactional
     @Override
@@ -31,7 +30,7 @@ public class CreateFornecedorInteractor implements CreateFornecedorInputPort {
             return;
         }
 
-        final var fornecedor = this.fornecedorMapper.toDomain(requestModel);
+        final var fornecedor = FornecedorMapper.INSTANCE.map(requestModel);
 
         final var id = this.fornecedorProvider.create(fornecedor);
 

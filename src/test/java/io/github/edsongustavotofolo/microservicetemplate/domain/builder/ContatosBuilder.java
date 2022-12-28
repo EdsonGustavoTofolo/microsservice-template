@@ -11,8 +11,7 @@ import io.github.edsongustavotofolo.microservicetemplate.domain.entities.impl.Co
 public class ContatosBuilder {
     private Contatos contatos;
 
-    private ContatosBuilder() {
-    }
+    private ContatosBuilder() {}
 
     public static ContatosBuilder umContatos() {
         final var builder = new ContatosBuilder();
@@ -25,7 +24,7 @@ public class ContatosBuilder {
         return builder;
     }
 
-    public Contatos get() {
+    public Contatos build() {
         return this.contatos;
     }
 }

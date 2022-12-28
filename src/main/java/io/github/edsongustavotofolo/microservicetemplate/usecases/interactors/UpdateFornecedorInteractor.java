@@ -51,7 +51,7 @@ public class UpdateFornecedorInteractor implements UpdateFornecedorInputPort {
 
         updateFornecedor.getContatos()
                 .forEach(contatoRequestModel -> {
-                    final Contato contatoRequest = this.contatoMapper.toDomain(contatoRequestModel);
+                    final Contato contatoRequest = null; // this.contatoMapper.toDomain(contatoRequestModel);
                     fornecedor.getContatos()
                             .getLista().stream()
                             .filter(contato -> contato.equals(contatoRequest))

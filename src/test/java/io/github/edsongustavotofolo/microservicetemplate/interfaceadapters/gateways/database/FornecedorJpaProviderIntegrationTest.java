@@ -51,7 +51,7 @@ class FornecedorJpaProviderIntegrationTest {
     @Test
     void deveRetornarTrueAoVerificarExistenciaDeFornecedorPorCnpj() {
         // cenario
-        final var fornecedor = umFornecedor().get();
+        final var fornecedor = umFornecedor().build();
         this.fornecedorJpaGateway.create(fornecedor);
 
         // exec
@@ -64,7 +64,7 @@ class FornecedorJpaProviderIntegrationTest {
     @Test
     void deveCriarFornecedorComSucesso() {
         // cenario
-        final var fornecedor = umFornecedor().get();
+        final var fornecedor = umFornecedor().build();
 
         // execucao
         final var id = this.fornecedorJpaGateway.create(fornecedor);
