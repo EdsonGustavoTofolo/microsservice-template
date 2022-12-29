@@ -1,6 +1,5 @@
 package io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.entrypoints.v1.fornecedores.dtos;
 
-import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.entrypoints.annotations.ExistsCountry;
 import lombok.Builder;
 import lombok.Data;
 import lombok.Value;
@@ -43,7 +42,6 @@ public class UpdateFornecedorRequest {
     @Size(message = "{fields.maxLength}", min = 8, max = 8)
     String cep;
     @NotNull(message = "{fields.required}")
-    @ExistsCountry
     Integer cidade;
     @NotEmpty(message = "{fields.required}")
     List<@Valid UpdateContatoRequest> contatos;

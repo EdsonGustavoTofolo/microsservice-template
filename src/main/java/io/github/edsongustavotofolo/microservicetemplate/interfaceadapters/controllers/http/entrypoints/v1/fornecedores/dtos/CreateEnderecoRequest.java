@@ -1,6 +1,5 @@
 package io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.entrypoints.v1.fornecedores.dtos;
 
-import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.entrypoints.annotations.ExistsCountry;
 import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.entrypoints.annotations.Endereco;
 import lombok.Builder;
 import lombok.Data;
@@ -33,7 +32,6 @@ public class CreateEnderecoRequest {
     @Size(message = "{fields.maxLength}", min = 8, max = 8)
     String cep;
     @NotNull(message = "{fields.required}")
-    @ExistsCountry
     Integer cidade;
     @NotBlank(message = "{fields.required}")
     @Size(message = "{fields.maxLength}", max = 2)

@@ -24,11 +24,6 @@ public class CidadeJpaProvider implements CidadeProvider {
     }
 
     @Override
-    public boolean existsById(final Integer id) {
-        return this.cidadeJpaRepository.existsById(id);
-    }
-
-    @Override
     public Optional<Cidade> getById(final Integer id) {
         return this.cidadeJpaRepository.findById(id)
                 .map(CidadeEntityMapper.INSTANCE::toDomain);
