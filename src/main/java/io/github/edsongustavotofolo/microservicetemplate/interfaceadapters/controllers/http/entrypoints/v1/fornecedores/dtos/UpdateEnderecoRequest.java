@@ -14,7 +14,7 @@ import java.util.Objects;
 @Builder
 @Value
 @Endereco
-public class CreateEnderecoRequest implements EnderecoRequest {
+public class UpdateEnderecoRequest implements EnderecoRequest {
     @NotBlank(message = "{fields.required}")
     @Size(message = "{fields.maxLength}", max = 255)
     String logradouro;

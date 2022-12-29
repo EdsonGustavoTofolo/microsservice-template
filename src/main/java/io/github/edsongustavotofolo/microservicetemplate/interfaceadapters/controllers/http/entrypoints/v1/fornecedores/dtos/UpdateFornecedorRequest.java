@@ -25,24 +25,8 @@ public class UpdateFornecedorRequest {
     @Size(message = "{fields.maxLength}", max = 255)
     String nomeFantasia;
     String observacao;
-    @NotBlank(message = "{fields.required}")
-    @Size(message = "{fields.maxLength}", max = 255)
-    String logradouro;
-    @NotBlank(message = "{fornecedor.fields.numero}")
-    @Size(message = "{fields.maxLength}", max = 10)
-    String numero;
-    @NotBlank(message = "{fields.required}")
-    @Size(message = "{fields.maxLength}", max = 60)
-    String bairro;
-    @Size(message = "{fields.maxLength}", max = 100)
-    String complemento;
-    @Size(message = "{fields.maxLength}", max = 100)
-    String pontoDeReferencia;
-    @NotBlank(message = "{fields.required}")
-    @Size(message = "{fields.maxLength}", min = 8, max = 8)
-    String cep;
     @NotNull(message = "{fields.required}")
-    Integer cidade;
+    UpdateEnderecoRequest endereco;
     @NotEmpty(message = "{fields.required}")
     List<@Valid UpdateContatoRequest> contatos;
     String observacaoContatos;

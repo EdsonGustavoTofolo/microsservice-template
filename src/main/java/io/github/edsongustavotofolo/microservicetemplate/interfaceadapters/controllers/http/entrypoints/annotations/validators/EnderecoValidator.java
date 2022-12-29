@@ -2,7 +2,7 @@ package io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.cont
 
 import feign.FeignException;
 import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.entrypoints.annotations.Endereco;
-import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.entrypoints.v1.fornecedores.dtos.CreateEnderecoRequest;
+import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.entrypoints.v1.fornecedores.dtos.EnderecoRequest;
 import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.gateways.clients.ViaCepClient;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.providers.CidadeProvider;
 import lombok.extern.slf4j.Slf4j;
@@ -28,22 +28,29 @@ public class EnderecoValidator implements ConstraintValidator<Endereco, Object> 
 
     @Override
     public boolean isValid(Object object, ConstraintValidatorContext constraintValidatorContext) {
-        if (object instanceof CreateEnderecoRequest endereco) {
+        if (object instanceof EnderecoRequest endereco) {
             if (isNotBlank(endereco.getCep()) && isNotBlank(endereco.getUf()) && (endereco.hasCity())) {
                 try {
                      return this.cepClient.buscarPorCep(endereco.getCep())
                             .map(viaCepResponse -> {
                                 if (viaCepResponse.isErro()) {
+                                    log.error("CEP informado não existe.");
                                     return false;
                                 }
 
                                 if (!endereco.getUf().equalsIgnoreCase(viaCepResponse.getUf())) {
+                                    log.error("UF informada não confere com UF do CEP. UF informada: {}, UF CEP: {}", endereco.getUf(), viaCepResponse.getUf());
                                     return false;
                                 }
 
                                 return this.cidadeProvider.getById(endereco.getCidade())
-                                        .map(cidade ->
-                                             endereco.getUf().equalsIgnoreCase(cidade.getEstado().getSigla())
+                                        .map(cidade -> {
+                                                    final var mesmaUf = endereco.getUf().equalsIgnoreCase(cidade.getEstado().getSigla());
+                                                    if (!mesmaUf) {
+                                                        log.error("UF informada não confere com UF da Cidade. UF informada: {}, UF cidade: {}", endereco.getUf(), cidade.getEstado().getSigla());
+                                                    }
+                                                    return mesmaUf;
+                                                }
                                         ).orElse(false);
                             }).orElse(false);
                 } catch (final FeignException.FeignClientException exception) {
