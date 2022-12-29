@@ -22,21 +22,21 @@ public class CreateFornecedorInteractor implements CreateFornecedorInputPort {
 
     @Transactional
     @Override
-    public void execute(final CreateFornecedor requestModel) throws BusinessRuleException {
+    public void execute(final CreateFornecedor createFornecedor) throws BusinessRuleException {
         log.info("Running fornecedor creation.");
 
-        if (Cnpj.numeroInvalido(requestModel.getCnpj())) {
+        if (Cnpj.numeroInvalido(createFornecedor.getCnpj())) {
             log.error("Fornecedor creation failed. CNPJ is invalid.");
             this.presenter.cnpjIsInvalid();
             return;
         }
-        if (this.fornecedorProvider.existsFornecedorWithCnpj(requestModel.getCnpj())) {
+        if (this.fornecedorProvider.existsFornecedorWithCnpj(createFornecedor.getCnpj())) {
             log.error("Fornecedor creation failed. Fornecedor already exists with CNPJ entered.");
             this.presenter.fornecedorAlreadyExists();
             return;
         }
 
-        final var fornecedor = FornecedorMapper.INSTANCE.map(requestModel);
+        final var fornecedor = FornecedorMapper.INSTANCE.map(createFornecedor);
 
         final var id = this.fornecedorProvider.create(fornecedor);
 

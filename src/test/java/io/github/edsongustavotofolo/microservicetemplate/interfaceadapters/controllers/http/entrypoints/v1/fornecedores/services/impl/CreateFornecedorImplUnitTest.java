@@ -53,13 +53,13 @@ class CreateFornecedorImplUnitTest {
         assertEquals(request.getRazaoSocial(), model.getRazaoSocial());
         assertEquals(request.getNomeFantasia(), model.getNomeFantasia());
         assertEquals(request.getObservacao(), model.getObservacao());
-        assertEquals(request.getLogradouro(), model.getLogradouro());
-        assertEquals(request.getNumero(), model.getNumero());
-        assertEquals(request.getBairro(), model.getBairro());
-        assertEquals(request.getComplemento(), model.getComplemento());
-        assertEquals(request.getPontoDeReferencia(), model.getPontoDeReferencia());
-        assertEquals(request.getCep(), model.getCep());
-        assertEquals(request.getCidade(), model.getCidade());
+        assertEquals(request.getEndereco().getLogradouro(), model.getLogradouro());
+        assertEquals(request.getEndereco().getNumero(), model.getNumero());
+        assertEquals(request.getEndereco().getBairro(), model.getBairro());
+        assertEquals(request.getEndereco().getComplemento(), model.getComplemento());
+        assertEquals(request.getEndereco().getPontoDeReferencia(), model.getPontoDeReferencia());
+        assertEquals(request.getEndereco().getCep(), model.getCep());
+        assertEquals(request.getEndereco().getCidade(), model.getCidade());
 
         assertNotNull(model.getContatos());
         assertEquals(2, model.getContatos().size());

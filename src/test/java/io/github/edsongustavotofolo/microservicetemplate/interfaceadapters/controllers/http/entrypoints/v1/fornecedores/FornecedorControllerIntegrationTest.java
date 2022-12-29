@@ -8,6 +8,7 @@ import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.contr
 import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.entrypoints.v1.fornecedores.services.CreateFornecedor;
 import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.entrypoints.v1.fornecedores.services.UpdateFornecedor;
 import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.handlers.ControllerExceptionHandler;
+import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.gateways.clients.ViaCepClient;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.output.exceptions.enums.ErrorType;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.providers.CidadeProvider;
 import org.junit.jupiter.api.Test;
@@ -28,18 +29,23 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Stream;
 
+import static io.github.edsongustavotofolo.microservicetemplate.domain.builder.CidadeBuilder.umaCidade;
 import static io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.entrypoints.v1.fornecedores.FornecedorControllerPaths.BASE_PATH;
 import static io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.entrypoints.v1.fornecedores.FornecedorControllerPaths.UPDATE_FORNECEDOR_PATH;
 import static io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.entrypoints.v1.fornecedores.FornecedorControllerPaths.getFullPath;
-import static io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.entrypoints.v1.fornecedores.dtos.builders.CreateFornecedorRequestBuilder.createFornecedorRequest;
 import static io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.entrypoints.v1.fornecedores.dtos.builders.CreateContatoRequestBuilder.createContatoRequest;
+import static io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.entrypoints.v1.fornecedores.dtos.builders.CreateEnderecoRequestBuilder.createEnderecoRequest;
+import static io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.entrypoints.v1.fornecedores.dtos.builders.CreateFornecedorRequestBuilder.createFornecedorRequest;
 import static io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.entrypoints.v1.fornecedores.dtos.builders.UpdateFornecedorRequestBuilder.updateFornecedorRequest;
+import static io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.gateway.clients.builders.ViaCepResponseBuilder.umViaCepResponse;
 import static org.hamcrest.Matchers.hasItem;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.when;
@@ -66,6 +72,8 @@ class FornecedorControllerIntegrationTest extends BaseControllerTest {
 
     @MockBean
     private CidadeProvider cidadeProvider;
+    @MockBean
+    private ViaCepClient cepClient;
 
     @Captor
     private ArgumentCaptor<CreateFornecedorRequest> createFornecedorRequestArgumentCaptor;
@@ -163,33 +171,34 @@ class FornecedorControllerIntegrationTest extends BaseControllerTest {
 
     private static Stream<Arguments> provideInvalidEnderecoCreateFornecedorBody() {
         return Stream.of(
-                Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, createFornecedorRequest().logradouro("").build(), "logradouro", List.of("campo obrigatório")),
-                Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, createFornecedorRequest().logradouro(" ").build(), "logradouro", List.of("campo obrigatório")),
-                Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, createFornecedorRequest().logradouro(null).build(), "logradouro", List.of("campo obrigatório")),
-                Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, createFornecedorRequest().logradouro("Nome".repeat(64)).build(), "logradouro", List.of("tamanho máximo de 255 caracteres")),
+                Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, createFornecedorRequest().endereco(null).build(), "endereco", List.of("campo obrigatório")),
+                Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, createFornecedorRequest().endereco(createEnderecoRequest().logradouro("").build()).build(), "endereco.logradouro", List.of("campo obrigatório")),
+                Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, createFornecedorRequest().endereco(createEnderecoRequest().logradouro(" ").build()).build(), "endereco.logradouro", List.of("campo obrigatório")),
+                Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, createFornecedorRequest().endereco(createEnderecoRequest().logradouro(null).build()).build(), "endereco.logradouro", List.of("campo obrigatório")),
+                Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, createFornecedorRequest().endereco(createEnderecoRequest().logradouro("Nome".repeat(64)).build()).build(), "endereco.logradouro", List.of("tamanho máximo de 255 caracteres")),
 
-                Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, createFornecedorRequest().numero("").build(), "numero", List.of("campo obrigatório. Caso não exista infomar 'SN'")),
-                Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, createFornecedorRequest().numero(" ").build(), "numero", List.of("campo obrigatório. Caso não exista infomar 'SN'")),
-                Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, createFornecedorRequest().numero(null).build(), "numero", List.of("campo obrigatório. Caso não exista infomar 'SN'")),
-                Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, createFornecedorRequest().numero("SN".repeat(6)).build(), "numero", List.of("tamanho máximo de 10 caracteres")),
+                Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, createFornecedorRequest().endereco(createEnderecoRequest().numero("").build()).build(), "endereco.numero", List.of("campo obrigatório. Caso não exista infomar 'SN'")),
+                Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, createFornecedorRequest().endereco(createEnderecoRequest().numero(" ").build()).build(), "endereco.numero", List.of("campo obrigatório. Caso não exista infomar 'SN'")),
+                Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, createFornecedorRequest().endereco(createEnderecoRequest().numero(null).build()).build(), "endereco.numero", List.of("campo obrigatório. Caso não exista infomar 'SN'")),
+                Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, createFornecedorRequest().endereco(createEnderecoRequest().numero("SN".repeat(6)).build()).build(), "endereco.numero", List.of("tamanho máximo de 10 caracteres")),
 
-                Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, createFornecedorRequest().bairro("").build(), "bairro", List.of("campo obrigatório")),
-                Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, createFornecedorRequest().bairro(" ").build(), "bairro", List.of("campo obrigatório")),
-                Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, createFornecedorRequest().bairro(null).build(), "bairro", List.of("campo obrigatório")),
-                Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, createFornecedorRequest().bairro("Nome".repeat(16)).build(), "bairro", List.of("tamanho máximo de 60 caracteres")),
+                Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, createFornecedorRequest().endereco(createEnderecoRequest().bairro("").build()).build(), "endereco.bairro", List.of("campo obrigatório")),
+                Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, createFornecedorRequest().endereco(createEnderecoRequest().bairro(" ").build()).build(), "endereco.bairro", List.of("campo obrigatório")),
+                Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, createFornecedorRequest().endereco(createEnderecoRequest().bairro(null).build()).build(), "endereco.bairro", List.of("campo obrigatório")),
+                Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, createFornecedorRequest().endereco(createEnderecoRequest().bairro("Nome".repeat(16)).build()).build(), "endereco.bairro", List.of("tamanho máximo de 60 caracteres")),
 
-                Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, createFornecedorRequest().complemento("Nome".repeat(26)).build(), "complemento", List.of("tamanho máximo de 100 caracteres")),
+                Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, createFornecedorRequest().endereco(createEnderecoRequest().complemento("Nome".repeat(26)).build()).build(), "endereco.complemento", List.of("tamanho máximo de 100 caracteres")),
 
-                Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, createFornecedorRequest().pontoDeReferencia("Nome".repeat(26)).build(), "pontoDeReferencia", List.of("tamanho máximo de 100 caracteres")),
+                Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, createFornecedorRequest().endereco(createEnderecoRequest().pontoDeReferencia("Nome".repeat(26)).build()).build(), "endereco.pontoDeReferencia", List.of("tamanho máximo de 100 caracteres")),
 
-                Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, createFornecedorRequest().cep("").build(), "cep", List.of("campo obrigatório")),
-                Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, createFornecedorRequest().cep(" ").build(), "cep", List.of("campo obrigatório")),
-                Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, createFornecedorRequest().cep(null).build(), "cep", List.of("campo obrigatório")),
-                Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, createFornecedorRequest().cep("cep".repeat(3)).build(), "cep", List.of("tamanho máximo de 8 caracteres")),
+                Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, createFornecedorRequest().endereco(createEnderecoRequest().cep("").build()).build(), "endereco.cep", List.of("campo obrigatório")),
+                Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, createFornecedorRequest().endereco(createEnderecoRequest().cep(" ").build()).build(), "endereco.cep", List.of("campo obrigatório")),
+                Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, createFornecedorRequest().endereco(createEnderecoRequest().cep(null).build()).build(), "endereco.cep", List.of("campo obrigatório")),
+                Arguments.of(true, ACCEPT_LANGUAGE_PT_BR, createFornecedorRequest().endereco(createEnderecoRequest().cep("cep".repeat(3)).build()).build(), "endereco.cep", List.of("tamanho máximo de 8 caracteres")),
 
-                Arguments.of(false, ACCEPT_LANGUAGE_PT_BR, createFornecedorRequest().cidade(null).build(), "cidade", List.of("campo obrigatório")),
-                Arguments.of(false, ACCEPT_LANGUAGE_PT_BR, createFornecedorRequest().cidade(0).build(), "cidade", List.of("valor inválido")),
-                Arguments.of(false, ACCEPT_LANGUAGE_PT_BR, createFornecedorRequest().cidade(123).build(), "cidade", List.of("valor inválido"))
+                Arguments.of(false, ACCEPT_LANGUAGE_PT_BR, createFornecedorRequest().endereco(createEnderecoRequest().cidade(null).build()).build(), "endereco.cidade", List.of("campo obrigatório")),
+                Arguments.of(false, ACCEPT_LANGUAGE_PT_BR, createFornecedorRequest().endereco(createEnderecoRequest().cidade(0).build()).build(), "endereco.cidade", List.of("valor inválido")),
+                Arguments.of(false, ACCEPT_LANGUAGE_PT_BR, createFornecedorRequest().endereco(createEnderecoRequest().cidade(123).build()).build(), "endereco.cidade", List.of("valor inválido"))
         );
     }
 
@@ -210,6 +219,8 @@ class FornecedorControllerIntegrationTest extends BaseControllerTest {
                                            final String fieldName,
                                            final List<String> messages) throws Exception {
         when(this.cidadeProvider.existsById(any())).thenReturn(existsCidade);
+        when(this.cidadeProvider.getById(any())).thenReturn(Optional.of(umaCidade().build()));
+        when(this.cepClient.buscarPorCep(anyString())).thenReturn(Optional.of(umViaCepResponse().build()));
 
         final var perform = this.mockMvc.perform(
                 post(BASE_PATH)
@@ -239,6 +250,8 @@ class FornecedorControllerIntegrationTest extends BaseControllerTest {
     @Test
     void shouldCreateFornecedorSuccessfully() throws Exception {
         when(this.cidadeProvider.existsById(any())).thenReturn(true);
+        when(this.cidadeProvider.getById(any())).thenReturn(Optional.of(umaCidade().build()));
+        when(this.cepClient.buscarPorCep(anyString())).thenReturn(Optional.of(umViaCepResponse().build()));
         when(this.createFornecedor.execute(any())).thenReturn(1);
 
         // execucao

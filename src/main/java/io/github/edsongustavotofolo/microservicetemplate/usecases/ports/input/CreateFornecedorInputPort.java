@@ -4,5 +4,5 @@ import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.input.dt
 import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.output.exceptions.BusinessRuleException;
 
 public interface CreateFornecedorInputPort {
-    void execute(final CreateFornecedor fornecedorRequestModel) throws BusinessRuleException;
+    void execute(final CreateFornecedor createFornecedor) throws BusinessRuleException;
 }

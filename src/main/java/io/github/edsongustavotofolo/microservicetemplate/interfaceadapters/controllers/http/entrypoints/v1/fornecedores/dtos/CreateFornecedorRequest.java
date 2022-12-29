@@ -1,6 +1,5 @@
 package io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.entrypoints.v1.fornecedores.dtos;
 
-import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.entrypoints.annotations.ExistsCountry;
 import lombok.Builder;
 import lombok.Data;
 import lombok.Value;
@@ -26,25 +25,9 @@ public class CreateFornecedorRequest {
     @Size(message = "{fields.maxLength}", max = 255)
     String nomeFantasia;
     String observacao;
-    @NotBlank(message = "{fields.required}")
-    @Size(message = "{fields.maxLength}", max = 255)
-    String logradouro;
-    @NotBlank(message = "{fornecedor.fields.numero}")
-    @Size(message = "{fields.maxLength}", max = 10)
-    String numero;
-    @NotBlank(message = "{fields.required}")
-    @Size(message = "{fields.maxLength}", max = 60)
-    String bairro;
-    @Size(message = "{fields.maxLength}", max = 100)
-    String complemento;
-    @Size(message = "{fields.maxLength}", max = 100)
-    String pontoDeReferencia;
-    @NotBlank(message = "{fields.required}")
-    @Size(message = "{fields.maxLength}", min = 8, max = 8)
-    String cep;
+    @Valid
     @NotNull(message = "{fields.required}")
-    @ExistsCountry
-    Integer cidade;
+    CreateEnderecoRequest endereco;
     @NotEmpty(message = "{fields.required}")
     List<@Valid CreateContatoRequest> contatos;
     String observacaoContatos;

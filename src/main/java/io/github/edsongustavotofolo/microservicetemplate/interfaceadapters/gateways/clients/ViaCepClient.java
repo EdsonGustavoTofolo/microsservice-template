@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.Optional;
 
-@FeignClient(name = "via-cep", url = "https://viacep.com.br/ws")
+@FeignClient(name = "via-cep", url = "https://viacep.com.br/ws", configuration = ViaCepClientConfiguration.class)
 public interface ViaCepClient {
 
     @GetMapping("/{cep}/json")
@@ -28,6 +28,7 @@ public interface ViaCepClient {
         private final String uf;
         @JsonProperty("ibge")
         private final String codigoIbgeUf;
+        private final boolean erro;
     }
 
 }
