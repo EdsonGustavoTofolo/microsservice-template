@@ -21,7 +21,7 @@ public class UpdateFornecedor {
     String complemento;
     String pontoDeReferencia;
     String cep;
-    Integer cidadeId;
+    Integer cidade;
     List<UpdateContato> contatos;
     String observacaoContatos;
 }

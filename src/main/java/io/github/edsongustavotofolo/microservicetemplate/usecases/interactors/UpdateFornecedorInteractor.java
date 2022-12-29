@@ -7,6 +7,7 @@ import io.github.edsongustavotofolo.microservicetemplate.domain.entities.OutroCo
 import io.github.edsongustavotofolo.microservicetemplate.domain.entities.Site;
 import io.github.edsongustavotofolo.microservicetemplate.domain.entities.Telefone;
 import io.github.edsongustavotofolo.microservicetemplate.domain.entities.valueobjects.Cnpj;
+import io.github.edsongustavotofolo.microservicetemplate.usecases.interactors.mappers.ContatoMapper;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.input.UpdateFornecedorInputPort;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.input.dtos.UpdateFornecedor;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.output.UpdateFornecedorOutputPort;
@@ -43,13 +44,13 @@ public class UpdateFornecedorInteractor implements UpdateFornecedorInputPort {
                 updateFornecedor.getComplemento(),
                 updateFornecedor.getPontoDeReferencia(),
                 updateFornecedor.getCep(),
-                updateFornecedor.getCidadeId());
+                updateFornecedor.getCidade());
 
         final List<Contato> novoContato = new ArrayList<>();
 
         updateFornecedor.getContatos()
                 .forEach(contatoRequestModel -> {
-                    final Contato contatoRequest = null; // this.contatoMapper.toDomain(contatoRequestModel);
+                    final var contatoRequest = ContatoMapper.INSTANCE.map(contatoRequestModel);
                     fornecedor.getContatos()
                             .getLista().stream()
                             .filter(contato -> contato.equals(contatoRequest))
