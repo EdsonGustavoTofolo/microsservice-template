@@ -7,7 +7,6 @@ import io.github.edsongustavotofolo.microservicetemplate.domain.entities.OutroCo
 import io.github.edsongustavotofolo.microservicetemplate.domain.entities.Site;
 import io.github.edsongustavotofolo.microservicetemplate.domain.entities.Telefone;
 import io.github.edsongustavotofolo.microservicetemplate.domain.entities.valueobjects.Cnpj;
-import io.github.edsongustavotofolo.microservicetemplate.usecases.interactors.mappers.ContatoMapper;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.input.UpdateFornecedorInputPort;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.input.dtos.UpdateFornecedor;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.output.UpdateFornecedorOutputPort;
@@ -26,7 +25,6 @@ public class UpdateFornecedorInteractor implements UpdateFornecedorInputPort {
 
     private final FornecedorProvider fornecedorProvider;
     private final UpdateFornecedorOutputPort presenter;
-    private final ContatoMapper contatoMapper;
 
     @Transactional
     @Override

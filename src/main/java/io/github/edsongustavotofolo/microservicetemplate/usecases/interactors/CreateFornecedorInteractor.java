@@ -8,11 +8,13 @@ import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.output.C
 import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.output.exceptions.BusinessRuleException;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.providers.FornecedorProvider;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class CreateFornecedorInteractor implements CreateFornecedorInputPort {
 
     private final CreateFornecedorOutputPort<?> presenter;
@@ -21,11 +23,15 @@ public class CreateFornecedorInteractor implements CreateFornecedorInputPort {
     @Transactional
     @Override
     public void execute(final CreateFornecedor requestModel) throws BusinessRuleException {
+        log.info("Running fornecedor creation.");
+
         if (Cnpj.numeroInvalido(requestModel.getCnpj())) {
+            log.error("Fornecedor creation failed. CNPJ is invalid.");
             this.presenter.cnpjIsInvalid();
             return;
         }
         if (this.fornecedorProvider.existsFornecedorWithCnpj(requestModel.getCnpj())) {
+            log.error("Fornecedor creation failed. Fornecedor already exists with CNPJ entered.");
             this.presenter.fornecedorAlreadyExists();
             return;
         }
@@ -35,5 +41,7 @@ public class CreateFornecedorInteractor implements CreateFornecedorInputPort {
         final var id = this.fornecedorProvider.create(fornecedor);
 
         this.presenter.show(id);
+
+        log.info("Created fornecedor successfully.");
     }
 }
