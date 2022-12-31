@@ -16,9 +16,6 @@ import java.util.List;
 @Value
 public class UpdateFornecedorRequest {
     @NotBlank(message = "{fields.required}")
-    @Size(message = "{fornecedor.fields.cnpj}", min = 14, max = 14)
-    String cnpj;
-    @NotBlank(message = "{fields.required}")
     @Size(message = "{fields.maxLength}", max = 255)
     String razaoSocial;
     @NotBlank(message = "{fields.required}")

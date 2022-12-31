@@ -7,7 +7,6 @@ import io.github.edsongustavotofolo.microservicetemplate.domain.entities.Email;
 import io.github.edsongustavotofolo.microservicetemplate.domain.entities.OutroContato;
 import io.github.edsongustavotofolo.microservicetemplate.domain.entities.Site;
 import io.github.edsongustavotofolo.microservicetemplate.domain.entities.Telefone;
-import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -15,7 +14,6 @@ import java.util.List;
 
 public class ContatosImpl implements Contatos {
     private Integer id;
-    @Setter
     private String observacao;
     private final List<Contato> lista;
 
@@ -37,6 +35,11 @@ public class ContatosImpl implements Contatos {
     @Override
     public String getObservacao() {
         return this.observacao;
+    }
+
+    @Override
+    public void setObservacao(final String observacao) {
+        this.observacao = observacao;
     }
 
     @Override
@@ -72,5 +75,10 @@ public class ContatosImpl implements Contatos {
     @Override
     public OutroContato getOutroAt(final int index) {
         return (OutroContato) this.lista.get(index);
+    }
+
+    @Override
+    public int getSize() {
+        return this.lista.size();
     }
 }

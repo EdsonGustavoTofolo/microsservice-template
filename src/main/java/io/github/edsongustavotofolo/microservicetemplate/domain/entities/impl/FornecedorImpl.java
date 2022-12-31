@@ -15,8 +15,8 @@ public class FornecedorImpl implements Fornecedor {
     private Endereco endereco;
     private final Contatos contatos;
 
-    public FornecedorImpl(final Cnpj cnpj, final String razaoSocial, final String nomeFantasia, final String observacao, final Endereco endereco, final Contatos contatos) {
-        this.id = null;
+    public FornecedorImpl(final Integer id, final Cnpj cnpj, final String razaoSocial, final String nomeFantasia, final String observacao, final Endereco endereco, final Contatos contatos) {
+        this.id = id;
         this.cnpj = cnpj;
         this.razaoSocial = razaoSocial;
         this.nomeFantasia = nomeFantasia;

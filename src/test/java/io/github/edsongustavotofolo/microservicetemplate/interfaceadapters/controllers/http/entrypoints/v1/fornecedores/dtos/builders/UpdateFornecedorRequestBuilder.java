@@ -19,7 +19,6 @@ public final class UpdateFornecedorRequestBuilder {
 
         builder.request = UpdateFornecedorRequest.builder();
 
-        builder.request.cnpj("68278677000120");
         builder.request.razaoSocial("Razao Social");
         builder.request.nomeFantasia("Nome Fantasia");
         builder.request.observacao("Observacao");

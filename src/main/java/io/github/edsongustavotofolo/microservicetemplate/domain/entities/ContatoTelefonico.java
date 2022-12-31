@@ -4,7 +4,7 @@ public abstract class ContatoTelefonico extends Contato {
     protected String ddd;
     protected String numero;
 
-    public ContatoTelefonico(String ddd, String numero) {
+    public ContatoTelefonico(final String ddd, final String numero) {
         this.ddd = ddd;
         this.numero = numero;
     }
@@ -15,10 +15,10 @@ public abstract class ContatoTelefonico extends Contato {
     }
 
     public String getDdd() {
-        return ddd;
+        return this.ddd;
     }
 
     public String getNumero() {
-        return numero;
+        return this.numero;
     }
 }

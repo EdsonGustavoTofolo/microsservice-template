@@ -13,6 +13,7 @@ public class EnderecoBuilder {
     public static EnderecoBuilder umEndereco() {
         var builder = new EnderecoBuilder();
         builder.endereco = new EnderecoImpl(
+                1,
                 "Rua Sao Miguel do Oeste",
                 "1111",
                 "Jardim das Americas",

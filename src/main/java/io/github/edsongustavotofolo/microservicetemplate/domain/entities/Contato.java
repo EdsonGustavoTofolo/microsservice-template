@@ -8,4 +8,8 @@ import lombok.Getter;
 public abstract class Contato {
     @EqualsAndHashCode.Include
     protected Integer id;
+
+    public abstract boolean isSame(final Contato other);
+
+    public abstract void update(final Contato other);
 }

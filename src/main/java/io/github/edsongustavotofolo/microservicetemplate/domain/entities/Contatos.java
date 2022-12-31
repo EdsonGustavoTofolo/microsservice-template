@@ -7,6 +7,8 @@ public interface Contatos {
 
     String getObservacao();
 
+    void setObservacao(final String observacao);
+
     List<Contato> getLista();
 
     void add(final Contato contato);
@@ -20,4 +22,6 @@ public interface Contatos {
     Site getSiteAt(int index);
 
     OutroContato getOutroAt(int index);
+
+    int getSize();
 }
