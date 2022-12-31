@@ -1,5 +1,6 @@
 package io.github.edsongustavotofolo.microservicetemplate.domain.entities;
 
+import io.github.edsongustavotofolo.microservicetemplate.domain.entities.enums.TipoDeContatoEnum;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
@@ -9,7 +10,6 @@ public abstract class Contato {
     @EqualsAndHashCode.Include
     protected Integer id;
 
-    public abstract boolean isSame(final Contato other);
-
     public abstract void update(final Contato other);
+    public abstract TipoDeContatoEnum getTipo();
 }

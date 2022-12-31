@@ -23,5 +23,9 @@ public interface Contatos {
 
     OutroContato getOutroAt(int index);
 
+    Contato getAt(final int index);
+
     int getSize();
+
+    void removeAll(final List<Contato> contatos);
 }

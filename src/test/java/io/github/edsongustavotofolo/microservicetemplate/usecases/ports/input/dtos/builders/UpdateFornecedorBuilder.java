@@ -26,11 +26,11 @@ public final class UpdateFornecedorBuilder {
         builder.updateFornecedor.cep("85601000");
         builder.updateFornecedor.cidade(4115200);
         builder.updateFornecedor.contatos(List.of(
-                UpdateContato.email("person@mail.com"),
-                UpdateContato.telefone("49","35202222"),
-                UpdateContato.celular("49", "991053588"),
-                UpdateContato.site("https://fornecedor.com"),
-                UpdateContato.outro("0800 8080 1234")));
+                UpdateContato.email(1, "person@mail.com"),
+                UpdateContato.telefone(2, "49","35202222"),
+                UpdateContato.celular(3, "49", "991053588"),
+                UpdateContato.site(4, "https://fornecedor.com"),
+                UpdateContato.outro(5, "0800 8080 1234")));
 
         return builder.updateFornecedor;
     }

@@ -1,4 +1,4 @@
-package io.github.edsongustavotofolo.microservicetemplate.usecases.ports.dtos;
+package io.github.edsongustavotofolo.microservicetemplate.domain.entities.enums;
 
 public enum TipoDeContatoEnum {
     EMAIL,

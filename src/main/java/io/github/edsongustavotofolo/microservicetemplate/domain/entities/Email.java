@@ -1,5 +1,7 @@
 package io.github.edsongustavotofolo.microservicetemplate.domain.entities;
 
+import io.github.edsongustavotofolo.microservicetemplate.domain.entities.enums.TipoDeContatoEnum;
+
 public class Email extends Contato {
     private String endereco;
 
@@ -22,17 +24,18 @@ public class Email extends Contato {
     }
 
     @Override
-    public boolean isSame(final Contato other) {
-        if (other instanceof Email otherEmail) {
-            return this.endereco.equals(otherEmail.endereco);
-        }
-        return false;
-    }
-
-    @Override
     public void update(final Contato other) {
         if (other instanceof Email otherEmail) {
             otherEmail.endereco = this.endereco;
         }
+    }
+
+    @Override
+    public TipoDeContatoEnum getTipo() {
+        return TipoDeContatoEnum.EMAIL;
+    }
+
+    public String getEndereco() {
+        return this.endereco;
     }
 }

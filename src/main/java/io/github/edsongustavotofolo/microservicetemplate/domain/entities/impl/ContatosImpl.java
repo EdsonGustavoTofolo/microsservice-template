@@ -78,7 +78,17 @@ public class ContatosImpl implements Contatos {
     }
 
     @Override
+    public Contato getAt(final int index) {
+        return this.lista.get(index);
+    }
+
+    @Override
     public int getSize() {
         return this.lista.size();
+    }
+
+    @Override
+    public void removeAll(final List<Contato> contatos) {
+        this.lista.removeAll(contatos);
     }
 }

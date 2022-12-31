@@ -14,6 +14,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
+import static java.util.Objects.isNull;
+
 @Service
 @RequiredArgsConstructor
 public class UpdateFornecedorInteractor implements UpdateFornecedorInputPort {
@@ -45,7 +47,7 @@ public class UpdateFornecedorInteractor implements UpdateFornecedorInputPort {
         fornecedor.getContatos().getLista().forEach(contato -> {
             updateFornecedor.getContatos().stream()
                     .map(ContatoMapper.INSTANCE::map)
-                    .filter(updateContato -> updateContato.isSame(contato))
+                    .filter(updateContato -> updateContato.equals(contato))
                     .findFirst()
                     .ifPresentOrElse(
                             updatableContato -> updatableContato.update(contato),
@@ -53,47 +55,14 @@ public class UpdateFornecedorInteractor implements UpdateFornecedorInputPort {
                             );
         });
         if (!removedContatos.isEmpty()) {
-            //
+            fornecedor.getContatos().removeAll(removedContatos);
         }
 
-//        final List<Contato> novoContato = new ArrayList<>();
-//        updateFornecedor.getContatos()
-//                .forEach(contatoRequestModel -> {
-//                    final var contatoRequest = ContatoMapper.INSTANCE.map(contatoRequestModel);
-//                    fornecedor.getContatos()
-//                            .getLista().stream()
-//                            .filter(contato -> contato.equals(contatoRequest))
-//                            .findFirst()
-//                            .ifPresentOrElse(contato -> {
-//                                switch (contatoRequestModel.getTipoDeContato()) {
-//                                    case EMAIL -> {
-//                                        final var email = (Email) contato;
-//                                        email.update(contatoRequestModel.getEnderecoEmail());
-//                                    }
-//                                    case TELEFONE -> {
-//                                        final var telefone = (Telefone) contato;
-//                                        telefone.update(contatoRequestModel.getDdd(), contatoRequestModel.getNumero());
-//                                    }
-//                                    case CELULAR -> {
-//                                        final var celular = (Celular) contato;
-//                                        celular.update(contatoRequestModel.getDdd(), contatoRequestModel.getNumero());
-//                                    }
-//                                    case SITE -> {
-//                                        final var site = (Site) contato;
-//                                        site.update(contatoRequestModel.getUrlSite());
-//                                    }
-//                                    case OUTRO -> {
-//                                        final var outro = (OutroContato) contato;
-//                                        outro.update(contatoRequestModel.getTexto());
-//                                    }
-//                                }
-//                            }, () -> novoContato.add(contatoRequest));
-//
-//                });
-//        if (!novoContato.isEmpty()) {
-//            novoContato.forEach(contato -> fornecedor.getContatos().add(contato));
-//        }
-
+        updateFornecedor.getContatos().forEach(updateContato -> {
+            if (isNull(updateContato.getId())) {
+                fornecedor.getContatos().add(ContatoMapper.INSTANCE.map(updateContato));
+            }
+        });
 
         this.fornecedorProvider.update(fornecedor);
     }

@@ -1,6 +1,9 @@
 package io.github.edsongustavotofolo.microservicetemplate.domain.entities;
 
+import io.github.edsongustavotofolo.microservicetemplate.domain.entities.enums.TipoDeContatoEnum;
+
 public final class Site extends Contato {
+
     private String url;
 
     public Site(final String url) {
@@ -22,17 +25,18 @@ public final class Site extends Contato {
     }
 
     @Override
-    public boolean isSame(final Contato other) {
-        if (other instanceof Site otherSite) {
-            return this.url.equals(otherSite.url);
-        }
-        return false;
-    }
-
-    @Override
     public void update(final Contato other) {
         if (other instanceof Site otherSite) {
             otherSite.url = this.url;
         }
+    }
+
+    @Override
+    public TipoDeContatoEnum getTipo() {
+        return TipoDeContatoEnum.SITE;
+    }
+
+    public String getUrl() {
+        return this.url;
     }
 }

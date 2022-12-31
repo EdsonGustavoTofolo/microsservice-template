@@ -1,6 +1,6 @@
 package io.github.edsongustavotofolo.microservicetemplate.usecases.ports.input.dtos;
 
-import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.dtos.TipoDeContatoEnum;
+import io.github.edsongustavotofolo.microservicetemplate.domain.entities.enums.TipoDeContatoEnum;
 import lombok.Builder;
 import lombok.Data;
 import lombok.Value;

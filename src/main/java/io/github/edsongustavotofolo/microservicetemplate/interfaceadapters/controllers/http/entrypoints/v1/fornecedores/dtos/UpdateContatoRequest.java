@@ -2,13 +2,12 @@ package io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.cont
 
 import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.entrypoints.annotations.Conditional;
 import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.entrypoints.annotations.Enum;
-import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.dtos.TipoDeContatoEnum;
+import io.github.edsongustavotofolo.microservicetemplate.domain.entities.enums.TipoDeContatoEnum;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
 import lombok.Data;
 import lombok.Value;
 
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -20,9 +19,8 @@ import javax.validation.constraints.Size;
 @Conditional(selected = "tipoDeContato", values = "SITE", required = "urlSite")
 @Conditional(selected = "tipoDeContato", values = "OUTRO", required = "texto")
 public class UpdateContatoRequest {
-    @NotNull
     Integer id;
-    @NotBlank(message = "{fields.required}")
+    @NotNull(message = "{fields.required}")
     @Schema(implementation = TipoDeContatoEnum.class)
     @Enum(enumClass = TipoDeContatoEnum.class)
     String tipoDeContato;

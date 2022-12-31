@@ -1,6 +1,6 @@
 package io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.gateways.database.model;
 
-import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.dtos.TipoDeContatoEnum;
+import io.github.edsongustavotofolo.microservicetemplate.domain.entities.enums.TipoDeContatoEnum;
 import lombok.*;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.envers.AuditOverride;
