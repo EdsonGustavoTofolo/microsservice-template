@@ -11,6 +11,7 @@ import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.contr
 import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.gateways.clients.ViaCepClient;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.output.exceptions.enums.ErrorType;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.providers.CidadeProvider;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -166,6 +167,7 @@ class FornecedorControllerIntegrationTest extends BaseControllerTest {
         );
     }
 
+    @DisplayName("Contatos")
     @ParameterizedTest(name = "{index} {0}")
     @MethodSource("provideInvalidContatosCreateFornecedorBody")
     void shouldResponseWithBadRequestWhenCreateFornecedorIsCalledWithInvalidContatos(final String displayName,
@@ -196,6 +198,7 @@ class FornecedorControllerIntegrationTest extends BaseControllerTest {
         );
     }
 
+    @DisplayName("Dados do fornecedor")
     @ParameterizedTest
     @MethodSource("provideInvalidFornecedorDataCreateFornecedorBody")
     void shouldResponseWithBadRequestWhenCreateFornecedorIsCalledWithInvalidFornecedorData(final String language,
@@ -236,6 +239,7 @@ class FornecedorControllerIntegrationTest extends BaseControllerTest {
         );
     }
 
+    @DisplayName("Endereco")
     @ParameterizedTest
     @MethodSource("provideInvalidEnderecoCreateFornecedorBody")
     void shouldResponseWithBadRequestWhenCreateFornecedorIsCalledWithInvalidEndereco(final String language,
