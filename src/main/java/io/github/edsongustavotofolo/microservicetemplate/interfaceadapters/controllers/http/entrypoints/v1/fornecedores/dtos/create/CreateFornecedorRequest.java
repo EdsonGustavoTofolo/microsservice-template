@@ -1,4 +1,4 @@
-package io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.entrypoints.v1.fornecedores.dtos;
+package io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.entrypoints.v1.fornecedores.dtos.create;
 
 import lombok.Builder;
 import lombok.Data;
@@ -14,7 +14,10 @@ import java.util.List;
 @Data
 @Builder
 @Value
-public class UpdateFornecedorRequest {
+public class CreateFornecedorRequest {
+    @NotBlank(message = "{fields.required}")
+    @Size(message = "{fornecedor.fields.cnpj}", min = 14, max = 14)
+    String cnpj;
     @NotBlank(message = "{fields.required}")
     @Size(message = "{fields.maxLength}", max = 255)
     String razaoSocial;
@@ -22,9 +25,10 @@ public class UpdateFornecedorRequest {
     @Size(message = "{fields.maxLength}", max = 255)
     String nomeFantasia;
     String observacao;
+    @Valid
     @NotNull(message = "{fields.required}")
-    UpdateEnderecoRequest endereco;
+    CreateEnderecoRequest endereco;
     @NotEmpty(message = "{fields.required}")
-    List<@Valid UpdateContatoRequest> contatos;
+    List<@Valid CreateContatoRequest> contatos;
     String observacaoContatos;
 }

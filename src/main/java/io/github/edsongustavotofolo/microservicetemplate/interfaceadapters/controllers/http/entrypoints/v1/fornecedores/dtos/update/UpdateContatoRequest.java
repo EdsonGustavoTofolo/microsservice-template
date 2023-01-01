@@ -1,4 +1,4 @@
-package io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.entrypoints.v1.fornecedores.dtos;
+package io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.entrypoints.v1.fornecedores.dtos.update;
 
 import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.entrypoints.annotations.Conditional;
 import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.entrypoints.annotations.Enum;
@@ -8,6 +8,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.Value;
 
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -28,6 +29,7 @@ public class UpdateContatoRequest {
     String ddd;
     @Size(message = "{fields.maxLength}", max = 10)
     String numero;
+    @Email
     @Size(message = "{fields.maxLength}", max = 255)
     String enderecoEmail;
     @Size(message = "{fields.maxLength}", max = 255)

@@ -1,6 +1,7 @@
-package io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.entrypoints.v1.fornecedores.dtos;
+package io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.entrypoints.v1.fornecedores.dtos.update;
 
 import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.entrypoints.annotations.Endereco;
+import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.entrypoints.v1.fornecedores.dtos.EnderecoRequest;
 import lombok.Builder;
 import lombok.Data;
 import lombok.Value;
@@ -14,7 +15,7 @@ import java.util.Objects;
 @Builder
 @Value
 @Endereco
-public class CreateEnderecoRequest implements EnderecoRequest {
+public class UpdateEnderecoRequest implements EnderecoRequest {
     @NotBlank(message = "{fields.required}")
     @Size(message = "{fields.maxLength}", max = 255)
     String logradouro;

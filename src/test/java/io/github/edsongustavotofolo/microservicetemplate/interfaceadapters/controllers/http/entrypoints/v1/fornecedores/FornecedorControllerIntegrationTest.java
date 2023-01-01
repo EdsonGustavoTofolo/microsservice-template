@@ -2,9 +2,9 @@ package io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.cont
 
 import io.github.edsongustavotofolo.microservicetemplate.infrastructure.configuration.bundles.MessageSourceConfig;
 import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.base.BaseControllerTest;
-import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.entrypoints.v1.fornecedores.dtos.CreateContatoRequest;
-import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.entrypoints.v1.fornecedores.dtos.CreateFornecedorRequest;
-import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.entrypoints.v1.fornecedores.dtos.UpdateFornecedorRequest;
+import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.entrypoints.v1.fornecedores.dtos.create.CreateContatoRequest;
+import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.entrypoints.v1.fornecedores.dtos.create.CreateFornecedorRequest;
+import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.entrypoints.v1.fornecedores.dtos.update.UpdateFornecedorRequest;
 import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.entrypoints.v1.fornecedores.services.CreateFornecedor;
 import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.entrypoints.v1.fornecedores.services.UpdateFornecedor;
 import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.handlers.ControllerExceptionHandler;
@@ -37,10 +37,10 @@ import static io.github.edsongustavotofolo.microservicetemplate.domain.builder.C
 import static io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.entrypoints.v1.fornecedores.FornecedorControllerPaths.BASE_PATH;
 import static io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.entrypoints.v1.fornecedores.FornecedorControllerPaths.UPDATE_FORNECEDOR_PATH;
 import static io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.entrypoints.v1.fornecedores.FornecedorControllerPaths.getFullPath;
-import static io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.entrypoints.v1.fornecedores.dtos.builders.CreateContatoRequestBuilder.createContatoRequest;
-import static io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.entrypoints.v1.fornecedores.dtos.builders.CreateEnderecoRequestBuilder.createEnderecoRequest;
-import static io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.entrypoints.v1.fornecedores.dtos.builders.CreateFornecedorRequestBuilder.createFornecedorRequest;
-import static io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.entrypoints.v1.fornecedores.dtos.builders.UpdateFornecedorRequestBuilder.updateFornecedorRequest;
+import static io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.entrypoints.v1.fornecedores.dtos.builders.create.CreateContatoRequestBuilder.createContatoRequest;
+import static io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.entrypoints.v1.fornecedores.dtos.builders.create.CreateEnderecoRequestBuilder.createEnderecoRequest;
+import static io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.entrypoints.v1.fornecedores.dtos.builders.create.CreateFornecedorRequestBuilder.createFornecedorRequest;
+import static io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.entrypoints.v1.fornecedores.dtos.builders.update.UpdateFornecedorRequestBuilder.updateFornecedorRequest;
 import static io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.gateway.clients.builders.ViaCepResponseBuilder.umViaCepResponse;
 import static org.hamcrest.Matchers.hasItem;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -146,6 +146,8 @@ class FornecedorControllerIntegrationTest extends BaseControllerTest {
                         ACCEPT_LANGUAGE_PT_BR, createFornecedorRequest().contatos(List.of(CreateContatoRequest.email(" "))).build(), "contatos[0].enderecoEmail", List.of("campo obrigatório")),
                 Arguments.of("Email com endereco com mais de 255 caracteres",
                         ACCEPT_LANGUAGE_PT_BR, createFornecedorRequest().contatos(List.of(CreateContatoRequest.email("email".repeat(52)))).build(), "contatos[0].enderecoEmail", List.of("tamanho máximo de 255 caracteres")),
+                Arguments.of("Email com endereco inválido",
+                        ACCEPT_LANGUAGE_PT_BR, createFornecedorRequest().contatos(List.of(CreateContatoRequest.email("email"))).build(), "contatos[0].enderecoEmail", List.of("deve ser um endereço de e-mail bem formado")),
 
                 Arguments.of("Site com url nula",
                         ACCEPT_LANGUAGE_PT_BR, createFornecedorRequest().contatos(List.of(CreateContatoRequest.site(null))).build(), "contatos[0].urlSite", List.of("campo obrigatório")),
