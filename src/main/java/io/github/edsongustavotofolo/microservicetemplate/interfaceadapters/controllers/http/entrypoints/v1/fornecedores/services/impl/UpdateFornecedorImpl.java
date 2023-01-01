@@ -17,7 +17,6 @@ public class UpdateFornecedorImpl implements UpdateFornecedor {
     @Override
     public void execute(final Integer id, final UpdateFornecedorRequest updateFornecedorRequest) throws BusinessRuleException {
         final var model = UpdateFornecedorMapper.INSTANCE.toModel(id, updateFornecedorRequest);
-
         this.updateFornecedor.execute(model);
     }
 }
