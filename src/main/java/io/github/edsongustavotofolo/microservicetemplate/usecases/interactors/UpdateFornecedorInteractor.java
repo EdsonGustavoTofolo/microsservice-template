@@ -27,7 +27,7 @@ public class UpdateFornecedorInteractor implements UpdateFornecedorInputPort {
     @Override
     public void execute(final UpdateFornecedor updateFornecedor) throws BusinessRuleException {
         final var fornecedor = this.fornecedorProvider.getById(updateFornecedor.getId())
-                .orElse(this.presenter.fornecedorNaoEncontrado());
+                .orElseThrow(this.presenter::fornecedorNaoEncontrado);
 
         fornecedor.setNomeFantasia(updateFornecedor.getNomeFantasia());
         fornecedor.setRazaoSocial(updateFornecedor.getRazaoSocial());
