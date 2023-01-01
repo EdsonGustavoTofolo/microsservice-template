@@ -167,7 +167,7 @@ class FornecedorControllerIntegrationTest extends BaseControllerTest {
         );
     }
 
-    @DisplayName("Contatos")
+    @DisplayName("Criação Fornecedor - Contatos")
     @ParameterizedTest(name = "{index} {0}")
     @MethodSource("provideInvalidContatosCreateFornecedorBody")
     void shouldResponseWithBadRequestWhenCreateFornecedorIsCalledWithInvalidContatos(final String displayName,
@@ -211,7 +211,7 @@ class FornecedorControllerIntegrationTest extends BaseControllerTest {
         );
     }
 
-    @DisplayName("Dados do fornecedor")
+    @DisplayName("Criação Fornecedor - Dados do fornecedor")
     @ParameterizedTest(name = "{index} {0}")
     @MethodSource("provideInvalidFornecedorDataCreateFornecedorBody")
     void shouldResponseWithBadRequestWhenCreateFornecedorIsCalledWithInvalidFornecedorData(final String displayName,
@@ -273,7 +273,7 @@ class FornecedorControllerIntegrationTest extends BaseControllerTest {
         );
     }
 
-    @DisplayName("Endereco")
+    @DisplayName("Criação Fornecedor - Endereco")
     @ParameterizedTest(name = "{index} {0}")
     @MethodSource("provideInvalidEnderecoCreateFornecedorBody")
     void shouldResponseWithBadRequestWhenCreateFornecedorIsCalledWithInvalidEndereco(final String displayName,
@@ -317,6 +317,7 @@ class FornecedorControllerIntegrationTest extends BaseControllerTest {
         verifyNoInteractions(this.createFornecedor);
     }
 
+    @DisplayName("Criação Fornecedor - Sucesso")
     @Test
     void shouldCreateFornecedorSuccessfully() throws Exception {
         when(this.cidadeProvider.getById(any())).thenReturn(Optional.of(umaCidade().build()));
@@ -341,6 +342,7 @@ class FornecedorControllerIntegrationTest extends BaseControllerTest {
         assertNotNull(request);
     }
 
+    @DisplayName("Atualização Fornecedor - Sucesso")
     @Test
     void shouldUpdateFornecedorSuccessfully() throws Exception {
         // execucao
