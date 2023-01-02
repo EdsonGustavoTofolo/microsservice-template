@@ -27,6 +27,21 @@ public final class FornecedorBuilder {
         return builder;
     }
 
+    public static FornecedorBuilder umFornecedorSemId() {
+        final var fornecedorImpl = new FornecedorImpl(
+                null,
+                new Cnpj("45135006000104"),
+                "Fornecedor Ltda",
+                "Fornecedor & Cia",
+                "nenhuma obs",
+                umEndereco().build(),
+                umContatos().build());
+
+        final var builder = new FornecedorBuilder();
+        builder.fornecedor = fornecedorImpl;
+        return builder;
+    }
+
     public Fornecedor build() {
         return this.fornecedor;
     }

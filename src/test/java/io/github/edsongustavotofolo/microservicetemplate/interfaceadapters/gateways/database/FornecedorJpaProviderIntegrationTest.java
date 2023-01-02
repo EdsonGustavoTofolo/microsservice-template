@@ -2,7 +2,6 @@ package io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.gate
 
 import io.github.edsongustavotofolo.microservicetemplate.infrastructure.configuration.database.repository.AuditConfig;
 import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.gateways.database.model.FornecedorEntity;
-import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.gateways.database.model.mappers.FornecedorEntityMapper;
 import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.gateways.database.repository.CidadeJpaRepository;
 import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.gateways.database.repository.FornecedorJpaRepository;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.providers.FornecedorProvider;
@@ -10,8 +9,8 @@ import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mapstruct.factory.Mappers;
 import org.mockito.ArgumentCaptor;
+import org.mockito.Captor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -21,7 +20,8 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
 
-import static io.github.edsongustavotofolo.microservicetemplate.domain.builder.FornecedorBuilder.umFornecedor;
+import static io.github.edsongustavotofolo.microservicetemplate.domain.builder.FornecedorBuilder.umFornecedorSemId;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -39,7 +39,8 @@ class FornecedorJpaProviderIntegrationTest {
     @Autowired
     private CidadeJpaRepository cidadeJpaRepository;
 
-    private final FornecedorEntityMapper fornecedorEntityMapper = Mappers.getMapper(FornecedorEntityMapper.class);
+    @Captor
+    private ArgumentCaptor<FornecedorEntity> argumentCaptor;
 
     private FornecedorProvider fornecedorJpaGateway;
 
@@ -51,7 +52,7 @@ class FornecedorJpaProviderIntegrationTest {
     @Test
     void deveRetornarTrueAoVerificarExistenciaDeFornecedorPorCnpj() {
         // cenario
-        final var fornecedor = umFornecedor().build();
+        final var fornecedor = umFornecedorSemId().build();
         this.fornecedorJpaGateway.create(fornecedor);
 
         // exec
@@ -64,7 +65,7 @@ class FornecedorJpaProviderIntegrationTest {
     @Test
     void deveCriarFornecedorComSucesso() {
         // cenario
-        final var fornecedor = umFornecedor().build();
+        final var fornecedor = umFornecedorSemId().build();
 
         // execucao
         final var id = this.fornecedorJpaGateway.create(fornecedor);
@@ -72,14 +73,15 @@ class FornecedorJpaProviderIntegrationTest {
         // verificacao
         assertNotNull(id);
 
-        final ArgumentCaptor<FornecedorEntity> argumentCaptor = ArgumentCaptor.forClass(FornecedorEntity.class);
+        verify(this.fornecedorJpaRepository).persist(this.argumentCaptor.capture());
 
-        verify(this.fornecedorJpaRepository).persist(argumentCaptor.capture());
+        final var actualFornecedorEntity = this.argumentCaptor.getValue();
 
-        final var actualFornecedorEntity = argumentCaptor.getValue();
-        assertNotNull(actualFornecedorEntity);
-        assertNotNull(actualFornecedorEntity.getId());
+        assertThat(actualFornecedorEntity).isNotNull();
+        assertThat(actualFornecedorEntity.getId()).isNotNull();
+
         assertEquals(id, actualFornecedorEntity.getId());
+
         assertNotNull(actualFornecedorEntity.getCreatedAt());
         assertNotNull(actualFornecedorEntity.getCreatedBy());
         assertNotNull(actualFornecedorEntity.getLastModifiedAt());
