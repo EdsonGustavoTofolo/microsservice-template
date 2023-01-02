@@ -2,12 +2,16 @@ package io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.gate
 
 import org.hibernate.Session;
 import org.hibernate.engine.jdbc.spi.JdbcServices;
+import org.hibernate.engine.spi.EntityEntry;
 import org.hibernate.engine.spi.SessionFactoryImplementor;
+import org.hibernate.engine.spi.SharedSessionContractImplementor;
 import org.hibernate.internal.AbstractSharedSessionContract;
 
 import javax.persistence.EntityManager;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Supplier;
 
 public class HibernateRepositoryImpl<T> implements HibernateRepository<T> {
@@ -106,6 +110,7 @@ public class HibernateRepositoryImpl<T> implements HibernateRepository<T> {
 
     @Override
     public <S extends T> S update(S entity) {
+        briefOverviewOfPersistentContextContent();
         session().update(entity);
         return entity;
     }
@@ -177,5 +182,42 @@ public class HibernateRepositoryImpl<T> implements HibernateRepository<T> {
         throw new UnsupportedOperationException(
                 "There's no such thing as a save method in JPA, so don't use this hack!"
         );
+    }
+
+    private void briefOverviewOfPersistentContextContent() {
+        org.hibernate.engine.spi.PersistenceContext persistenceContext = getPersistenceContext();
+
+        int managedEntities = persistenceContext.getNumberOfManagedEntities();
+        Map collectionEntries = persistenceContext.getCollectionEntries();
+
+        System.out.println("\n-----------------------------------");
+        System.out.println("Total number of managed entities: " + managedEntities);
+        if (collectionEntries != null) {
+            System.out.println("Total number of collection entries: "
+                    + (collectionEntries.values().size()));
+        }
+
+        Map entities = persistenceContext.getEntitiesByKey();
+        entities.forEach((key, value) -> System.out.println(key + ":" + value));
+
+        entities.values().forEach(entry
+                -> {
+            EntityEntry ee = persistenceContext.getEntry(entry);
+            System.out.println(
+                    "Entity name: " + ee.getEntityName()
+                            + " | Status: " + ee.getStatus()
+                            + " | State: " + Arrays.toString(ee.getLoadedState()));
+        });
+
+        System.out.println("\n-----------------------------------\n");
+    }
+
+    private org.hibernate.engine.spi.PersistenceContext getPersistenceContext() {
+
+        SharedSessionContractImplementor sharedSession = entityManager.unwrap(
+                SharedSessionContractImplementor.class
+        );
+
+        return sharedSession.getPersistenceContext();
     }
 }

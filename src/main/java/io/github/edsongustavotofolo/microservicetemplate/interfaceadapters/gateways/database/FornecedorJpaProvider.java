@@ -1,19 +1,27 @@
 package io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.gateways.database;
 
+import io.github.edsongustavotofolo.microservicetemplate.domain.entities.Contato;
+import io.github.edsongustavotofolo.microservicetemplate.domain.entities.ContatoTelefonico;
+import io.github.edsongustavotofolo.microservicetemplate.domain.entities.Email;
 import io.github.edsongustavotofolo.microservicetemplate.domain.entities.Fornecedor;
-import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.gateways.database.model.FornecedorEntity;
+import io.github.edsongustavotofolo.microservicetemplate.domain.entities.OutroContato;
+import io.github.edsongustavotofolo.microservicetemplate.domain.entities.Site;
+import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.gateways.database.model.TipoDeContatoEntity;
 import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.gateways.database.model.mappers.FornecedorEntityMapper;
+import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.gateways.database.model.mappers.TipoDeContatoEntityMapper;
 import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.gateways.database.repository.CidadeJpaRepository;
 import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.gateways.database.repository.FornecedorJpaRepository;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.providers.FornecedorProvider;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
+import static java.util.Objects.nonNull;
+
 @Component
-@Slf4j
 @RequiredArgsConstructor
 public class FornecedorJpaProvider implements FornecedorProvider {
 
@@ -22,29 +30,22 @@ public class FornecedorJpaProvider implements FornecedorProvider {
 
     @Override
     public Integer create(final Fornecedor fornecedor) {
-        log.info("Criando fornecedor");
+        final var cidadeEntity = this.cidadeJpaRepository
+                .getReferenceById(fornecedor.getEndereco().getCidade().getId());
 
-        final var fornecedorEntity = this.getFornecedorEntity(fornecedor);
+        final var fornecedorEntity = FornecedorEntityMapper.INSTANCE.toEntity(fornecedor);
+
+        fornecedorEntity.getEndereco().setCidade(cidadeEntity);
+        fornecedorEntity.getEndereco().setFornecedor(fornecedorEntity);
+        fornecedorEntity.getContatos().setFornecedor(fornecedorEntity);
 
         final var saved = this.fornecedorJpaRepository.persist(fornecedorEntity);
 
         return saved.getId();
     }
 
-    private FornecedorEntity getFornecedorEntity(final Fornecedor fornecedor) {
-        final var cidadeEntity = this.cidadeJpaRepository
-                .getReferenceById(fornecedor.getEndereco().getCidade().getId());
-
-        final var fornecedorEntity = FornecedorEntityMapper.INSTANCE.toEntity(fornecedor);
-        fornecedorEntity.getEndereco().setCidade(cidadeEntity);
-        fornecedorEntity.getEndereco().setFornecedor(fornecedorEntity);
-        fornecedorEntity.getContatos().setFornecedor(fornecedorEntity);
-        return fornecedorEntity;
-    }
-
     @Override
     public boolean existsFornecedorWithCnpj(final String cnpj) {
-        log.info("Verificando existencia de fornecedor pelo cnpj " + cnpj);
         return this.fornecedorJpaRepository.existsByCnpj(cnpj);
     }
 
@@ -56,8 +57,56 @@ public class FornecedorJpaProvider implements FornecedorProvider {
 
     @Override
     public void update(final Fornecedor fornecedor) {
-        final var fornecedorEntity = this.getFornecedorEntity(fornecedor);
+        final var fornecedorEntity = this.fornecedorJpaRepository.getReferenceById(fornecedor.getId());
 
-        this.fornecedorJpaRepository.update(fornecedorEntity);
+        final var cidadeEntity = this.cidadeJpaRepository
+                .getReferenceById(fornecedor.getEndereco().getCidade().getId());
+
+        fornecedorEntity.setRazaoSocial(fornecedor.getRazaoSocial());
+        fornecedorEntity.setNomeFantasia(fornecedor.getNomeFantasia());
+        fornecedorEntity.setObservacao(fornecedor.getObservacao());
+
+        fornecedorEntity.getEndereco().setLogradouro(fornecedor.getEndereco().getLogradouro());
+        fornecedorEntity.getEndereco().setNumero(fornecedor.getEndereco().getNumero());
+        fornecedorEntity.getEndereco().setBairro(fornecedor.getEndereco().getBairro());
+        fornecedorEntity.getEndereco().setComplemento(fornecedor.getEndereco().getComplemento());
+        fornecedorEntity.getEndereco().setPontoDeReferencia(fornecedor.getEndereco().getPontoDeReferencia());
+        fornecedorEntity.getEndereco().setCep(fornecedor.getEndereco().getCep().toString());
+        fornecedorEntity.getEndereco().setCidade(cidadeEntity);
+
+        fornecedorEntity.getContatos().setObservacao(fornecedor.getContatos().getObservacao());
+
+        final List<TipoDeContatoEntity> removedEntities = new ArrayList<>();
+
+        fornecedorEntity.getContatos().getTipos().forEach(tipoDeContatoEntity -> {
+            final var exists = fornecedor.getContatos().getLista().stream()
+                    .filter(contato -> nonNull(contato.getId()))
+                    .anyMatch(contato -> contato.getId().equals(tipoDeContatoEntity.getId()));
+            if (!exists) {
+                removedEntities.add(tipoDeContatoEntity);
+            }
+        });
+
+        fornecedorEntity.getContatos().getTipos().removeAll(removedEntities);
+
+        for (final Contato contato : fornecedor.getContatos().getLista()) {
+            fornecedorEntity.getContatos().getTipos().stream()
+                    .filter(tipoDeContatoEntity -> tipoDeContatoEntity.getId().equals(contato.getId()))
+                    .findFirst()
+                    .ifPresentOrElse(tipoDeContatoEntity -> {
+                        switch (tipoDeContatoEntity.getTipoDeContato()) {
+                            case SITE -> tipoDeContatoEntity.setUrlSite(((Site) contato).getUrl());
+                            case EMAIL -> tipoDeContatoEntity.setEnderecoEmail(((Email) contato).getEndereco());
+                            case OUTRO -> tipoDeContatoEntity.setTexto(((OutroContato) contato).getTexto());
+                            case CELULAR, TELEFONE -> {
+                                tipoDeContatoEntity.setDdd(((ContatoTelefonico) contato).getDdd());
+                                tipoDeContatoEntity.setNumero(((ContatoTelefonico) contato).getNumero());
+                            }
+                        }
+                    }, () -> {
+                        final var newTipoDeContatoEntity = TipoDeContatoEntityMapper.INSTANCE.map(contato);
+                        fornecedorEntity.addContato(newTipoDeContatoEntity);
+                    });
+        }
     }
 }

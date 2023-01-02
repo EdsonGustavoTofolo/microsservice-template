@@ -23,8 +23,9 @@ public class FornecedorEntity extends AuditableEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
+    @Column(nullable = false, updatable = false)
     private Integer id;
-    @Column(nullable = false, length = 14, unique = true)
+    @Column(nullable = false, length = 14, unique = true, updatable = false)
     private String cnpj;
     @Column(nullable = false)
     private String razaoSocial;
@@ -35,4 +36,9 @@ public class FornecedorEntity extends AuditableEntity implements Serializable {
     private String observacao;
     @OneToOne(mappedBy = "fornecedor", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private ContatosEntity contatos;
+
+    public void addContato(final TipoDeContatoEntity tipoDeContato) {
+        this.contatos.getTipos().add(tipoDeContato);
+        tipoDeContato.setContatos(this.contatos);
+    }
 }

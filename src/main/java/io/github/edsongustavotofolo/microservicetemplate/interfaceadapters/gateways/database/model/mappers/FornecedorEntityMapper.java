@@ -19,14 +19,11 @@ import io.github.edsongustavotofolo.microservicetemplate.domain.entities.valueob
 import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.gateways.database.model.ContatosEntity;
 import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.gateways.database.model.EnderecoEntity;
 import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.gateways.database.model.FornecedorEntity;
-import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.gateways.database.model.TipoDeContatoEntity;
 import org.apache.commons.lang3.StringUtils;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
 import org.mapstruct.factory.Mappers;
-
-import java.util.List;
 
 @Mapper
 public interface FornecedorEntityMapper {
@@ -101,20 +98,8 @@ public interface FornecedorEntityMapper {
     static ContatosEntity contatosListaToTipoDeContatoEntity(final Contatos contatos) {
         final var contatosEntity = new ContatosEntity();
 
-        final List<TipoDeContatoEntity> tipoDeContatoEntities = contatos.getLista().stream().map(contato -> {
-            final TipoDeContatoEntity tipoDeContatoEntity;
-            if (contato instanceof Email email) {
-                tipoDeContatoEntity = TipoDeContatoEntity.email(email.toString());
-            } else if (contato instanceof Site site) {
-                tipoDeContatoEntity = TipoDeContatoEntity.site(site.toString());
-            } else if (contato instanceof Telefone telefone) {
-                tipoDeContatoEntity = TipoDeContatoEntity.telefone(telefone.getDdd(), telefone.getNumero());
-            } else if (contato instanceof Celular celular) {
-                tipoDeContatoEntity = TipoDeContatoEntity.celular(celular.getDdd(), celular.getNumero());
-            } else {
-                final var outroContato = (OutroContato) contato;
-                tipoDeContatoEntity = TipoDeContatoEntity.outro(outroContato.toString());
-            }
+        final var tipoDeContatoEntities = contatos.getLista().stream().map(contato -> {
+            final var tipoDeContatoEntity = TipoDeContatoEntityMapper.INSTANCE.map(contato);
             tipoDeContatoEntity.setContatos(contatosEntity);
             return tipoDeContatoEntity;
         }).toList();
