@@ -7,7 +7,7 @@ import io.github.edsongustavotofolo.microservicetemplate.domain.entities.valueob
 import io.github.edsongustavotofolo.microservicetemplate.domain.entities.valueobjects.Cnpj;
 
 public class FornecedorImpl implements Fornecedor {
-    private final Integer id;
+    private Integer id;
     private Cnpj cnpj;
     private String razaoSocial;
     private String nomeFantasia;
@@ -58,6 +58,11 @@ public class FornecedorImpl implements Fornecedor {
     @Override
     public Contatos getContatos() {
         return this.contatos;
+    }
+
+    @Override
+    public void setId(final Integer id) {
+        this.id = id;
     }
 
     @Override

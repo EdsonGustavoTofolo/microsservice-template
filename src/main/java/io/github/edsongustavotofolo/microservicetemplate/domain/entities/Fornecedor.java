@@ -17,6 +17,8 @@ public interface Fornecedor {
 
     Contatos getContatos();
 
+    void setId(final Integer id);
+
     void setCnpj(final Cnpj cnpj);
 
     void setRazaoSocial(final String razaoSocial);

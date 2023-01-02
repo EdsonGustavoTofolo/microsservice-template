@@ -42,21 +42,40 @@ class FornecedorJpaProviderIntegrationTest {
     @Captor
     private ArgumentCaptor<FornecedorEntity> argumentCaptor;
 
-    private FornecedorProvider fornecedorJpaGateway;
+    private FornecedorProvider fornecedorProvider;
 
     @BeforeEach
     public void setup() {
-        this.fornecedorJpaGateway = new FornecedorJpaProvider(this.fornecedorJpaRepository, this.cidadeJpaRepository);
+        this.fornecedorProvider = new FornecedorJpaProvider(this.fornecedorJpaRepository, this.cidadeJpaRepository);
+    }
+
+    @Test
+    void deveAtualizarFornecedorComSucesso() {
+        // cenario
+        final var fornecedor = umFornecedorSemId().build();
+
+        final var id = this.fornecedorProvider.create(fornecedor);
+
+        fornecedor.setId(id);
+        fornecedor.setRazaoSocial("Nova Razao Social");
+
+        // execucao
+        this.fornecedorProvider.update(fornecedor);
+
+        // verificacao
+        final var entity = this.fornecedorProvider.getById(id).get();
+
+        assertThat(entity.getRazaoSocial()).isEqualTo(fornecedor.getRazaoSocial());
     }
 
     @Test
     void deveRetornarTrueAoVerificarExistenciaDeFornecedorPorCnpj() {
         // cenario
         final var fornecedor = umFornecedorSemId().build();
-        this.fornecedorJpaGateway.create(fornecedor);
+        this.fornecedorProvider.create(fornecedor);
 
         // exec
-        final var actualExistsByCnpj = this.fornecedorJpaGateway.existsFornecedorWithCnpj(fornecedor.getCnpj().toString());
+        final var actualExistsByCnpj = this.fornecedorProvider.existsFornecedorWithCnpj(fornecedor.getCnpj().toString());
 
         // check
         assertTrue(actualExistsByCnpj);
@@ -68,7 +87,7 @@ class FornecedorJpaProviderIntegrationTest {
         final var fornecedor = umFornecedorSemId().build();
 
         // execucao
-        final var id = this.fornecedorJpaGateway.create(fornecedor);
+        final var id = this.fornecedorProvider.create(fornecedor);
 
         // verificacao
         assertNotNull(id);
