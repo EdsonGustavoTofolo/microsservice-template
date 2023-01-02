@@ -6,6 +6,7 @@ import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.contr
 import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.entrypoints.v1.fornecedores.dtos.create.CreateFornecedorRequest;
 import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.entrypoints.v1.fornecedores.dtos.update.UpdateFornecedorRequest;
 import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.entrypoints.v1.fornecedores.services.CreateFornecedor;
+import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.entrypoints.v1.fornecedores.services.DeleteFornecedor;
 import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.entrypoints.v1.fornecedores.services.UpdateFornecedor;
 import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.handlers.ControllerExceptionHandler;
 import io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.gateways.clients.ViaCepClient;
@@ -35,6 +36,7 @@ import java.util.stream.Stream;
 
 import static io.github.edsongustavotofolo.microservicetemplate.domain.builder.CidadeBuilder.umaCidade;
 import static io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.entrypoints.v1.fornecedores.FornecedorControllerPaths.BASE_PATH;
+import static io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.entrypoints.v1.fornecedores.FornecedorControllerPaths.DELETE_FORNECEDOR_PATH;
 import static io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.entrypoints.v1.fornecedores.FornecedorControllerPaths.UPDATE_FORNECEDOR_PATH;
 import static io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.entrypoints.v1.fornecedores.FornecedorControllerPaths.getFullPath;
 import static io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.entrypoints.v1.fornecedores.dtos.builders.create.CreateContatoRequestBuilder.createContatoRequest;
@@ -42,6 +44,7 @@ import static io.github.edsongustavotofolo.microservicetemplate.interfaceadapter
 import static io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.entrypoints.v1.fornecedores.dtos.builders.create.CreateFornecedorRequestBuilder.createFornecedorRequest;
 import static io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.controllers.http.entrypoints.v1.fornecedores.dtos.builders.update.UpdateFornecedorRequestBuilder.updateFornecedorRequest;
 import static io.github.edsongustavotofolo.microservicetemplate.interfaceadapters.gateway.clients.builders.ViaCepResponseBuilder.umViaCepResponse;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -50,6 +53,7 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
@@ -70,6 +74,8 @@ class FornecedorControllerIntegrationTest extends BaseControllerTest {
     private CreateFornecedor createFornecedor;
     @MockBean
     private UpdateFornecedor updateFornecedor;
+    @MockBean
+    private DeleteFornecedor deleteFornecedor;
 
     @MockBean
     private CidadeProvider cidadeProvider;
@@ -267,8 +273,8 @@ class FornecedorControllerIntegrationTest extends BaseControllerTest {
                         ACCEPT_LANGUAGE_PT_BR, createFornecedorRequest().endereco(createEnderecoRequest().cep(" ").build()).build(), "endereco.cep", List.of("campo obrigatório")),
                 Arguments.of("Cep nulo",
                         ACCEPT_LANGUAGE_PT_BR, createFornecedorRequest().endereco(createEnderecoRequest().cep(null).build()).build(), "endereco.cep", List.of("campo obrigatório")),
-                Arguments.of("Cep com mais de 8 caracteres",
-                        ACCEPT_LANGUAGE_PT_BR, createFornecedorRequest().endereco(createEnderecoRequest().cep("cep".repeat(3)).build()).build(), "endereco.cep", List.of("tamanho máximo de 8 caracteres")),
+                Arguments.of("Cep com string",
+                        ACCEPT_LANGUAGE_PT_BR, createFornecedorRequest().endereco(createEnderecoRequest().cep("cepcepce").build()).build(), "endereco.cep", List.of("valor inválido")),
 
                 Arguments.of("Cidade nula",
                         ACCEPT_LANGUAGE_PT_BR, createFornecedorRequest().endereco(createEnderecoRequest().cidade(null).build()).build(), "endereco.cidade", List.of("campo obrigatório"))
@@ -365,5 +371,23 @@ class FornecedorControllerIntegrationTest extends BaseControllerTest {
         final var request = this.updateFornecedorRequestArgumentCaptor.getValue();
 
         assertNotNull(request);
+    }
+
+    @DisplayName("Deleção de Fornecedor - Sucesso")
+    @Test
+    void shouldDeleteForencedorSuccessfully() throws Exception {
+        // execucao
+        final var perform = this.mockMvc.perform(
+                delete(getFullPath(DELETE_FORNECEDOR_PATH), 1)
+                        .contentType(MediaType.APPLICATION_JSON));
+
+        // verificacao
+        perform.andExpect(status().isNoContent());
+
+        verify(this.deleteFornecedor).execute(this.idArgumentCaptor.capture());
+
+        final var id = this.idArgumentCaptor.getValue();
+
+        assertThat(id).isEqualTo(1);
     }
 }

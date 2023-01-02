@@ -8,6 +8,7 @@ import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.output.U
 import io.github.edsongustavotofolo.microservicetemplate.usecases.ports.output.exceptions.BusinessRuleException;
 import io.github.edsongustavotofolo.microservicetemplate.usecases.providers.FornecedorProvider;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,6 +19,7 @@ import static java.util.Objects.isNull;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class UpdateFornecedorInteractor implements UpdateFornecedorInputPort {
 
     private final FornecedorProvider fornecedorProvider;
@@ -26,6 +28,10 @@ public class UpdateFornecedorInteractor implements UpdateFornecedorInputPort {
     @Transactional
     @Override
     public void execute(final UpdateFornecedor updateFornecedor) throws BusinessRuleException {
+        log.info("Updating fornecedor.");
+
+        log.info("Searching for fornecedor by id.");
+
         final var fornecedor = this.fornecedorProvider.getById(updateFornecedor.getId())
                 .orElseThrow(this.presenter::fornecedorNaoEncontrado);
 
@@ -64,6 +70,10 @@ public class UpdateFornecedorInteractor implements UpdateFornecedorInputPort {
             }
         });
 
+        log.info("Requesting fornecedor updating at provider.");
+
         this.fornecedorProvider.update(fornecedor);
+
+        log.info("Fornecedor updated successfully.");
     }
 }

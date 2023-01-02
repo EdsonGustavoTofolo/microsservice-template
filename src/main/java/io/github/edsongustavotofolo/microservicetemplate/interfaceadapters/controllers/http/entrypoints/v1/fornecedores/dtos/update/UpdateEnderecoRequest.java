@@ -8,6 +8,7 @@ import lombok.Value;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.util.Objects;
 
@@ -30,7 +31,7 @@ public class UpdateEnderecoRequest implements EnderecoRequest {
     @Size(message = "{fields.maxLength}", max = 100)
     String pontoDeReferencia;
     @NotBlank(message = "{fields.required}")
-    @Size(message = "{fields.maxLength}", min = 8, max = 8)
+    @Pattern(regexp = "^(\\d{8})$", message = "{fields.invalidValue}")
     String cep;
     @NotNull(message = "{fields.required}")
     Integer cidade;
@@ -39,6 +40,6 @@ public class UpdateEnderecoRequest implements EnderecoRequest {
     String uf;
 
     public boolean hasCity() {
-        return Objects.nonNull(this.cidade) && this.cidade > 0;
+        return Objects.nonNull(this.cidade);
     }
 }

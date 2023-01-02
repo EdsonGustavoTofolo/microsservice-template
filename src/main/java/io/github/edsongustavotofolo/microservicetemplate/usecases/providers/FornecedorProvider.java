@@ -12,4 +12,8 @@ public interface FornecedorProvider {
     Optional<Fornecedor> getById(final Integer id);
 
     void update(final Fornecedor fornecedor);
+
+    boolean existsFornecedorById(final Integer id);
+
+    void delete(final Integer id);
 }

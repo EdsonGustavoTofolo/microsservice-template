@@ -25,11 +25,14 @@ public class CreateFornecedorInteractor implements CreateFornecedorInputPort {
     public void execute(final CreateFornecedor createFornecedor) throws BusinessRuleException {
         log.info("Running fornecedor creation.");
 
+        log.info("Validating CNPJ.");
         if (Cnpj.numeroInvalido(createFornecedor.getCnpj())) {
             log.error("Fornecedor creation failed. CNPJ is invalid.");
             this.presenter.cnpjIsInvalid();
             return;
         }
+
+        log.info("Checking if existing fornecedor by CNPJ.");
         if (this.fornecedorProvider.existsFornecedorWithCnpj(createFornecedor.getCnpj())) {
             log.error("Fornecedor creation failed. Fornecedor already exists with CNPJ entered.");
             this.presenter.fornecedorAlreadyExists();
@@ -37,6 +40,8 @@ public class CreateFornecedorInteractor implements CreateFornecedorInputPort {
         }
 
         final var fornecedor = FornecedorMapper.INSTANCE.map(createFornecedor);
+
+        log.info("Requesting fornecedor creating at provider.");
 
         final var id = this.fornecedorProvider.create(fornecedor);
 

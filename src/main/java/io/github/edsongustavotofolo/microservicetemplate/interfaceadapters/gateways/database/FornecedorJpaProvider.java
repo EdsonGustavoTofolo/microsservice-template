@@ -109,4 +109,14 @@ public class FornecedorJpaProvider implements FornecedorProvider {
                     });
         }
     }
+
+    @Override
+    public boolean existsFornecedorById(final Integer id) {
+        return this.fornecedorJpaRepository.existsById(id);
+    }
+
+    @Override
+    public void delete(final Integer id) {
+        this.fornecedorJpaRepository.deleteById(id);
+    }
 }
