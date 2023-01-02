@@ -31,10 +31,10 @@ public class FornecedorEntity extends AuditableEntity implements Serializable {
     private String razaoSocial;
     @Column(nullable = false)
     private String nomeFantasia;
-    @OneToOne(mappedBy = "fornecedor", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @OneToOne(mappedBy = "fornecedor", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, orphanRemoval = true)
     private EnderecoEntity endereco;
     private String observacao;
-    @OneToOne(mappedBy = "fornecedor", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @OneToOne(mappedBy = "fornecedor", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, orphanRemoval = true)
     private ContatosEntity contatos;
 
     public void addContato(final TipoDeContatoEntity tipoDeContato) {

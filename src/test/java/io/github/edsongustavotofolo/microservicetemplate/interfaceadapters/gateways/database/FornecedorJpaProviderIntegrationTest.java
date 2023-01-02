@@ -50,6 +50,19 @@ class FornecedorJpaProviderIntegrationTest {
     }
 
     @Test
+    void deveDeletarFornecedorComSucesso() {
+        final var fornecedor = umFornecedorSemId().build();
+
+        final var id = this.fornecedorProvider.create(fornecedor);
+
+        this.fornecedorProvider.delete(id);
+
+        final var existsFornecedor = this.fornecedorProvider.existsFornecedorById(id);
+
+        assertThat(existsFornecedor).isFalse();
+    }
+
+    @Test
     void deveAtualizarFornecedorComSucesso() {
         // cenario
         final var fornecedor = umFornecedorSemId().build();

@@ -117,6 +117,7 @@ public class FornecedorJpaProvider implements FornecedorProvider {
 
     @Override
     public void delete(final Integer id) {
-        this.fornecedorJpaRepository.deleteById(id);
+        this.fornecedorJpaRepository.findById(id)
+                .ifPresent(this.fornecedorJpaRepository::delete);
     }
 }
