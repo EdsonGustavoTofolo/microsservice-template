@@ -1,3 +1,4 @@
+# NAO ESTA FUNCIONANDO
 
 FROM quay.io/keycloak/keycloak:20.0.2 as builder
 
