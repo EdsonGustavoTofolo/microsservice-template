@@ -12,6 +12,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -49,7 +50,8 @@ public class FornecedorController {
     private final DeleteFornecedor deleteFornecedor;
 
     @Operation(summary = "Cria um novo fornecedor",
-            description = "Cria um fornecedor com os dados fornecidos")
+            description = "Cria um fornecedor com os dados fornecidos",
+            security = @SecurityRequirement(name = "bearerToken"))
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Criado com sucesso",
                     headers = @Header(name = LOCATION,

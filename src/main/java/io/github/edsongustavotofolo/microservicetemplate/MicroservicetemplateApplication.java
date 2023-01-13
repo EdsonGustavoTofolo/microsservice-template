@@ -1,7 +1,9 @@
 package io.github.edsongustavotofolo.microservicetemplate;
 
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
+import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
 import io.swagger.v3.oas.annotations.info.Info;
+import io.swagger.v3.oas.annotations.security.SecurityScheme;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
@@ -13,6 +15,11 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
         title = "${application.name}",
         version = "${application.version}",
         description = "${application.description}"))
+@SecurityScheme(name = "bearerToken",
+        type = SecuritySchemeType.HTTP,
+        bearerFormat = "JWT",
+        scheme = "bearer",
+        description = "Bearer token provided by keycloak")
 @SpringBootApplication(scanBasePackages = {
         "io.github.edsongustavotofolo.microservicetemplate.infrastructure",
         "io.github.edsongustavotofolo.microservicetemplate.interfaceadapters",
